@@ -1,0 +1,96 @@
+import { route } from "./config.js";
+import {warn} from "./warn.js";
+
+export const isH5 = function() {
+  return typeof window !== "undefined" && typeof document !== "undefined";
+};
+export const queryMp=function(Vim){
+	if(Vim.constructor.name=='Vue'){
+		Vim.$options.page='';
+		Vim.$options.ONLAUNCH=true;
+		return Vim.$options
+	}else{
+		if(Object.keys(Vim).length<6){
+			return Vim;
+		}
+		if(Vim.$mp&&Vim.$mp.page){
+			return Vim.$mp;
+		}
+		return queryMp(Vim.$parent);
+	}
+}
+
+export const parseQuery = function(routerName, query, Encode = false) {
+  if (Encode) {
+    return {
+      url: routerName,
+      query: JSON.parse(decodeURIComponent(query.replace(/^query=/,'')))
+    };
+  } else {
+    return {
+      url: routerName,
+      query: `query=${encodeURIComponent(JSON.stringify(query))}`
+    };
+  }
+};
+export const exactRule = function(cloneRule, routes, ruleKey, getRule = false) {
+  const params = {};
+  let i = 0;
+  while (true) {
+    const item = routes["routes"][i];
+    if (item == null) {
+      if (!getRule) {
+		  warn(`路由表中未查找到 '${ruleKey}' 为 '${cloneRule[ruleKey]}'`)
+      }
+	  return {path:'',name:''}
+    }
+    if (item[ruleKey] != null && item[ruleKey] === cloneRule[ruleKey]) {
+      if (!getRule) {
+        params.url = item["path"];
+        params.rule = item;
+        return params;
+      }
+      return item;
+    }
+    i++;
+  }
+};
+
+export const normalizeParams = function(cloneRule, routes) {
+  let params = {};
+  if (cloneRule.constructor === String) {
+    let rule = {};
+    rule.path = cloneRule;
+    rule.query = {};
+    cloneRule = rule;
+  }
+  params =
+    (cloneRule["path"] && parseQuery("path", cloneRule["query"] || {})) ||
+    (cloneRule["name"] && parseQuery("name", cloneRule["params"] || {}));
+  params = {
+    ...exactRule(cloneRule, routes, params.url),
+    query: params.query
+  };
+  return params;
+};
+
+export const encodeURI = function(rule) {
+	return encodeURIComponent(rule);
+};
+
+export const resolveRule = function(router, rule, query={}) {
+  let ruleInfo = route(
+    exactRule(
+      {
+        ...rule
+      },
+      router.routers,
+      "path",
+      router
+    )
+  );
+  return {
+    ...ruleInfo,
+    query
+  };
+};

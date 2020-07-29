@@ -1,0 +1,164 @@
+{
+	"pages": [{
+			"path": "pages/schedule/schedule",
+			"style": {
+				"disableScroll":true
+			}
+		},
+		{
+			"path": "pages/my/my-index/my-index",
+			"style": {}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"disableScroll":true
+			}
+		},
+		{
+			"path": "pages/my/my-clear/my-clear",
+			"style": {
+				"disableScroll":true
+			}
+		}, {
+			"path": "pages/my/my-personalization/my-personalization",
+			"style": {
+				"disableScroll":true
+			}
+		}, {
+			"path": "pages/my/my-about/my-about",
+			"style": {}
+		}, {
+			"path": "pages/map/location",
+			"style": {}
+		}, {
+			"path": "pages/map/map",
+			"style": {}
+
+		}, {
+			"path": "pages/grade/grade",
+			"style": {
+				"enablePullDownRefresh": true
+			}
+		}, {
+			"path": "pages/grade/grade-find/grade-find",
+			"style": {}
+		},
+		{
+			"path": "pages/library/douban",
+			"style": {}
+		},
+		{
+			"path": "pages/file/file_page/file_0",
+			"style": {}
+		}, {
+			"path": "pages/file/file_page/file_1",
+			"style": {}
+		}, {
+			"path": "pages/file/file_page/file_2",
+			"style": {}
+		}, {
+			"path": "pages/file/file_page/file_3",
+			"style": {}
+		}, {
+			"path": "pages/file/file_page/file_4",
+			"style": {}
+		}, {
+			"path": "pages/file/file_page/file_5",
+			"style": {}
+		}, {
+			"path": "pages/file/file_page/file_6",
+			"style": {}
+		}, {
+			"path": "pages/file/file_page/file_7",
+			"style": {}
+		}, {
+			"path": "pages/file/file_page/file_8",
+			"style": {}
+		}, {
+			"path": "pages/file/file_page/file_9",
+			"style": {}
+		}, {
+			"path": "pages/file/file-detail/file-detail",
+			"style": {}
+		}, {
+			"path": "pages/rubbish/rubbish",
+			"style": {}
+		}
+	    ,{
+            "path" : "pages/pay/pay",
+            "style" : {
+				"disableScroll":true
+			}
+        }
+        ,{
+            "path" : "pages/library/library",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/privacy/privacy",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/schedule/plugin_button/plugin_item/plugin-add-course/plugin-delete-course/plugin-delete-course",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/news/news",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/news/news-detail",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/my/my-mark/my-mark",
+            "style" : {}
+        }
+    ],
+	"tabBar": {
+		"color": "#A1A1A1",
+		"selectedColor": "#A1A1A1",
+		"backgroundColor": "#ffffff",
+		"borderStyle": "white",
+		"list": [{
+				"pagePath": "pages/schedule/schedule",
+				"text": "日程表",
+				"iconPath": "static/bar/task_fill.png",
+				"selectedIconPath": "static/bar/gray/task_fill.png"
+			}, {
+				"pagePath": "pages/grade/grade",
+				"text": "成绩",
+				"iconPath": "static/bar/grade.png",
+				"selectedIconPath": "static/bar/gray/grade.png"
+			},
+			{
+				"pagePath": "pages/my/my-index/my-index",
+				"text": "我的",
+				"iconPath": "static/bar/people_fill.png",
+				"selectedIconPath": "static/bar/gray/people_fill.png"
+			}
+		]
+	},
+	"globalStyle": {
+		"mp-alipay": {
+			/* 支付宝小程序特有相关 */
+			"transparentTitle": "always",
+			"allowsBounceVertical": "NO"
+		},
+		"navigationBarBackgroundColor": "#0081ff",
+		"navigationBarTitleText": "gdutday",
+		"navigationStyle": "custom",
+		"navigationBarTextStyle": "white"
+	},
+	"usingComponts": true,
+	"condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [{
+			"name": "首页", //模式名称
+			"path": "pages/schedule/schedule", //启动页面
+			"query": "" //启动参数
+		}]
+	}
+
+}

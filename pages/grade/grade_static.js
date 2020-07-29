@@ -1,0 +1,114 @@
+export const defaultGrade = [{
+	credit: "4.5",
+	examName: "下拉可以刷新哦",
+	examPole: "4.5",
+	examScore: "95",
+	examTime: "2018秋季",
+	readMethod: "必修",
+}, {
+	credit: "4",
+	examName: "糯米鸡",
+	examPole: "3.5",
+	examScore: "85",
+	examTime: "2018秋季",
+	readMethod: "必修",
+}, {
+	credit: "3.5",
+	examName: "鸡肉卷",
+	examPole: "2",
+	examScore: "70",
+	examTime: "2018秋季",
+	readMethod: "必修",
+}, {
+	credit: "3",
+	examName: "铁板烧",
+	examPole: "2.5",
+	examScore: "75",
+	examTime: "2018秋季",
+	readMethod: "必修"
+}, {
+	credit: "2",
+	examName: "鸡蛋灌饼",
+	examPole: "1.5",
+	examScore: "65",
+	examTime: "2018秋季",
+	readMethod: "选修"
+}, {
+	credit: "1",
+	examName: "烤冷面",
+	examPole: "4.9",
+	examScore: "99",
+	examTime: "2019春季",
+	readMethod: "选修"
+}, {
+	credit: "1.5",
+	examName: "手抓饼",
+	examPole: "2.7",
+	examScore: "77",
+	examTime: "2019春季",
+	readMethod: "必修"
+}, {
+	credit: "1.5",
+	examName: "关东煮",
+	examPole: "0",
+	examScore: "0",
+	examTime: "2019春季",
+	readMethod: "必修"
+}, {
+	credit: "4.5",
+	examName: "下拉可以刷新哦",
+	examPole: "4.5",
+	examScore: "95",
+	examTime: "2019秋季",
+	readMethod: "必修"
+}, {
+	credit: "4",
+	examName: "糯米鸡",
+	examPole: "3.5",
+	examScore: "85",
+	examTime: "2019秋季",
+	readMethod: "必修"
+}, {
+	credit: "3.5",
+	examName: "鸡肉卷",
+	examPole: "2",
+	examScore: "70",
+	examTime: "2019秋季",
+	readMethod: "必修"
+}, {
+	credit: "3",
+	examName: "铁板烧",
+	examPole: "2.5",
+	examScore: "75",
+	examTime: "2019秋季",
+	readMethod: "必修"
+}, {
+	credit: "2",
+	examName: "鸡蛋灌饼",
+	examPole: "1.5",
+	examScore: "65",
+	examTime: "2019秋季",
+	readMethod: "选修"
+}, {
+	credit: "1",
+	examName: "烤冷面",
+	examPole: "4.9",
+	examScore: "99",
+	examTime: "2020春季",
+	readMethod: "选修"
+}, {
+	credit: "1.5",
+	examName: "手抓饼",
+	examPole: "2.7",
+	examScore: "77",
+	examTime: "2020春季",
+	readMethod: "必修"
+}, {
+	credit: "1.5",
+	examName: "关东煮",
+	examPole: "0",
+	examScore: "0",
+	examTime: "2020春季",
+	readMethod: "必修"
+}];
+export const colors = ['#f04864', '#FF7293', '#FFE655', '#33C8FD', '#40C769','#40C769'];

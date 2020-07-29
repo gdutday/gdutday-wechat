@@ -1,0 +1,55 @@
+body {
+	/* 青色 */
+	/* 主,深,浅,副色 */
+	--cyantheme: #0DA7A5;
+	--cyandark: #0C6C62;
+	--cyanwhite: #C1E8E2;
+	--cyanside: #FF8E3A;
+	/* 珊瑚红 */
+	--redtheme: #EC6455;
+	--reddark: #C13830;
+	--redwhite: #F2D9D7;
+	--redside: #30A73F;
+	/* 橙色 */
+	--orangetheme: #FA8424;
+	--orangedark: #D25D00;
+	--orangewhite: #F6E2D7;
+	--orangeside: #12938E;
+	/* 粉色 */
+	--pinktheme: #EC6A8E;
+	--pinkdark: #D54970;
+	--pinkwhite: #F6E1E6;
+	--pinkside: #A0EE64;
+	/* 蓝色 */
+	--bluetheme: #1869BA;
+	--bluedark:#004995 ;
+	--bluewhite: #D0E2F0;
+	--blueside: #FF9705;
+	/* 灰色 */
+	--graytheme: #757575;
+	--graydark:#434343 ;
+	--graywhite: #CECECE;
+	--grayside: #545454;
+	
+}
+/* .text-theme {
+	color: #00BFA5;
+}
+.bg-theme {
+	background-color: #26a69a;
+	color: #FFFFFF;
+}
+
+.bg-theme .light {
+	background-color: #5AD3C6 !important;
+	color: #FFFFFF;
+} */
+.white-opacity {
+	/* background-color: rgba(162, 162, 162, .5); */
+	background-color: rgba(255,255,255,.2);
+}
+
+.black-opacity {
+	background-color: rgba(0, 0, 0, .2);
+	color: white;
+}
