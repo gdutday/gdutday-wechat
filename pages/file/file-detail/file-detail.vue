@@ -80,6 +80,7 @@ export default {
             path: `/pages/file/file-detail/file-detail?query=${encodeURIComponent(JSON.stringify(query))}` // 路径，传递参数到指定页面。
         };
     },
+	onShareTimeline(){},
     onLoad(e) {
         const query = JSON.parse(decodeURIComponent(e.query));
         ({

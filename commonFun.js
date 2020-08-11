@@ -39,7 +39,7 @@ export function getStorageSync(key, def, toJSONparse = false) {
 }
 
 //开学日期
-let termStart = getStorageSync('schoolOpening', "2020.3.2");
+let termStart = getStorageSync('schoolOpening', "2020.9.7");
 //输入距离开学日期的天数,输出日期
 export function getDate(intervalDay) {
 	const start = termStart.split("."),

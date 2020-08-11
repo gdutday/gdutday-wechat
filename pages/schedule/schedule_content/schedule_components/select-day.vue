@@ -1,6 +1,6 @@
 <template>
 	<view class="flex-row py-1" style="z-index: 100;">
-		<view style="width: 50rpx;" class="flex-column a-center j-center" :style="$themeFont">{{ months }}月</view>
+		<view style="width: 50rpx;font-size:.8em" class="flex-column a-center j-center" :style="$themeFont">{{ months }}月</view>
 		<view class="a-center j-center text-xs text-gray flex-1 flex-row h-1 " v-for="(item, i) in weekDay" @tap="selectDay" :data-index="i" :key="i">
 			<view class="text-center flex-column j-center day-rounded position-relative">
 				<!-- :style="i == day ? '' : (i == currentDay && week == currentWeek ? selectedDayStyleString.today : '')" -->

@@ -80,6 +80,7 @@ export default {
 			path: `/pages/schedule/schedule${isButton ? '?params=' + JSON.stringify(this.shareParams) : ''}`
 		};
 	},
+	onShareTimeline(){},
 	// #endif
 	data() {
 		return {
