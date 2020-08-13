@@ -84,10 +84,18 @@ export default {
 				})
 				.then(res => {
 					this.rotate = false;
-					if (+res.data.error == -400) {
+					if (+res.data.error == -201) {
 						console.log(res.data);
 						this.showTip = true;
 						this.tip = '学号不存在或密码错误';
+					} else if (+res.data.error == -503) {
+						console.log(res.data);
+						this.showTip = true;
+						this.tip = '账号被教务系统判定为需要验证';
+					} else if (+res.data.error == -501) {
+						console.log(res.data);
+						this.showTip = true;
+						this.tip = '教务系统异常';
 					} else if (+res.data.error == 1) {
 						// this.$store.commit('changeAccount', { ID: this.ID, password: this.password });
 						this.$store.commit({
@@ -121,7 +129,7 @@ export default {
 					} else if (res.errMsg == 'request:fail') {
 						this.tip = '网络连接错误 , 请重试';
 					} else {
-						this.tip = '其他错误请重试';
+						this.tip = '其他错误请重试 , 请重启小程序';
 					}
 				});
 		},

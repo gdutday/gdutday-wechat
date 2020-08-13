@@ -9,7 +9,7 @@
 			</view>
 		</view>
 		<view class="hg flex-row j-sb px-4">
-			<view>课程块透明度</view>
+			<view>课程块不透明度</view>
 			<slider
 				style="width:300rpx;margin: 0px;"
 				@changing="sliderChangeing"

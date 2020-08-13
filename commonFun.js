@@ -1,5 +1,8 @@
 //抽离出来的函数
 import Vue from "vue";
+import { http } from '@/axios-config.js';
+import { APIs } from '@/staticData/staticData.js';
+// import { store } from '@/store.js';
 //通用函数,异步设置缓存,没有就设置缓存值
 export function getStorage(key, success = () => {}, fail = () => {}, def) {
 	if (typeof key !== "string") throw new Error("请输入字符");
@@ -283,6 +286,100 @@ export function interceptToLogin(
 			""
 	});
 }
+
+export function openSchoolChangeTips(
+	content = "检测到本地时间与服务器时间不一致\n点击确定后将更新课程\n请更新完后重启小程序同步时间"
+) {
+	uni.showModal({
+		showCancel: false,
+		title: "提示",
+		content: content,
+		success() {
+			getClassAndExam()
+		}
+		// success: e =>
+		// 	e.confirm ?
+		// 	""
+	});
+}
+function tip(title, icon = 'none') {
+	uni.showToast({
+		title: title,
+		icon: icon
+	});
+}
+export async function  getClassAndExam() {
+	var account = getStorageSync('account', {
+		ID: '',
+		password: ''
+	}, true);
+	if(account.ID === '') {
+		tip('无账号,请登录');
+		return
+	}
+	uni.showLoading({
+			title: '更新课表中..'
+		});
+		try {
+			const {
+				data: { error, data }
+			} = await rePromise({
+				PromiseFunction: http.post.bind(http),
+				parms: [
+					APIs.classAndExam,
+					// APIs.curriculum,
+					{
+						schoolId: account.ID,
+						password: account.password
+					}
+				],
+				times: 2
+			});
+			uni.hideLoading();
+			if (+error == 1) {
+				const {
+					curriculum,
+					exam,
+					campus
+				} = data;
+				Vue.prototype.$store.commit({
+					type: 'changeStateofSchedule',
+					stateName: 'classData',
+					value: curriculum,
+					toStorage: true,
+					toStringify: true
+				});
+				Vue.prototype.$store.commit({
+					type: 'changeStateofSchedule',
+					stateName: 'examData',
+					value: exam,
+					toStorage: true,
+					toStringify: true
+				});
+				Vue.prototype.$store.commit({
+					type: 'changeStateofSchedule',
+					stateName: 'campus',
+					value: campus,
+					toStorage: true
+				});
+				tip('更新成功','success')
+				return true;
+			} else if (+error == -201) {
+				tip('学号不存在或密码错误');
+			} else if (error == -503) {
+				tip('账号被教务系统判定为需要验证');
+			} else if (error == -501) {
+				tip('教务系统异常');
+			} else {
+				tip('更新失败,服务器原因')
+			}
+			return false;
+		} catch (e) {
+			console.log(e);
+			tip('更新失败,未知原因');
+			return false;
+		}
+}
 //async 等待几秒后才执行
 export function wait(time = 1000) {
 	return new Promise(function(resolve, reject) {
@@ -310,6 +407,8 @@ const commonFun = {
 	hexify,
 	levelColors,
 	interceptToLogin,
+	openSchoolChangeTips,
+	getClassAndExam,
 	wait
 };
 Vue.prototype.$commonFun = commonFun;

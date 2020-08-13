@@ -1,7 +1,7 @@
 <script>
 import Vue from 'vue';
 import { APIs } from '@/staticData/staticData.js';
-import { getStorageSync, getCurrentWeek } from '@/commonFun.js';
+import { getStorageSync, getCurrentWeek,openSchoolChangeTips,commonFun,getClassAndExam } from '@/commonFun.js';
 import { http } from '@/axios-config.js';
 export default {
 	onLaunch() {
@@ -73,7 +73,12 @@ export default {
 			const {
 				data: { schoolOpening }
 			} = await http.get(APIs.getSchoolOpening);
+			var oldTime = uni.getStorageSync('schoolOpening')
 			uni.setStorageSync('schoolOpening', schoolOpening);
+			if (oldTime !== schoolOpening) {
+				// TODO 刷新一次课表
+				openSchoolChangeTips()
+			}
 		}
 	}
 };

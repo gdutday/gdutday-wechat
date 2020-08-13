@@ -1,15 +1,20 @@
 export const courseBlockColorListRGBA = {
-    red: 'rgba(251,118,116)',
-    orange: 'rgba(251,208,144)',
-    yellow: 'rgba(229,227,118)',
+    red: 'rgba(215,84,85)',
     olive: 'rgba(228,198,63)',
     green: 'rgba(129,199,132)',
+	hiwamoegi: 'rgba(144,180,75)',
     cyan: 'rgba(139,210,216)',
+	grey: 'rgba(166,186,185)',
     blue: 'rgba(164,214,249)',
+    pink: 'rgba(225,107,140)',
+	yellow: 'rgba(247,217,76)',
+	mauve: 'rgba(223,148,240)',
     purple: 'rgba(229,118,195)',
-    mauve: 'rgba(223,148,240)',
-    pink: 'rgba(250,164,163)',
-    brown: 'rgba(228,178,117)',
+	// aonibi: 'rgba(83,89,93)',
+	// pink: 'rgba(250,164,163)',
+	// orange: 'rgba(251,208,144)',
+	// yellow: 'rgba(229,227,118)',
+    // brown: 'rgba(228,178,117)',
     // grey:'rgba(158,158,158)'
     // red:'rgba(211,47,47)',
     // orange:'rgba(255,145,0)',
@@ -22,6 +27,5 @@ export const courseBlockColorListRGBA = {
     // mauve:'rgba(206,147,216)',
     // pink:'rgba(245,0,87)',
     // brown:'rgba(121,85,72)',
-    // grey: 'rgba(166,186,185)'
 }
 export const courseBlockColorList = Object.keys(courseBlockColorListRGBA);

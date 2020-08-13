@@ -17,11 +17,16 @@
 </template>
 <script>
 import { defaultCourseBlock } from '@/staticData/staticData.js';
+import { getClassAndExam } from '@/commonFun.js'
 export default {
 	components: {},
 	data() {
 		return {
 			list: [
+				{
+					item: '刷新课程表',
+					operation: '刷新'
+				},
 				{
 					item: '统一认证账户更换/登录',
 					operation: '更换'
@@ -48,6 +53,13 @@ export default {
 		change(e) {
 			let mes = e.currentTarget.dataset.name;
 			switch (mes) {
+				case '刷新课程表':
+					getClassAndExam().then(res=>{
+						if(res) {
+							this.$Router.replaceAll({ name: 'schedule' });
+						}
+					})
+					break;
 				case '清除账号缓存':
 					this.title = mes;
 					this.tip = '清除账号(统一认证账号)后, 将不会刷新课表, 但课表数据保留, 详情请见隐私政策';

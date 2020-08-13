@@ -19,7 +19,7 @@
                         <image
                             :src="'/static/extension/' + item.icon + '.png'"
                             mode=""
-                            style="height: 30px;width: 30px;"
+                            style="height: 28px;width: 28px;"
                         />
                     </view>
                     <text
@@ -81,15 +81,15 @@ export default {
                     description: "空教室查询",
                     operation: this.openWait,
                 },
-                {
-                    icon: "evaluate",
-                    description: "一键评教",
-                    operation: this.openWait,
-                },
+                // {
+                //     icon: "evaluate",
+                //     description: "一键评教",
+                //     operation: this.openWait,
+                // },
                 {
                     icon: "map",
                     description: "校园导览",
-                    operation: this.openWait,
+                    operation: this.openMap,
                 },
                 // {
                 // image:'',
