@@ -51,16 +51,16 @@ export default {
                     description: "入馆二维码",
                     operation: this.openQR,
                 },
-                {
-                    icon: "file",
-                    description: "资料查找",
-                    operation: this.openFile,
-                },
-				// {
-				//     icon: "news",
-				//     description: "校内新闻",
-				//     operation: this.openNews,
-				// },
+				{
+				    icon: "book",
+				    description: "图书检索",
+				    operation: this.openLibrary,
+				},
+				{
+				    icon: "news",
+				    description: "校内新闻",
+				    operation: this.openWait,//this.openNews,
+				},
                 {
                     icon: "rubbish",
                     description: "垃圾分类查询",
@@ -69,13 +69,18 @@ export default {
                 {
                     icon: "pay",
                     description: "校园网缴费",
-                    operation: this.openPay,
+                    operation: this.openWaitFixing,//this.openPay,
                 },
-                {
-                    icon: "book",
-                    description: "图书检索",
-                    operation: this.openLibrary,
-                },
+				{
+				    icon: "file",
+				    description: "资料查找",
+				    operation: this.openFile,
+				},
+				{
+				    icon: "map",
+				    description: "校园导览",
+				    operation: this.openMap,
+				},
                 {
                     icon: "classroom",
                     description: "空教室查询",
@@ -86,11 +91,6 @@ export default {
                 //     description: "一键评教",
                 //     operation: this.openWait,
                 // },
-                {
-                    icon: "map",
-                    description: "校园导览",
-                    operation: this.openMap,
-                },
                 // {
                 // image:'',
                 //description
@@ -111,11 +111,19 @@ export default {
         async openWait() {
             uni.showToast({
                 icon: "none",
-                title: "敬请期待...",
+                title: "咕咕咕,在做了...",
             });
             await this.$commonFun.wait(1000);
             uni.hideToast();
         },
+		async openWaitFixing() {
+		    uni.showToast({
+		        icon: "none",
+		        title: "维护中...",
+		    });
+		    await this.$commonFun.wait(1000);
+		    uni.hideToast();
+		},
         open(operation) {
             operation();
         },
