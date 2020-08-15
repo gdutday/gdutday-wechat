@@ -388,6 +388,7 @@ export function wait(time = 1000) {
 		}, time);
 	});
 }
+		
 const commonFun = {
 	getStorage,
 	getStorageSync,

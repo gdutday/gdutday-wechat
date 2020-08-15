@@ -160,6 +160,17 @@ body {
 	text-align: center;
 }
 
+.capsul-button-2 {
+	height: 60rpx;
+	line-height: 60rpx;
+	margin: 18rpx;
+	padding: 0px 28rpx;
+	border-radius: 30rpx;
+	background-color: var(--commonButton);
+	color: var(--commonButtonTip);
+	text-align: center;
+}
+
 .capsul-input {
 	display: inline-block;
 	width: 70rpx;

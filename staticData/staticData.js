@@ -12,9 +12,9 @@ import {
 import {
 	defaultCourseBlock
 } from './defaultCourseBlock.js'
-import {
-	locationData
-} from './locations.js'
+// import {
+// 	locationData
+// } from './locations.js'
 import {
 	tmplIds
 } from './others.js'
@@ -31,7 +31,7 @@ export {
 	courseBlockColorList,
 	courseBlockColorListRGBA,
 	defaultCourseBlock,
-	locationData,
+	// locationData,
 	introdution,
 	tmplIds,
 	privacy
