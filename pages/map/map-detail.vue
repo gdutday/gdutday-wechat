@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import marked from 'marked';
 import uParse from '@/components/gaoyia-parse/parse.vue';
 import { APIs } from '@/staticData/staticData.js';
 export default {
@@ -23,17 +24,21 @@ export default {
 	},
 	async created() {
 		console.log("created")
-		// const {
-		// 	data: { html }
-		// } = await this.$http.get(APIs.update);
-		// this.article = html;
-		this.article = "# hello"//marked("# hello")
+		
 	},
 	data() {
 		return {
 			article: '',
 			title: 'title',
 		};
+	},
+	async mounted() {
+		console.log("mounted");
+		const {
+			data
+		} = await this.$http.get("https://gdutday.gitee.io/textpage/text");
+		console.log(data)
+		this.article = marked(data)
 	},
 	methods: {
 	}
