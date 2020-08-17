@@ -393,7 +393,8 @@ export async function getLocationList() {
 	const {data: { locationData }} = await rePromise({
 		PromiseFunction: http.get.bind(http),
 		parms: [
-			"https://api.cerbur.top/functions/getLocationList",
+			// "https://api.cerbur.top/functions/getLocationList",
+			"https://gdutday.gitee.io/location/locations",
 		],
 		times: 3,
 	})

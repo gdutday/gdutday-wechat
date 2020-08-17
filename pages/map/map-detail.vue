@@ -15,16 +15,11 @@ export default {
 		uParse
 	},
 	onLoad(e) {
-		console.log("onLoad")
 		const name = decodeURIComponent(e.name);
 		const location = decodeURIComponent(e.location);
 		this.title = name
 		this.location = location
 		console.log(this.location)
-	},
-	async created() {
-		console.log("created")
-		
 	},
 	data() {
 		return {
@@ -33,12 +28,18 @@ export default {
 		};
 	},
 	async mounted() {
-		console.log("mounted");
-		const {
-			data
-		} = await this.$http.get("https://gdutday.gitee.io/textpage/text");
-		console.log(data)
-		this.article = marked(data)
+		let markdown = ''
+		try {
+			const {
+				data
+			} = await this.$http.get("https://gdutday.gitee.io/location/details/" + this.title);
+			markdown = data
+		}catch(e){
+			if (+e.statusCode == 404) {
+				markdown = "# 没有数据"
+			}
+		};
+		this.article = marked(markdown)
 	},
 	methods: {
 	}
