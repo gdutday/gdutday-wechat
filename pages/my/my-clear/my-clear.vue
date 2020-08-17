@@ -36,6 +36,10 @@ export default {
 					operation: '清除'
 				},
 				{
+					item: '清除课表缓存/解决首页白屏问题',
+					operation: '清除'
+				},
+				{
 					item: '清除全部缓存',
 					operation: '清除'
 				}
@@ -70,6 +74,11 @@ export default {
 					this.tip = '清除全部缓存后, 将会清除课表数据,成绩,账号(统一认证账号)数据等数据, 请谨慎! 详情请见隐私政策';
 					this.$refs.modal.showModal();
 					break;
+				case '清除课表缓存/解决首页白屏问题':
+					this.title = mes;
+					this.tip = '这将清除课表缓存并重新获取课表!';
+					this.$refs.modal.showModal();
+					break;
 				case '统一认证账户更换/登录':
 					this.$Router.push({ name: 'login' });
 					break;
@@ -89,6 +98,27 @@ export default {
 				});
 				this.$refs.tip.show('清除成功, 如需重新登陆可点击 "更换统一认证账户"');
 				this.$refs.modal.hideModal();
+			} else if (this.title == '清除课表缓存/解决首页白屏问题') {
+				this.$refs.modal.hideModal();
+				this.$store.commit({
+					type: 'changeStateofSchedule',
+					stateName: 'classData',
+					value: defaultCourseBlock,
+					toStorage: true,
+					toStringify: true
+				});
+				this.$store.commit({
+					type: 'changeStateofSchedule',
+					stateName: 'examData',
+					value: [],
+					toStorage: true,
+					toStringify: true
+				});
+				getClassAndExam().then(res=>{
+					if(res) {
+						this.$Router.replaceAll({ name: 'schedule' });
+					}
+				})
 			} else if (this.title == '清除全部缓存') {
 				uni.clearStorageSync();
 				this.$refs.tip.show('清除成功, 重新加载后生效');

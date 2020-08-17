@@ -6,8 +6,42 @@
 			<view class="p-content text-indent line-8" style="user-select: all;" v-for="(item, index) in introdution" :key="index">{{ item }}</view>
 		</view>
 		<view style="border-radius: 5rpx;margin-bottom: 30px;" class="w-650 box-border px-5 pb bg-white shadow-warp rounded">
-			<view class="h-130 text-gray text-lg">成员</view>
-			<block v-for="(item, index) in team" :key="index">
+			<view class="h-130 text-gray text-lg">二代目成员2020-今</view>
+			<block v-for="(item, index) in team1" :key="index">
+				<view class="flex-row j-sb a-center team my-4">
+					<view class="flex-column j-around h-1">
+						<view class="text-df flex-row">
+							<view class="">{{ item.name }}</view>
+							<view class="text-gray text-xs ml-1 flex-row flex-1 a-end" style="margin-bottom: 1px;">
+								<view>{{ item.position }}</view>
+							</view>
+						</view>
+						<view class="text-gray text-sm">{{ item.introdution }}</view>
+					</view>
+					<image class="head" :src="item.head"></image>
+				</view>
+			</block>
+		</view>
+		<view style="border-radius: 5rpx;margin-bottom: 30px;" class="w-650 box-border px-5 pb bg-white shadow-warp rounded">
+			<view class="h-130 text-gray text-lg">特别合作</view>
+			<block v-for="(item, index) in cooperation" :key="index">
+				<view class="flex-row j-sb a-center team my-4">
+					<view class="flex-column j-around h-1">
+						<view class="text-df flex-row">
+							<view class="">{{ item.name }}</view>
+							<view class="text-gray text-xs ml-1 flex-row flex-1 a-end" style="margin-bottom: 1px;">
+								<view>{{ item.position }}</view>
+							</view>
+						</view>
+						<view class="text-gray text-sm">{{ item.introdution }}</view>
+					</view>
+					<image class="head" :src="item.head"></image>
+				</view>
+			</block>
+		</view>
+		<view style="border-radius: 5rpx;margin-bottom: 30px;" class="w-650 box-border px-5 pb bg-white shadow-warp rounded">
+			<view class="h-130 text-gray text-lg">一代目成员2019-2020</view>
+			<block v-for="(item, index) in team0" :key="index">
 				<view class="flex-row j-sb a-center team my-4">
 					<view class="flex-column j-around h-1">
 						<view class="text-df flex-row">

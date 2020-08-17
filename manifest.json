@@ -62,7 +62,13 @@
             "scope.userLocation" : {
                 "desc" : "你的位置信息将用于导航"
             }
-        }
+        },
+		"plugins": {
+			"routePlan": {
+			"version": "1.0.7",
+			"provider": "wx50b5593e81dd937a"
+			}
+		}
     },
     "h5" : {
         "title" : "gdutday",

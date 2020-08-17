@@ -349,13 +349,13 @@ export async function  getClassAndExam() {
 					toStorage: true,
 					toStringify: true
 				});
-				Vue.prototype.$store.commit({
-					type: 'changeStateofSchedule',
-					stateName: 'examData',
-					value: exam,
-					toStorage: true,
-					toStringify: true
-				});
+				// Vue.prototype.$store.commit({
+				// 	type: 'changeStateofSchedule',
+				// 	stateName: 'examData',
+				// 	value: exam,
+				// 	toStorage: true,
+				// 	toStringify: true
+				// });
 				Vue.prototype.$store.commit({
 					type: 'changeStateofSchedule',
 					stateName: 'campus',
@@ -388,7 +388,18 @@ export function wait(time = 1000) {
 		}, time);
 	});
 }
-		
+
+export async function getLocationList() {
+	const {data: { locationData }} = await rePromise({
+		PromiseFunction: http.get.bind(http),
+		parms: [
+			"https://api.cerbur.top/functions/getLocationList",
+		],
+		times: 3,
+	})
+	return locationData;
+}
+	
 const commonFun = {
 	getStorage,
 	getStorageSync,
@@ -410,7 +421,8 @@ const commonFun = {
 	interceptToLogin,
 	openSchoolChangeTips,
 	getClassAndExam,
-	wait
+	getLocationList,
+	wait,
 };
 Vue.prototype.$commonFun = commonFun;
 export default commonFun;

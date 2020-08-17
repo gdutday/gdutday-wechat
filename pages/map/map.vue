@@ -1,10 +1,10 @@
 <template>
 	<view class="flex-column" style="height: 100vh;">
 		<view style="width: 750rpx;height: 1000rpx;" class="bg-white position-relative">
-			<text class="cuIcon-back hg ml-3 pt-3 position-absolute " @tap.stop="back" :class="show ? '' : 'text-white'" style="z-index: 999999999;font-size: 20px;top:35rpx;"></text>
-			<!-- cuIcon-locationfill -->
+			<text class="cuIcon-back hg ml-3 pt-3 position-absolute " @tap.stop="back" v-show="showBack" style="z-index: 999999999;font-size: 20px;top:35rpx;"></text>
+			<text class="cuIcon-home hg ml-3 pt-3 position-absolute " @tap.stop="home" v-show="showHome" style="z-index: 999999999;font-size: 20px;top:35rpx;"></text>
 			<view
-			    class="flex-column a-center j-center bg-white position-absolute depth-6"
+			    class="flex-column a-center j-center bg-white position-absolute depth-6 active-shadow"
 			    style="width:40px;height:40px;border-radius:50%;z-index: 999999999;bottom: 45rpx; right: 20rpx;"
 				@tap.stop="goToMyLocation"
 				>    
@@ -26,9 +26,7 @@
 				:markers = "markers"
 				:polyline = "polyline"
 			>
-			<!-- show-location="true" -->
-			</map>			
-			<!-- subkey="6ROBZ-HXOLX-L7M42-74U5S-7KFJJ-72F56s" -->
+			</map>
 		</view>
 		<view class="position-relative" style="z-index: 20;">
 			<xing-nav :shadow="true" :navItem="navStr" :index="i" @change="navChange" :color="$colorList.theme" :selectedColor="$colorList.white" />
@@ -37,7 +35,7 @@
 			<swiper-item v-for="(item, _index) in 3" :key="_index">
 				<scroll-view scroll-y="true" class="all-1">
 					<view
-						@tap.stop="toDetail(nextItem)"
+						@tap.stop="showLocation(nextItem)"
 						class="ripple hg j-sb flex-row text-df animation-fade animation-3"
 						v-for="(nextItem, nextIndex) in locationData[swiperList[_index]].items"
 						:style="'animation-delay:'+ Math.log10(_index + 1) * 150 + 'ms'"
@@ -48,11 +46,12 @@
 							<view style="color:var(--commonButtonTip);width: 25px;">{{ nextIndex + 1 }}</view>
 							<view >{{ nextItem.name }}</view>
 						</view>
-						<!-- <view @tap.stop="showLocation(nextItem.location)" class="capsul-button-2 text-white depth-3" :style="$themeBackground">介绍</view> -->
-						<view @tap.stop="showLocation(nextItem.location)" class="capsul-button-2 text-white depth-3" :style="$themeBackground">导航</view>	
-
-						<!-- <text @tap.stop="showLocation(nextItem.location)"></text> -->
-						<!-- <text class="cuIcon-right"></text> -->
+						<view
+							class="flex-row"
+						>
+							<view @tap.stop="toDetail(nextItem)" class="capsul-button-2 text-white depth-3" :style="$themeBackground">介绍</view>
+							<view @tap.stop="showNavigation(nextItem)" class="capsul-button-2 text-white depth-3 active-shadow" :style="$themeBackground">导航</view>	
+						</view>
 					</view>
 				</scroll-view>
 			</swiper-item>
@@ -61,10 +60,10 @@
 </template>
 
 <script>
+import Vue from "vue";
 import xingNav from '@/components/xing-nav.vue';
 import xingSwiperComponent from '@/components/xing-swiper.js';
-import { http } from '@/axios-config.js';
-import {rePromise,getLocationListCom} from '@/commonFun.js';
+import {rePromise,getLocationList} from '@/commonFun.js';
 const xingSwiper = xingSwiperComponent({
 	length: 5
 });
@@ -79,7 +78,8 @@ export default {
 	mixins: [xingSwiper],
 	data() {
 		return {
-			show: true,
+			showBack: true,
+			showHome: false,
 			showLocationButton: true,
 			i: 0,
 			tabDelay: null,
@@ -88,15 +88,22 @@ export default {
 			latitude: '23.039404',         // 初始纬度
 			markers: [],
 			scale: 17,
-			mapContext: Object,
-			qqmapsdk: qqmapsdk,
 			polyline: [],
 			loctionUrl: "/static/mylocation.png",
-			// xingSwiper:xingSwiperComponent({length: 5}),
 		};
 	},
+	onLoad(e) {
+	    const share = decodeURIComponent(e.share);
+		if (share == 1) {
+			this.showBack = false;
+			this.showHome = true;
+		}
+	},
 	created() {
-		this.mapContext = uni.createMapContext("map",this);
+		this.mapContext = uni.createMapContext('map');
+		this.mapContext.moveToLocation();
+		this.colorTheme = this.$commonFun.hexify(this.$store.getters.color.theme);
+		// this.mapContext = uni.createMapContext("map",this);
 	},
 	computed: {
 		scrollCenter() {
@@ -111,7 +118,7 @@ export default {
 	},
 	mounted() {
 		this.openInitLocation()
-		this.getLocationList().then(res=>{
+		getLocationList().then(res=>{
 			this.locationData = res;
 		})
 	},
@@ -119,6 +126,18 @@ export default {
 		back() {
 			this.$Router.back(1);
 		},
+		home(){
+			let this_ = this;
+			uni.showModal({
+				showCancel: false,
+				title: "提示",
+				content: "你可以在首页中下拉,找到校园导览重新打开此页面",
+				complete() {
+					this_.$Router.replaceAll({ name: 'schedule' });
+				},
+			});
+		}
+		,
 		load() {
 			this.show = false;
 		},
@@ -130,24 +149,21 @@ export default {
 			this.i = e.detail.index;
 			this.refreshIndex(this.i);
 		},
-		async getLocationList() {
-			const {
-				data: { locationData }
-			} = await rePromise({
-				PromiseFunction: http.get.bind(http),
-				parms: [
-					"https://api.cerbur.top/functions/getLocationList",
-				],
-				times: 3,
-			})
-			return locationData;
-		},
 		toDetail(nextItem){
-			console.log(nextItem.location)
+			console.log("detail");
+			uni.navigateTo({
+			    url: '/pages/map/map-detail?name='+nextItem.name+'&location='+nextItem.location
+			}); 
+			
+			// this.$Router.push({
+			// 	name:"mark",
+			// });
+		},
+		showLocation(nextItem){
 			var lat = nextItem.location[0];
 			var lng = nextItem.location[1];
 			this.markers = [{
-						iconPath: "/static/location.png",
+						iconPath: "/static/marker.png",
 						id: 0,
 						latitude: lat,
 						longitude: lng,
@@ -156,58 +172,79 @@ export default {
 						// title: nextItem.name,
 						callout: {
 							content: nextItem.name,
+							fontSize: 13,
+							color: '#ffffff',
+							padding: 5,
+							borderRadius: 15,
+							bgColor: this.colorTheme,
 							display: "ALWAYS",
 						},
 					}];
-			this.mapContext.moveToLocation({
-				latitude:lat,
-				longitude:lng,
-				success:function(res) {
-					console.log(res)
-				},
-				fail: function (error) {
-				  // console.error(error);
-				},
-			})
-			
-			// translateMarker
-		},
-		showLocation(location) {
+			let lct = lat +','+lng;
+			let that = this;
 			qqmapsdk.direction({
 				mode: 'walking',//可选值：'driving'（驾车）、'walking'（步行）、'bicycling'（骑行），不填默认：'driving',可不填
 				//from参数不填默认当前地址
-				to:"22.765282,112.96285",
+				to:lct,
 				success: function (res) {
-				// console.log(res);
-				var ret = res;
-				var coors = ret.result.routes[0].polyline, pl = [];
-				//坐标解压（返回的点串坐标，通过前向差分进行压缩）
-				var kr = 1000000;
-				for (var i = 2; i < coors.length; i++) {
-				  coors[i] = Number(coors[i - 2]) + Number(coors[i]) / kr;
-				}
-				//将解压后的坐标放入点串数组pl中
-				for (var i = 0; i < coors.length; i += 2) {
-				  pl.push({ latitude: coors[i], longitude: coors[i + 1] })
-				}
-				// console.log(pl)
-				//设置polyline属性，将路线显示出来,将解压坐标第一个数据作为起点
-				this.latitude = pl[0].latitude,
-				this.longitude = pl[0].longitude,
-				this.polyline = [{
-					points: pl,
-					color: '#FF0000DD',
-					width: 4
-				  }];
-				console.log(this.polyline)
+					// console.log(res);
+					let ret = res;
+					let coors = ret.result.routes[0].polyline, pl = [];
+					that.markers[0].callout.content = nextItem.name + "  大约" + ret.result.routes[0].distance + "米";
+					//坐标解压（返回的点串坐标，通过前向差分进行压缩）
+					let kr = 1000000;
+					for (let i = 2; i < coors.length; i++) {
+					  coors[i] = Number(coors[i - 2]) + Number(coors[i]) / kr;
+					}
+					//将解压后的坐标放入点串数组pl中
+					for (let i = 0; i < coors.length; i += 2) {
+					  pl.push({ latitude: coors[i], longitude: coors[i + 1] })
+					}
+					// console.log(pl)
+					//设置polyline属性，将路线显示出来,将解压坐标第一个数据作为起点
+					// that.latitude = pl[0].latitude,
+					// that.longitude = pl[0].longitude,
+					that.nowLocation = {
+						lat:pl[0].latitude,
+						lng:pl[0].longitude,
+					};
+					that.polyline = [{
+						points: pl,
+						color: that.colorTheme,
+						width: 6,
+						arrowLine: true,
+					}];
 				},
 				fail: function (error) {
-				// console.error(error);
+					setTimeout(function(){
+						uni.hideToast();
+					},1000);
+					uni.showToast({
+					    icon: "none",
+					    title: "获取路径异常",
+					});
 				},
-				complete: function (res) {
-				// console.log(res);
+				complete: function(res) {
+					that.mapContext.moveToLocation({
+						latitude:lat,
+						longitude:lng,
+					})
 				}
-				});
+			});
+			// translateMarker
+		},
+		showNavigation(nextItem) {
+			let plugin = requirePlugin('routePlan');
+			let key = '6ROBZ-HXOLX-L7M42-74U5S-7KFJJ-72F56';  //使用在腾讯位置服务申请的key
+			let referer = 'gdutday导航';   //调用插件的app的名称
+			let endPoint = JSON.stringify({  //终点
+			    'name': nextItem.name,
+			    'latitude': nextItem.location[0],
+			    'longitude': nextItem.location[1]
+			});
+			uni.navigateTo({
+			    url: 'plugin://routePlan/index?key=' + key + '&referer=' + referer + '&endPoint=' + endPoint
+			});
 		},
 		openInitLocation() {
 			var that = this
@@ -215,9 +252,9 @@ export default {
 				showCancel: false,
 				title: "提示",
 				content: "这个服务需要您打开位置，且给小程序位置权限以便给您提供优质的服务",
-				success() {
+				complete() {
 					that.mapContext.moveToLocation();
-				}
+				},
 			});
 		},
 		goToMyLocation() {
@@ -232,13 +269,13 @@ export default {
 		// 来自页面内转发按钮
 		return {
 			title: 'gdutday-校园导航分享给你',
-			path: `/pages/map/map`
+			path: `/pages/map/map?share=1`
 		};
 	},
 	onShareTimeline(){
 		return {
 			title: 'gdutday-校园导航分享给你',
-			path: `/pages/map/map`
+			path: `/pages/map/map?share=1`
 		}
 	},
 };

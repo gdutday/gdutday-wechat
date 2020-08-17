@@ -41,6 +41,10 @@ export default {
 			name: 'map'
 		},
 		{
+			path: "/pages/map/map-detail",
+			name: 'mapDetail'
+		},
+		{
 			path: "/pages/file/file-detail/file-detail",
 			name: 'file_detail'
 		},

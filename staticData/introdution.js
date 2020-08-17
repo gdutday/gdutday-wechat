@@ -5,7 +5,29 @@ export const introdution = {
         '本小程序在ui,交互和自定义化做出不同的尝试,希望给带你最好的体验感受。',
 		'如果你发现了bug，或者有什么建议或者想法，我们非常欢迎你加入gdutday反馈群：1076030174，我们一起让gdutday变得更好 :)。',
     ],
-    team: [{
+	team1: [
+	    {
+	        name: 'Cerbur',
+	        head: 'https://gdutday.gitee.io/textpage/images/pic10.jpg',
+	        introdution: '一级退堂鼓选手奶盖犬犬',
+	        position: '后台'
+	    },
+	],
+	cooperation: [
+		{
+			name: '广工电子科技协会',
+			head: 'https://gdutday.gitee.io/textpage/images/pic11.png',
+			introdution: '合作协会',
+			position: '技术支持'
+		},
+		{
+			name: '电子科技协会网络组',
+			head: 'https://gdutday.gitee.io/textpage/images/pic12.jpg',
+			introdution: '技术合作',
+			position: '技术支持'
+		},
+	],
+    team0: [{
             name: 'MuZhou',
             head: 'https://7869-xingxinglieo-tecft-1300484036.tcb.qcloud.la/head/muzhou.jpeg?sign=5d81977e21432ce9f16f433595baed25&t=1575894030',
             introdution: '摸鱼工具人',
@@ -20,7 +42,7 @@ export const introdution = {
         {
             name: 'Cerbur',
             head: 'https://gdutday.gitee.io/textpage/images/pic10.jpg',
-            introdution: '关于我国家一级退堂鼓选手奶盖犬犬这档事',
+            introdution: '一级退堂鼓选手奶盖犬犬',
             position: '后台'
         },
         {
@@ -35,5 +57,5 @@ export const introdution = {
             introdution: '爬',
             position: '爬虫'
         },
-    ]
+    ],
 }

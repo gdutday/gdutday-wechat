@@ -29,13 +29,12 @@
 			"path": "pages/my/my-about/my-about",
 			"style": {}
 		}, {
-			"path": "pages/map/location",
-			"style": {}
-		}, {
 			"path": "pages/map/map",
 			"style": {}
-
 		}, {
+			"path": "pages/map/map-detail",
+			"style": {}
+		},{
 			"path": "pages/grade/grade",
 			"style": {
 				"enablePullDownRefresh": true

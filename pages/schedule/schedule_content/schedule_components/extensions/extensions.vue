@@ -12,7 +12,7 @@
                     class="flex-column j-around a-center"
                 >
                     <view
-                        class="flex-column a-center j-center bg-white"
+                        class="flex-column a-center j-center bg-white depth-3 active-shadow"
                         style="width:40px;height:40px;border-radius:50%"
                     >
                         <!-- <text :class="'cuIcon-' + item.icon" style="font-size: 30px;"></text> -->
