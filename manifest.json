@@ -1,5 +1,5 @@
 {
-    "name" : "GDUTday",
+    "name" : "gdutday",
     "appid" : "__UNI__DF8311E",
     "description" : "",
     "versionName" : "GDUT day",
@@ -52,7 +52,7 @@
         /* 小程序特有相关 */
         "appid" : "wx78a9204e89a6e0ca",
         "setting" : {
-            "urlCheck" : false,
+            "urlCheck" : true,
             "es6" : false,
             "minified" : true,
             "postcss" : true
@@ -63,12 +63,12 @@
                 "desc" : "你的位置信息将用于导航"
             }
         },
-		"plugins": {
-			"routePlan": {
-			"version": "1.0.7",
-			"provider": "wx50b5593e81dd937a"
-			}
-		}
+        "plugins" : {
+            "routePlan" : {
+                "version" : "1.0.7",
+                "provider" : "wx50b5593e81dd937a"
+            }
+        }
     },
     "h5" : {
         "title" : "gdutday",

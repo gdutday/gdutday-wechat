@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import marked from 'marked';
 import uParse from '@/components/gaoyia-parse/parse.vue';
 import { APIs } from '@/staticData/staticData.js';
 export default {
@@ -14,10 +15,18 @@ export default {
 		uParse
 	},
 	async created() {
-		const {
-			data: { html }
-		} = await this.$http.get(APIs.update);
-		this.article = html;
+		let markdown = ''
+		try {
+			const {
+				data
+			} = await this.$http.get(APIs.update);
+			markdown = data
+		}catch(e){
+			if (+e.statusCode == 404) {
+				markdown = "# 没有数据"
+			}
+		};
+		this.article = marked(markdown)
 	},
 	data() {
 		return {

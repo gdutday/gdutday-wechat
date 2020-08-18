@@ -178,9 +178,15 @@ export default {
                 });
         },
         openMap() {
-            this.$Router.push({
-                name: "map",
-            });
+			uni.navigateTo({
+			    url: '/pages/map/map?fromHome=1',
+			}); 
+    //         this.$Router.push({
+    //             name: "map",
+				// query:{
+				// 	fromHome:true,
+				// },
+    //         });
         },
         openFile() {
             this.$store.commit({

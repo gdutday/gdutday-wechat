@@ -5,15 +5,25 @@
 			<text class="cuIcon-home hg ml-3 pt-3 position-absolute " @tap.stop="home" v-show="showHome" style="z-index: 999999999;font-size: 20px;top:35rpx;"></text>
 			<view
 			    class="flex-column a-center j-center bg-white position-absolute depth-6 active-shadow"
-			    style="width:40px;height:40px;border-radius:50%;z-index: 999999999;bottom: 45rpx; right: 20rpx;"
+			    style="width:80rpx;height:80rpx;border-radius:50%;z-index: 999999999;bottom: 45rpx; right: 20rpx;"
 				@tap.stop="goToMyLocation"
 				>    
 				<image  
 				class="position-absolute" 
 				:src="loctionUrl" 
-				style="width:30px;height:30px;"
+				style="width:50rpx;height:50rpx;"
+				></image></view>
+			<view
+			    class="flex-column a-center j-center bg-white position-absolute depth-6 active-shadow"
+			    style="width:80rpx;height:80rpx;border-radius:50%;z-index: 999999999;bottom: 150rpx; right: 20rpx;"
+				@tap.stop="home"
+				v-show="showBackButton"
+				>    
+				<image  
+				class="position-absolute" 
+				:src="homeUrl" 
+				style="width:40rpx;height:40rpx;"
 				></image>
-			    <!-- <text class="cuIcon-locationfill position-absolute " :class="showLocationButton ? '' : 'text-white'" style="z-index: 999999999;font-size: 30px;"></text> -->
 			</view>
 			<map style="width: 750rpx;height: 1000rpx;"
 				id="map"
@@ -62,11 +72,8 @@
 <script>
 import Vue from "vue";
 import xingNav from '@/components/xing-nav.vue';
-import xingSwiperComponent from '@/components/xing-swiper.js';
-import {rePromise,getLocationList} from '@/commonFun.js';
-const xingSwiper = xingSwiperComponent({
-	length: 5
-});
+import xingMapSwiperComponent from '@/components/xing-swiper-map.js';
+import {rePromise,getLocationList,getLocationLenght} from '@/commonFun.js';
 const QQMapWX = require('@/js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.js')
 const qqmapsdk = new QQMapWX({
   key: '6ROBZ-HXOLX-L7M42-74U5S-7KFJJ-72F56'
@@ -75,11 +82,12 @@ export default {
 	components: {
 		xingNav
 	},
-	mixins: [xingSwiper],
+	mixins:[xingMapSwiperComponent({length: getLocationLenght()})],
 	data() {
 		return {
-			showBack: true,
-			showHome: false,
+			showBack: false,
+			showHome: true,
+			showBackButton: true,
 			showLocationButton: true,
 			i: 0,
 			tabDelay: null,
@@ -89,21 +97,20 @@ export default {
 			markers: [],
 			scale: 17,
 			polyline: [],
-			loctionUrl: "/static/mylocation.png",
+			loctionUrl: "https://gdutday.gitee.io/data/img/location.png",
+			homeUrl: "https://gdutday.gitee.io/data/img/home.png",
 		};
 	},
 	onLoad(e) {
-	    const share = decodeURIComponent(e.share);
-		if (share == 1) {
-			this.showBack = false;
-			this.showHome = true;
+		const fromHome = decodeURIComponent(e.fromHome)
+		if (fromHome == 1) {
+			this.showBack = true;
+			this.showHome = false ;
 		}
 	},
 	created() {
 		this.mapContext = uni.createMapContext('map');
-		this.mapContext.moveToLocation();
 		this.colorTheme = this.$commonFun.hexify(this.$store.getters.color.theme);
-		// this.mapContext = uni.createMapContext("map",this);
 	},
 	computed: {
 		scrollCenter() {
@@ -121,6 +128,9 @@ export default {
 		getLocationList().then(res=>{
 			this.locationData = res;
 		})
+		if (this.showHome == true) {
+			this.showBackButton = false
+		}
 	},
 	methods: {
 		back() {
@@ -129,12 +139,13 @@ export default {
 		home(){
 			let this_ = this;
 			uni.showModal({
-				showCancel: false,
-				title: "提示",
+				showCancel: true,
+				title: "返回首页",
 				content: "你可以在首页中下拉,找到校园导览重新打开此页面",
-				complete() {
-					this_.$Router.replaceAll({ name: 'schedule' });
-				},
+				success:e =>
+					e.confirm ?
+					this_.$Router.replaceAll({ name: 'schedule' }) :
+					""
 			});
 		}
 		,
@@ -156,7 +167,11 @@ export default {
 			}); 
 			
 			// this.$Router.push({
-			// 	name:"mark",
+			// 	name:"mapDetail",
+			// 	query:{
+			// 		name:nextItem.name,
+			// 		location:nextItem.location
+			// 	}
 			// });
 		},
 		showLocation(nextItem){
@@ -269,13 +284,13 @@ export default {
 		// 来自页面内转发按钮
 		return {
 			title: 'gdutday-校园导航分享给你',
-			path: `/pages/map/map?share=1`
+			path: `/pages/map/map`
 		};
 	},
 	onShareTimeline(){
 		return {
 			title: 'gdutday-校园导航分享给你',
-			path: `/pages/map/map?share=1`
+			path: `/pages/map/map`
 		}
 	},
 };

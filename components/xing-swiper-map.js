@@ -13,7 +13,7 @@ export default function xingMapSwiperComponent({
 			let that = this
 			if (typeof(length)=="object"){
 				length.then(res=>{
-					length = res.length
+					length = res
 					that.$_handleSwiperList();
 				})
 			}else{

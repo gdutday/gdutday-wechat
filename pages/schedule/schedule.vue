@@ -133,7 +133,7 @@ export default {
 					//版本更新内容提示
 					const {
 						data: { version }
-					} = await this.$http.get(APIs.update);
+					} = await this.$http.get(APIs.version);
 					const beforeVersion = getStorageSync('version', '1.0.0');
 					//如果版本号不匹配则说明未看过更新说明
 					if (beforeVersion !== version && this.$account.ID !== '') {
