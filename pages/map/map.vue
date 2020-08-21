@@ -51,7 +51,6 @@
 						:style="'animation-delay:'+ Math.log10(_index + 1) * 150 + 'ms'"
 						:key="nextIndex"
 					>
-					<!-- class="ripple hg j-sb flex-row px-5 text-df animation-fade animation-3" -->
 						<view  class="flex-row px-5">
 							<view style="color:var(--commonButtonTip);width: 25px;">{{ nextIndex + 1 }}</view>
 							<view >{{ nextItem.name }}</view>
@@ -71,10 +70,10 @@
 
 <script>
 import Vue from "vue";
-import xingNav from '@/components/xing-nav.vue';
+import xingNav from '@/components/cerbur-nav.vue';
 import xingMapSwiperComponent from '@/components/xing-swiper-map.js';
 import {rePromise,getLocationList,getLocationLenght} from '@/commonFun.js';
-const QQMapWX = require('@/js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.js')
+const QQMapWX = require('@/js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.min.js')
 const qqmapsdk = new QQMapWX({
   key: '6ROBZ-HXOLX-L7M42-74U5S-7KFJJ-72F56'
 });

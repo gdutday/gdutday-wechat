@@ -27,9 +27,10 @@ export const introdution = {
 			position: '技术支持'
 		},
 	],
-    team0: [{
-            name: 'MuZhou',
-            head: 'https://7869-xingxinglieo-tecft-1300484036.tcb.qcloud.la/head/muzhou.jpeg?sign=5d81977e21432ce9f16f433595baed25&t=1575894030',
+    team0: [
+		{
+            name: 'Mosarin',
+            head: 'https://gdutday.gitee.io/textpage/images/pic13.jpg',
             introdution: '摸鱼工具人',
             position: '负责人'
         },
