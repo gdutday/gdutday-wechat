@@ -24,7 +24,7 @@ export default {
 			let locationArray = this.location.split(",")
 			// this.$Router.pushTab({name:'schedule'})
 			let plugin = requirePlugin('routePlan');
-			let key = '6ROBZ-HXOLX-L7M42-74U5S-7KFJJ-72F56';  //使用在腾讯位置服务申请的key
+			let key = 'Y55BZ-XJG63-YL23W-3ZPWX-YZI65-6UBCN';  //使用在腾讯位置服务申请的key
 			let referer = 'gdutday导航';   //调用插件的app的名称
 			let endPoint = JSON.stringify({  //终点
 			    'name': _this.name,

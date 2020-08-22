@@ -30,7 +30,7 @@
 			    :scale="scale"
 				layer-style="1"
 				show-location="true"
-				subkey="6ROBZ-HXOLX-L7M42-74U5S-7KFJJ-72F56"
+				subkey="Y55BZ-XJG63-YL23W-3ZPWX-YZI65-6UBCN"
 				:latitude="latitude"
 				:longitude="longitude"
 				:markers = "markers"
@@ -75,7 +75,7 @@ import xingMapSwiperComponent from '@/components/xing-swiper-map.js';
 import {rePromise,getLocationList,getLocationLenght} from '@/commonFun.js';
 const QQMapWX = require('@/js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.min.js')
 const qqmapsdk = new QQMapWX({
-  key: '6ROBZ-HXOLX-L7M42-74U5S-7KFJJ-72F56'
+  key: 'Y55BZ-XJG63-YL23W-3ZPWX-YZI65-6UBCN'
 });
 export default {
 	components: {
@@ -249,7 +249,7 @@ export default {
 		},
 		showNavigation(nextItem) {
 			let plugin = requirePlugin('routePlan');
-			let key = '6ROBZ-HXOLX-L7M42-74U5S-7KFJJ-72F56';  //使用在腾讯位置服务申请的key
+			let key = 'Y55BZ-XJG63-YL23W-3ZPWX-YZI65-6UBCN';  //使用在腾讯位置服务申请的key
 			let referer = 'gdutday导航';   //调用插件的app的名称
 			let endPoint = JSON.stringify({  //终点
 			    'name': nextItem.name,
