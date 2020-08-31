@@ -1,22 +1,111 @@
 <template>
-	<view>
-		
+	<view class="bg-white" style="min-height: 100vh;">
+		<cu-custom isBack>
+			<template v-slot:content>
+				校内新闻
+			</template>
+		</cu-custom>
+		<view class="list-container">
+			<view class="list" v-for="(list,listIndex) of viewList" :key="listIndex">
+				<view class="item" v-for="(item,index) of list.list" :key="index">
+					<view @tap="getNewsDetail(item.newsId)">
+						<view :id="item.newsId" class="desc">{{item.newsTitle}}</view>
+						<view class="desc">{{item.newsId}}</view>
+						<view class="desc">{{item.newsOwner}}</view>
+						<view class="desc">{{item.newsTime}}</view>
+						<view class="desc">{{item.newsType}}</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view v-show="isLoadMore">
+			<uni-load-more :status="loadStatus"></uni-load-more>
+		</view>
 	</view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				
+import { APIs } from '@/staticData/staticData.js';
+import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
+export default {
+	components:{
+		uniLoadMore
+	},
+	data() {
+		return {
+			isLoadMore:true,
+			loadStatus:'more',
+			flagList:0,
+			pageNum:1,
+			viewList:[{list:[]},{list:[]}],
+		}
+	},
+	async mounted() {
+		this.getNewsList();
+	},
+	methods: {
+		getNewsDetail(id) {
+			uni.navigateTo({
+			    url: '/pages/news/news-detail?id='+id
+			}); 
+		},
+		async getNewsList() {
+			try {
+				const {
+					data: { error, data }
+				} = await this.$commonFun.rePromise({
+					PromiseFunction: this.$http.get.bind(this.$http),
+					parms: [
+						APIs.getNewsList+"?pageNum=" + this.pageNum + "&pageSize=20"
+					]
+				});
+				if (+error == 1) {
+					this.pageNum++;
+					this.putInfoToList(data);	
+					uni.stopPullDownRefresh();
+				}
+			} catch (e) {
+				console.log(e);
 			}
 		},
-		methods: {
-			
-		}
-	}
+		putInfoToList(dataList) {
+			let _this = this;
+			dataList.forEach(item => {
+				let listFlag = _this.flagList % 2;
+				_this.flagList++;
+				this.viewList[listFlag].list.push(item)
+			})
+		},
+	},
+	onPullDownRefresh() {
+		this.pageNum = 1;
+		this.flagList = 0;
+		this.viewList = [{list:[]},{list:[]}];
+		this.getNewsList();
+		console.log("refresh")
+	},
+	onReachBottom(){
+		this.getNewsList();
+		console.log("加载更多")
+	},
+}
 </script>
 
-<style>
-
+<style lang="stylus" scoped>
+    .list-container
+        display flex
+        justify-content space-between
+        align-items:flex-start
+        padding 0 24rpx
+        padding-top 30rpx
+        .list
+            width calc(50% - 8rpx)
+            display flex
+            flex-direction column
+            .item
+                margin-bottom 18rpx
+                border 1px solid red
+                .desc
+                    padding 16rpx
+                    font-size 28rpx
 </style>

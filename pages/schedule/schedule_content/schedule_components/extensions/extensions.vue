@@ -59,7 +59,7 @@ export default {
 				{
 				    icon: "news",
 				    description: "校内新闻",
-				    operation: this.openWait,//this.openNews,
+				    operation: this.openNews,
 				},
                 {
                     icon: "rubbish",
@@ -139,7 +139,7 @@ export default {
 		},
 		openNews(){
 			this.$Router.push({
-				name:"newsDetail"
+				name:"news"
 			})
 		},
         openQR() {

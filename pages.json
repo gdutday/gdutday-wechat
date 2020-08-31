@@ -104,7 +104,9 @@
         }
         ,{
             "path" : "pages/news/news",
-            "style" : {}
+            "style": {
+            	"enablePullDownRefresh": true
+            }
         }
         ,{
             "path" : "pages/news/news-detail",
