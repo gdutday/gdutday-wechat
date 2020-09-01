@@ -7,13 +7,12 @@
 		</cu-custom>
 		<view class="list-container">
 			<view class="list" v-for="(list,listIndex) of viewList" :key="listIndex">
-				<view class="item" v-for="(item,index) of list.list" :key="index">
+				<view class="item px-3 depth-3 active-shadow" v-for="(item,index) of list.list" :key="index">
 					<view @tap="getNewsDetail(item.newsId)">
-						<view :id="item.newsId" class="desc">{{item.newsTitle}}</view>
-						<view class="desc">{{item.newsId}}</view>
-						<view class="desc">{{item.newsOwner}}</view>
-						<view class="desc">{{item.newsTime}}</view>
-						<view class="desc">{{item.newsType}}</view>
+						<view :id="item.newsId" class="news-title ">{{item.newsTitle}}</view>
+						<view class="news-owner ">{{item.newsOwner}}</view>
+						<view class="news-type ">{{item.newsType}}</view>
+                        <view class="news-time ">{{item.newsTime}}</view>
 					</view>
 				</view>
 			</view>
@@ -103,9 +102,19 @@ export default {
             display flex
             flex-direction column
             .item
-                margin-bottom 18rpx
-                border 1px solid red
-                .desc
-                    padding 16rpx
-                    font-size 28rpx
+                margin-bottom 20rpx
+                border-radius: 25px
+                background-color #A5D7FB
+                .news-title
+                    margin-top 18rpx
+                    font-size 40rpx;
+                    font-weight:bold;
+                .news-owner
+                    font-size 20rpx
+                .news-type
+                    font-size 20rpx
+                .news-time
+                    font-size 20rpx
+                    margin-bottom 18rpx
 </style>
+<style scoped lang="scss"></style>

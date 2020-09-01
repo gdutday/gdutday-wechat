@@ -58,7 +58,7 @@
 						<view
 							class="flex-row"
 						>
-							<view @tap.stop="toDetail(nextItem)" class="capsul-button-2 text-white depth-3" :style="$themeBackground">介绍</view>
+							<view @tap.stop="toDetail(nextItem)" class="capsul-button-2 text-white depth-3 active-shadow" :style="$themeBackground">介绍</view>
 							<view @tap.stop="showNavigation(nextItem)" class="capsul-button-2 text-white depth-3 active-shadow" :style="$themeBackground">导航</view>	
 						</view>
 					</view>
