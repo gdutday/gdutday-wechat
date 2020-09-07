@@ -93,6 +93,14 @@ export default {
 					icon: 'privacy',
 					text: '用户服务条款'
 				},
+                {
+					icon: 'task',
+					text: '开发计划'
+				},
+                {
+					icon: 'problem',
+					text: '常见问题'
+				},
 				{
 					icon: 'about',
 					text: '关于我们'
@@ -135,9 +143,19 @@ export default {
 				        name: 'mark'
 				    });
 				    break;
+                case 'task':
+                    this.$Router.push({
+                        name: 'task'
+                    });
+                    break;
 				case 'privacy':
 					this.$Router.push({
 						name: 'privacy'
+					});
+					break;
+                case 'problem':
+					this.$Router.push({
+						name: 'problem'
 					});
 					break;
 				case 'about':

@@ -18,6 +18,8 @@ export const APIs = {
 	test: baseFunctionsUrl + "/test",
 	update: baseDataUrl + "/update",
 	version: baseDataUrl + "/version",
+    task: baseDataUrl + "/task",
+    problem: baseDataUrl + "/problem",
 	location: baseDataUrl + "/locations",
 	details: baseDataUrl + "/details/",
 	getSchoolOpening: baseDataUrl+"/openSchool",

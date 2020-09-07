@@ -12,6 +12,10 @@ export default {
 			path: "/pages/my/my-mark/my-mark",
 			name: 'mark'
 		},
+        {
+        	path: "/pages/my/my-task/my-task",
+        	name: 'task'
+        },
 		{
 			path: "/pages/my/my-clear/my-clear",
 			name: 'clear'
@@ -28,6 +32,10 @@ export default {
 			path: "/pages/my/my-about/my-about",
 			name: 'about'
 		},
+        {
+        	path: "/pages/my/my-problem/my-problem",
+        	name: 'problem'
+        },
 		{
 			path: "/pages/grade/grade",
 			name: 'grade'

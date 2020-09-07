@@ -116,6 +116,14 @@
             "path" : "pages/my/my-mark/my-mark",
             "style" : {}
         }
+        ,{
+            "path" : "pages/my/my-task/my-task",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/my/my-problem/my-problem",
+            "style" : {}
+        }
     ],
 	"tabBar": {
 		"color": "#A1A1A1",

@@ -29,7 +29,8 @@
 			<text @tap="privacy">用户服务条款</text>
 			<text>|</text>
 			<text @tap="toAbout">关于我们</text>
-			
+			<text>|</text>
+            <text @tap="toProblem">登录遇到问题</text>
 		</view>
 	</view>
 </template>
@@ -135,7 +136,10 @@ export default {
 		},
 		toAbout() {
 			this.$Router.push({ name: 'about' });
-		}
+		},
+        toProblem() {
+            this.$Router.push({ name: 'problem' });
+        }
 	},
 	watch: {}
 };
