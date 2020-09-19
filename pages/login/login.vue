@@ -97,6 +97,10 @@ export default {
 						console.log(res.data);
 						this.showTip = true;
 						this.tip = '教务系统异常';
+					} else if (+res.data.error == -305) {
+						console.log(res.data);
+						this.showTip = true;
+						this.tip = '课表信息为空,若为20级目前教务系统未对接,请之后尝试';
 					} else if (+res.data.error == 1) {
 						// this.$store.commit('changeAccount', { ID: this.ID, password: this.password });
 						this.$store.commit({
@@ -117,7 +121,7 @@ export default {
 						this.$Router.replaceAll({ name: 'schedule' });
 					} else {
 						this.showTip = true;
-						this.tip = '其他错误请重试';
+						this.tip = res.data.msg;
 					}
 				})
 				.catch(res => {
