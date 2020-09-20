@@ -132,10 +132,6 @@
             "path" : "pages/my/my-problem/my-problem",
             "style" : {}
         }
-        ,{
-            "path" : "pages/login/login-edu",
-            "style" : {}
-        }
     ],
 	"tabBar": {
 		"color": "#A1A1A1",
