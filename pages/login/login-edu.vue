@@ -100,7 +100,7 @@ export default {
 					} else if (+res.data.error == -503) {
 						console.log(res.data);
 						this.showTip = true;
-						this.tip = '账号被教务系统判定为需要验证';
+						this.tip = '账号被教务系统判定为需要验证,或者验证码错误';
 					} else if (+res.data.error == -501) {
 						console.log(res.data);
 						this.showTip = true;
@@ -124,7 +124,15 @@ export default {
                         	value: res.data.data.campus,
                         	toStorage: true
                         });
-						this.$Router.replaceAll({ name: 'schedule' });
+                        let _this = this;
+                        uni.showModal({
+                        	showCancel: false,
+                        	title: "提示",
+                        	content: "教务系统由于特殊原因,无法自动更新,请在之后教务系统与统一身份认证系统对接完成后,使用统一身份认证系统登录",
+                            complete() {
+                                _this.$Router.replaceAll({ name: 'schedule' });
+                            }
+                        });
 					} else {
 						this.showTip = true;
 						this.tip = res.data.msg;

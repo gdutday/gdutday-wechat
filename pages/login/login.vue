@@ -35,8 +35,8 @@
         <view class="footer footer2" style="top: 5rpx;">
             <text>-=-=-=-=-=-=-</text>
         </view>
-        <view class="footer footer2" style="top: 5rpx;">
-            <text @tap="toEduLogin">点击教务系统登录</text>
+        <view class="footer footer2" style="top: 5rpx;" :textColor="$colorList.theme">
+            <text @tap="toEduLogin" >点击教务系统登录</text>
         </view>
 	</view>
 </template>
