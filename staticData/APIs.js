@@ -4,6 +4,7 @@ const baseDataUrl = "https://gdutday.gitee.io/data";
 const baseNewsUrl = "https://news.cerbur.top"
 export const APIs = {
 	classAndExam: "/crawler/classAndExam",
+    educationInit: "/crawler/education/init",
 	curriculum: "/crawler/curriculum",
 	exam: "/crawler/exam",
 	campus: "/crawler/campus",

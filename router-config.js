@@ -8,6 +8,10 @@ export default {
 			path: "/pages/login/login",
 			name: 'login'
 		},
+        {
+        	path: "/pages/login/login-edu",
+        	name: 'login-edu'
+        },
 		{
 			path: "/pages/my/my-mark/my-mark",
 			name: 'mark'

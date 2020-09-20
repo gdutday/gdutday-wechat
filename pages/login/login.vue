@@ -32,6 +32,12 @@
 			<text>|</text>
             <text @tap="toProblem">登录遇到问题</text>
 		</view>
+        <view class="footer footer2" style="top: 5rpx;">
+            <text>-=-=-=-=-=-=-</text>
+        </view>
+        <view class="footer footer2" style="top: 5rpx;">
+            <text @tap="toEduLogin">点击教务系统登录</text>
+        </view>
 	</view>
 </template>
 
@@ -100,7 +106,7 @@ export default {
 					} else if (+res.data.error == -305) {
 						console.log(res.data);
 						this.showTip = true;
-						this.tip = '课表信息为空,若为20级目前教务系统未对接,请之后尝试';
+						this.tip = '课表信息为空,若为20级目前教务系统未对接,请使用下方教务系统登录';
 					} else if (+res.data.error == 1) {
 						// this.$store.commit('changeAccount', { ID: this.ID, password: this.password });
 						this.$store.commit({
@@ -143,6 +149,9 @@ export default {
 		},
         toProblem() {
             this.$Router.push({ name: 'problem' });
+        },
+        toEduLogin() {
+            this.$Router.push({ name: 'login-edu' });
         }
 	},
 	watch: {}
@@ -162,6 +171,11 @@ export default {
 }
 .footer text {
 	font-size: 14px;
+	margin-left: 15upx;
+	margin-right: 15upx;
+}
+.footer2 text {
+	font-size: 18px;
 	margin-left: 15upx;
 	margin-right: 15upx;
 }
