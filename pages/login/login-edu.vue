@@ -154,6 +154,7 @@ export default {
 		},
         refreshYzm(){
             this.getImage();
+            this.verifyCode = '';
         },
         async getImage(){
             let time = new Date().getTime();
@@ -176,25 +177,6 @@ export default {
                         this.session = session;
                     }
             })
-            // this.$commonFun
-            // 	.rePromise({
-            // 		PromiseFunction: this.$http.get.bind(this.$http),
-            // 		parms: [url, {}],
-            // 		times: 3,
-            // 	})
-            //     .then(res => {
-            //         let cookie = res.header["Set-Cookie"];
-            //         let session = cookie.substring(cookie.indexOf("=")+1,cookie.indexOf(";"));
-            //         console.log(session);
-            //         // let img = polyfill.btoa(new Uint8Array(res.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-            //         // console.log(img)
-            //         // // window.btoa()
-            //         // // let img = uni.arrayBufferToBase64(res.data)
-            //         // this.yzm = "data:image/jpeg;base64,"+ polyfill.btoa(new Uint8Array(res.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-            //         this.yzm = "data:image/jpeg;base64," + res.data;
-            //         this.session = session;
-            //         console.log(this.yzm)
-            //     })
         },
 	},
 	watch: {}
