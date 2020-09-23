@@ -33,10 +33,11 @@
             <text @tap="toProblem">登录遇到问题</text>
 		</view>
         <view class="footer footer2" style="top: 5rpx;">
-            <text>-=-=-=-=-=-=-</text>
+            <text></text>
+            <text></text>
         </view>
         <view class="footer footer2" style="top: 5rpx;" :textColor="$colorList.theme">
-            <text @tap="toEduLogin" >点击教务系统登录</text>
+            <text @tap="toEduLogin" :style="$themeFont">20级点这里:使用教务系统登录</text>
         </view>
 	</view>
 </template>
