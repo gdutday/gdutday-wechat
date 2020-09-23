@@ -5,6 +5,7 @@
 				校内新闻
 			</template>
 		</cu-custom>
+        <empty-tip v-if="isEmpty === true" loading></empty-tip>
 		<view class="list-container">
 			<view class="list" v-for="(list,listIndex) of viewList" :key="listIndex">
 				<view class="item px-3 depth-3 active-shadow" v-for="(item,index) of list.list" :key="index">
@@ -33,8 +34,9 @@ export default {
 	},
 	data() {
 		return {
-			isLoadMore:true,
-			loadStatus:'more',
+			isLoadMore:false,
+			loadStatus:'loading',
+            isEmpty:true,
 			flagList:0,
 			pageNum:1,
 			viewList:[{list:[]},{list:[]}],
@@ -60,6 +62,10 @@ export default {
 					]
 				});
 				if (+error == 1) {
+                    if (data.length == 0) {
+                        this.loadStatus = 'noMore';
+                        return;
+                    }
 					this.pageNum++;
                     // console.log(data);
                     data.forEach(d=>{
@@ -67,6 +73,7 @@ export default {
                        d.newsTime = getTimeToCnameTime(d.newsTime);
                     });
 					this.putInfoToList(data);
+                    this.isEmpty = false
 					uni.stopPullDownRefresh();
 				}
 			} catch (e) {
@@ -87,11 +94,10 @@ export default {
 		this.flagList = 0;
 		this.viewList = [{list:[]},{list:[]}];
 		this.getNewsList();
-		console.log("refresh")
 	},
 	onReachBottom(){
+        this.isLoadMore = true;
 		this.getNewsList();
-		console.log("加载更多")
 	},
 }
 </script>

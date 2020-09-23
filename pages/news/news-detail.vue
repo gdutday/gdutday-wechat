@@ -5,6 +5,7 @@
 				新闻详情
 			</template>
 		</cu-custom>
+        <empty-tip v-if="article === ''" loading></empty-tip>
 		<view class="py-3"><uParse @navigate="downloadFile" :content="article" /></view>
 		<modal ref="modal" :round="true" :maskForce="isProgress">
 			<block v-if="isProgress">
@@ -71,14 +72,21 @@ export default {
 	},
 	async mounted(){
 		let article = '';
-		try {
-			const {
-				data: { error, data }
-			} = await this.$http.get(APIs.getNewsDetail + "/" + this.newsId);
-			article = data;
-		}catch(e){
-			console.log(e)
-		};
+        let i=0
+        while(i++<3){
+            try {
+            	const {
+            		data: { error, data }
+            	} = await this.$http.get(APIs.getNewsDetail + "/" + this.newsId);
+            	article = data;
+                if (+error == 1) {
+                    break;
+                }
+            }catch(e){
+            	console.log(e)
+            };
+        }
+        console.log(article)
 		this.article = replaceSpace(article)
 	},
 	computed: {
