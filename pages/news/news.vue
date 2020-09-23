@@ -8,7 +8,7 @@
 		<view class="list-container">
 			<view class="list" v-for="(list,listIndex) of viewList" :key="listIndex">
 				<view class="item px-3 depth-3 active-shadow" v-for="(item,index) of list.list" :key="index">
-					<view @tap="getNewsDetail(item.newsId)">
+					<view @tap="getNewsDetail(item.newsId,item.newsTitle)">
 						<view :id="item.newsId" class="news-title ">{{item.newsTitle}}</view>
 						<view class="news-owner ">{{item.newsOwner}}</view>
 						<view class="news-type ">{{item.newsType}}</view>
@@ -43,9 +43,9 @@ export default {
 		this.getNewsList();
 	},
 	methods: {
-		getNewsDetail(id) {
+		getNewsDetail(id,title) {
 			uni.navigateTo({
-			    url: '/pages/news/news-detail?id='+id
+			    url: '/pages/news/news-detail?id='+id+'&title='+title+'&isShare=1'
 			}); 
 		},
 		async getNewsList() {

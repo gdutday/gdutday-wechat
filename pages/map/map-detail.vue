@@ -11,7 +11,7 @@
 import marked from 'marked';
 import uParse from '@/components/gaoyia-parse/parse.vue';
 import { APIs } from '@/staticData/staticData.js';
-import goToButton from './goToButton.vue';
+import goToButton from '@/pages/map/goToButton.vue';
 export default {
 	components: {
 		uParse,

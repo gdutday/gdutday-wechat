@@ -28,6 +28,7 @@
 			</block>
 		</modal>
 		<!-- <empty-tip loading/> -->
+        <back-button v-show="isShare" />
 		<tip ref="tip" />
 	</view>
 </template>
@@ -35,11 +36,13 @@
 <script>
 import { APIs } from '@/staticData/staticData.js';
 import uParse from '@/components/gaoyia-parse/parse.vue';
-import { replaceSpace } from './util.js';
+import { replaceSpace } from '@/pages/news/util.js';
+import backButton from '@/pages/file/file_backButton.vue';
 let task = null;
 export default {
 	components: {
-		uParse
+		uParse,
+        backButton
 	},
 	data() {
 		return {
@@ -52,11 +55,22 @@ export default {
 			url: '',
 			article: '',
 			newsId:0,
+            title:'',
+            isShare:true,
 		};
 	},
 	onLoad(e) {
 		const id = decodeURIComponent(e.id);
-		this.newsId = id
+        const title = decodeURIComponent(e.title)
+        const isShare = decodeURIComponent(e.isShare)
+        this.newsId = id
+        this.title = title
+        if (isShare == 1) {
+            this.isShare = false;
+        }
+        console.log(this.newsId)
+        console.log(this.title)
+        console.log(this.isShare)
 	},
 	async mounted(){
 		let article = '';
@@ -140,7 +154,24 @@ export default {
 					})
 			});
 		}
-	}
+	},
+    
+    
+    onShareAppMessage(res) {
+        // 来自页面内转发按钮
+        let _this = this;
+        return {
+            title: 'gdutday-校内新闻 | '+ _this.title,
+            path:  '/pages/news/news-detail?id='+_this.newsId+'&title='+_this.title
+        };
+    },
+    onShareTimeline(){
+        let _this = this;
+        return {
+            title: 'gdutday-校内新闻 | '+ _this.title,
+            path:  '/pages/news/news-detail?id='+_this.newsId+'&title='+_this.title
+        };
+    },
 };
 </script>
 
