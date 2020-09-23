@@ -68,9 +68,6 @@ export default {
         if (isShare == 1) {
             this.isShare = false;
         }
-        console.log(this.newsId)
-        console.log(this.title)
-        console.log(this.isShare)
 	},
 	async mounted(){
 		let article = '';
@@ -169,7 +166,7 @@ export default {
         let _this = this;
         return {
             title: 'gdutday-校内新闻 | '+ _this.title,
-            path:  '/pages/news/news-detail?id='+_this.newsId+'&title='+_this.title
+            query: 'id='+_this.newsId+'&title='+_this.title,
         };
     },
 };

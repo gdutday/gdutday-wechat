@@ -289,7 +289,8 @@ export default {
 	onShareTimeline(){
 		return {
 			title: 'gdutday-校园导航分享给你',
-			path: `/pages/map/map`
+			path: `/pages/map/map`,
+            query:'',
 		}
 	},
 };

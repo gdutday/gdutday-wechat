@@ -11,8 +11,8 @@
 					<view @tap="getNewsDetail(item.newsId,item.newsTitle)">
 						<view :id="item.newsId" class="news-title ">{{item.newsTitle}}</view>
 						<view class="news-owner ">{{item.newsOwner}}</view>
-						<view class="news-type ">{{item.newsType}}</view>
-                        <view class="news-time ">{{item.newsTime}}</view>
+                        <view class="news-time">{{item.newsTime}}</view>
+						<!-- <view class="news-type ">{{item.newsType}}</view> -->
 					</view>
 				</view>
 			</view>
@@ -26,6 +26,7 @@
 <script>
 import { APIs } from '@/staticData/staticData.js';
 import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
+import {getTimeToCnameTime} from '@/commonFun.js';
 export default {
 	components:{
 		uniLoadMore
@@ -60,7 +61,12 @@ export default {
 				});
 				if (+error == 1) {
 					this.pageNum++;
-					this.putInfoToList(data);	
+                    // console.log(data);
+                    data.forEach(d=>{
+                       d.newsTime = d.newsTime.replace(new RegExp("/","gm"),"-");
+                       d.newsTime = getTimeToCnameTime(d.newsTime);
+                    });
+					this.putInfoToList(data);
 					uni.stopPullDownRefresh();
 				}
 			} catch (e) {
