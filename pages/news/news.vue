@@ -1,5 +1,5 @@
 <template>
-	<view class="bg-white" style="min-height: 100vh;">
+	<view class="body-background" style="min-height: 100vh;">
 		<cu-custom isBack>
 			<template v-slot:content>
 				校内新闻
@@ -8,7 +8,7 @@
         <empty-tip v-if="isEmpty === true" loading></empty-tip>
 		<view class="list-container">
 			<view class="list" v-for="(list,listIndex) of viewList" :key="listIndex">
-				<view class="item px-3 depth-3 active-shadow" v-for="(item,index) of list.list" :key="index">
+				<view class="item px-3 drop-shadow active-shadow" v-for="(item,index) of list.list" :key="index">
 					<view @tap="getNewsDetail(item.newsId,item.newsTitle)">
 						<view :id="item.newsId" class="news-title ">{{item.newsTitle}}</view>
 						<view class="news-owner ">{{item.newsOwner}}</view>
@@ -107,19 +107,20 @@ export default {
         display flex
         justify-content space-between
         align-items:flex-start
-        padding 0 24rpx
-        padding-top 30rpx
+        padding-left: 30rpx
+        padding-right: 30rpx
+        // padding 0 24rpx
+        padding-top: 40rpx
         .list
-            width calc(50% - 8rpx)
+            width calc(50% - 25rpx)
             display flex
             flex-direction column
             .item
-                margin-bottom 20rpx
-                border-radius: 25px
-                background-color #A5D7FB
+                margin-bottom 40rpx
+                // border-radius: 35px
                 .news-title
                     margin-top 18rpx
-                    font-size 40rpx;
+                    font-size 35rpx;
                     font-weight:bold;
                 .news-owner
                     font-size 20rpx
@@ -129,4 +130,14 @@ export default {
                     font-size 20rpx
                     margin-bottom 18rpx
 </style>
-<style scoped lang="scss"></style>
+<style>
+.body-background {
+    background: #dde5e9;
+}
+.drop-shadow {
+    border-radius: 33rpx;
+    background: #dde5e9;
+    box-shadow:  13rpx 13rpx 26rpx #acb3b6, 
+                 -13rpx -13rpx 26rpx #ffffff;
+}
+</style>
