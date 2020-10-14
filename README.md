@@ -16,11 +16,13 @@
 - 后端/运维/产品[@Cerbur](https://github.com/Cerbur)
 - 前端[@xingxinglieo](https://github.com/xingxinglieo)
 - 爬虫[@YangZeqin](https://github.com/YangZeqin)
-- 后端[seehin](https://github.com/seehin)
+- 后端[@seehin](https://github.com/seehin)
 
 ## 如何参与开发
 如果你是前端,可以选择学习 [vue.js](https://github.com/vuejs/vue) 和跨平台框架 [uniapp](https://github.com/dcloudio/uni-app).fork or download 本 repo.然后使用 [hbuilderx](https://dcloud.io/hbuilderx.html) 集成uniapp开发工具进行项目的构建,最后通过 [微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html) 进行调试.如果开发的功能不错想让更多的同学使用,可以选择 pull request 与本项目合并,或者选择自行运营自己的小程序.  
+
 如果你是后端,可以选择关注本 organization 的其他与后端有关的 repo, 然后选择去阿里云或腾讯云使用学生优惠购买10月一个月的服务器跑这些后台.  
+
 如果你是产品,可以给本项目提 issue 进行功能上和设计上的改进和建议.  
 
 ## 开发规划和主线
