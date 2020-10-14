@@ -16,18 +16,18 @@
 由于在地图导览中引入了腾讯地图sdk使得其在其他平台上的体验无法那么优质,以及国内绝大多数用户都习惯使用微信小程序,所以优先兼容微信平台.
 
 感谢本 repo 的初创者
-- 策划/产品[@Muzhou233](https://github.com/Muzhou233)
-- 后端/运维/产品[@Cerbur](https://github.com/Cerbur)
-- 前端[@xingxinglieo](https://github.com/xingxinglieo)
-- 爬虫[@YangZeqin](https://github.com/YangZeqin)
-- 后端[@seehin](https://github.com/seehin)
+- 策划/产品 [@Muzhou233](https://github.com/Muzhou233)
+- 后端/运维/产品 [@Cerbur](https://github.com/Cerbur)
+- 前端 [@xingxinglieo](https://github.com/xingxinglieo)
+- 爬虫 [@YangZeqin](https://github.com/YangZeqin)
+- 后端 [@seehin](https://github.com/seehin)
 
 ## 如何参与开发
-如果你是前端,可以选择学习 [vue.js](https://github.com/vuejs/vue) 和跨平台框架 [uniapp](https://github.com/dcloudio/uni-app).fork or download 本 repo.然后使用 [hbuilderx](https://dcloud.io/hbuilderx.html) 集成uniapp开发工具进行项目的构建,最后通过 [微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html) 进行调试.如果开发的功能不错想让更多的同学使用,可以选择 pull request 与本项目合并,或者选择自行运营自己的小程序.  
+- 如果你是前端,可以选择学习 [vue.js](https://github.com/vuejs/vue) 和跨平台框架 [uniapp](https://github.com/dcloudio/uni-app).fork or download 本 repo.然后使用 [hbuilderx](https://dcloud.io/hbuilderx.html) 集成uniapp开发工具进行项目的构建,最后通过 [微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html) 进行调试.如果开发的功能不错想让更多的同学使用,可以选择 pull request 与本项目合并,或者选择自行运营自己的小程序.  
 
-如果你是后端,可以选择关注本 organization 的其他与后端有关的 repo, 然后选择去阿里云或腾讯云使用学生优惠购买10月一个月的服务器跑这些后台.  
+- 如果你是后端,可以选择关注本 organization 的其他与后端有关的 repo, 然后选择去阿里云或腾讯云使用学生优惠购买10月一个月的服务器跑这些后台.  
 
-如果你是产品,可以给本项目提 issue 进行功能上和设计上的改进和建议.  
+- 如果你是产品,可以给本项目提 issue 进行功能上和设计上的改进和建议.  
 
 ## 开发规划和主线
 1. 产品的第一个主线是基于OCR技术的校内失物招领(暂命名为千寻系统).OCR是针对校园卡等学校内常丢的东西优化的.用户仅仅拍一张校卡照片上传后端,即可获取卡号,名字以及对人照片进行打码处理.上传学号,如果被捡到此校卡对人也同样在使用本软件.将会直接发一条消息推送到此用户,更加便捷的找到丢校卡的人.  
@@ -35,4 +35,6 @@
 3. 最后的最后的主线,就是我们大一的时候深受通知群的困扰,我们特别希望能有一个更友好的方式来解决部门班级一些开会安排的适宜.这里的逻辑大概就是,普通的用户可以创建一个team,其他用户可以加入到这个 team 之中,team 的拥有者发布会议或者活动安排给所有的用户.用户将进行确认,如果同意将会把这个行程添加到日常表中,如果拒绝会返回信息给 team 拥有者,team 拥有者能查看到所有人的确认状态,来更高
 
 ## 未来的开发打算
-微信小程序虽然使用起来看着方便,但在做很多负责事情的时候并没有那么的轻松.诸如上面的三个涉及到ugc的内容,在消息推送、操作性能等方面是不如原生 APP 的.此外小程序无法断网打开,这就造成了部分极端情况下,没有网络的同学无法第一时间知道自己的课程安排从而耽误上课.使用过iOS的超级课程表的同学会知道,今日的所有课程都会被添加到捷径(也就是常说的负一屏)之中,这种看课程的极度方便程度,是小程序无法比拟的
+微信小程序虽然使用起来看着方便,但在做很多负责事情的时候并没有那么的轻松.诸如上面的三个涉及到ugc的内容,在消息推送、操作性能等方面是不如原生 APP 的.此外小程序无法断网打开,这就造成了部分极端情况下,没有网络的同学无法第一时间知道自己的课程安排从而耽误上课.使用过iOS的超级课程表的同学会知道,今日的所有课程都会被添加到捷径(也就是常说的负一屏)之中,这种看课程的极度方便程度,是小程序无法比拟的.虽然很多 app 开发的都是为了提高打开率,但这和我的产品理念是背道而驰的,我更希望一个程序用起来是方便的,用户是无感的.所以希望接下来能做原生 APP 使用桌面小部件或者其他形式实现非常无感的查看课程体验.
+
+此外小程序是没办法自己选择版本和自定义bar(底部操作栏).这就造成了我们在增加功能方便部分用户时,其他用户会觉得应用变得臃肿不堪.目前 gdutday-wechat 的功能栏是隐藏起来就是为了使得增加新功能时,不影响老用户的体验,但这就造成了 UI 的不协调问题.但如果是 APP,那我们就可以给所有功能是否展示设置开关,甚至用户自定义 bar.选择使用自己想用的功能.
