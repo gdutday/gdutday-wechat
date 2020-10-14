@@ -1,6 +1,9 @@
 # gdutday-uniapp 
 前人栽树  后人乘凉  拥抱开源
-如果喜欢点个 Star 拜托拜托这对我们真的很重要
+如果喜欢点个 Star 拜托拜托这对我们真的很重要  
+
+<img src="https://gdutday.gitee.io/textpage/images/pic14.jpg" width="200px" height="200px"></img>  
+微信扫码体验!!
 
 ## 写在前面
 这里的内容和项目的结构没什么关系,主要说下之后 gdutday 维护问题.目前 gdutday 由广东工业大学电子科技协会(后文简称电协)负责后期运营,具体小程序运营和最高权限管理由电协网络组 [@elcbng](https://github.com/elcbng)完成.gdutday-wechat 承诺一年内至少不会做盈利相关的东西,免费的优质推广可以会考虑(如公益服务、学生心理健康教育推广).
