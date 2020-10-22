@@ -55,10 +55,14 @@ export default {
 	onShareAppMessage(res) {
 		// 来自页面内转发按钮
 		const isButton = res.from === 'button';
-		return {
-			title: isButton ? 'gdutday-转发课程' : '颜值超高的课表小程序-gdutday分享给你',
-			path: `/pages/schedule/schedule${isButton ? '?params=' + JSON.stringify(this.shareParams) : ''}`
-		};
+		// return {
+		// 	title: isButton ? 'gdutday-转发课程' : '颜值超高的课表小程序-gdutday分享给你',
+		// 	path: `/pages/schedule/schedule${isButton ? '?params=' + JSON.stringify(this.shareParams) : ''}`
+		// };
+        return {
+        	title: '颜值超高的课表小程序-gdutday分享给你',
+        	path: `/pages/schedule/schedule`
+        };
 	},
 	onShareTimeline(){},
 	data() {

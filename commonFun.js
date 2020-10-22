@@ -349,13 +349,13 @@ export async function  getClassAndExam() {
 					toStorage: true,
 					toStringify: true
 				});
-				// Vue.prototype.$store.commit({
-				// 	type: 'changeStateofSchedule',
-				// 	stateName: 'examData',
-				// 	value: exam,
-				// 	toStorage: true,
-				// 	toStringify: true
-				// });
+				Vue.prototype.$store.commit({
+					type: 'changeStateofSchedule',
+					stateName: 'examData',
+					value: [],
+					toStorage: true,
+					toStringify: true
+				});
 				Vue.prototype.$store.commit({
 					type: 'changeStateofSchedule',
 					stateName: 'campus',
