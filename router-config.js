@@ -60,6 +60,10 @@ export default {
 			path: "/pages/file/file-detail/file-detail",
 			name: 'file_detail'
 		},
+        {
+        	path: "/pages/exam/exam",
+        	name: 'exam'
+        },
 		{
 			path: "/pages/rubbish/rubbish",
 			name: 'rubbish'

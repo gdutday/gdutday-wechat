@@ -308,6 +308,7 @@ function tip(title, icon = 'none') {
 		icon: icon
 	});
 }
+
 export async function  getClassAndExam() {
 	var account = getStorageSync('account', {
 		ID: '',
@@ -438,7 +439,13 @@ export function getTimeToCnameTime(stringTime){
     }
     return result
 }
-
+export function getDayDiff(endTime) {
+    var now = new Date();
+    var dateStart = new Date(now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate());
+	var dateEnd = new Date(endTime);
+	var difValue = (dateEnd - dateStart) / (1000 * 60 * 60 * 24);
+    return Math.floor(difValue);
+}
 const commonFun = {
 	getStorage,
 	getStorageSync,
@@ -463,6 +470,7 @@ const commonFun = {
 	getLocationList,
     getTimeToCnameTime,
 	wait,
+    getDayDiff,
 };
 Vue.prototype.$commonFun = commonFun;
 export default commonFun;

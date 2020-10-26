@@ -86,11 +86,11 @@ export default {
                     description: "空教室查询",
                     operation: this.openWait,
                 },
-                // {
-                //     icon: "evaluate",
-                //     description: "一键评教",
-                //     operation: this.openWait,
-                // },
+                {
+                    icon: "evaluate",
+                    description: "考试安排",
+                    operation: this.openExam,
+                },
                 // {
                 // image:'',
                 //description
@@ -126,6 +126,12 @@ export default {
 		},
         open(operation) {
             operation();
+        },
+        openExam(){
+            console.log("exam")
+        	this.$Router.push({
+        	    name: "exam",
+        	});
         },
         openRubbish() {
             this.$Router.push({

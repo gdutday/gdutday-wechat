@@ -26,8 +26,9 @@ export default {
 		firstIndex: getStorageSync("firstIndex", 0),
 		classData: getStorageSync("classData", defaultCourseBlock, true),
 		examData: getStorageSync("examData", [], true),
+		examNewData: getStorageSync("examNewData", [], true),
 		addClassData: getStorageSync("addClassData", [], true),
-		addScheduleData: getStorageSync("addScheduleData", [], true),
+        // countTimes: getStorageSync("countTimes", [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],true), //校区
 		campus: getStorageSync("campus", "大学城校区"), //校区
 		courseBlockOpacity: getStorageSync("courseBlockOpacity", 80),
 		isFontColorWhite: getStorageSync("isFontColorWhite", true),

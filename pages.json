@@ -132,6 +132,12 @@
             "path" : "pages/my/my-problem/my-problem",
             "style" : {}
         }
+        ,{
+            "path" : "pages/exam/exam",
+            "style" : {
+                "enablePullDownRefresh": true
+            }
+        }
     ],
 	"tabBar": {
 		"color": "#A1A1A1",
