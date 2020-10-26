@@ -23,7 +23,12 @@
 				</view>
 			</view>
 		</wave>
-		<view class="bg-white py-4 px-3 shadow-warp flex-row" style="height: 160rpx;"><view class="flex-1 h-1" v-for="i in 3" :key="i"></view></view>
+		<view class="bg-white py-4 px-3 shadow-warp flex-row" style="height: 160rpx;">
+            <!-- <view class="flex-1 h-1" v-for="i in 3" :key="i"></view> -->
+            <view class="m-center">
+                <view v-show="lastExam!=null" class="cuIcon-time mr-4 text-bold text-center" @tap="toExam" > {{ lastExam!=null?(lastExam.examCountDown>0?lastExam.examCountDown+"天后有":"今天有"):""}}{{lastExam!=null?lastExam.examSubject:""}}考试</view>
+            </view>
+        </view>
 		<view v-if="delay" class="rounded-2 mx-5 mt-5 animation-slide-bottom depth-2">
 			<button @tap="tapList(item.icon)" v-for="(item, index) in list" class="bg-white" :open-type="item.icon" :key="index">
 				<view class="w-1 px hg flex-row j-sb">
@@ -42,7 +47,7 @@
 <script>
 import wave from './wave.vue';
 import { APIs } from '@/staticData/staticData.js';
-import { wait } from '@/commonFun.js';
+import { wait,getLastExam } from '@/commonFun.js';
 export default {
 	components: {
 		wave
@@ -67,6 +72,7 @@ export default {
 	onShareTimeline(){},
 	data() {
 		return {
+            lastExam: [],
 			list: [
 				{
 					icon: 'account',
@@ -121,6 +127,7 @@ export default {
 		await wait(300);
 		uni.hideLoading();
 		this.delay = true;
+        this.lastExam = getLastExam();
 	},
 	computed: {
 		iconColor() {
@@ -128,6 +135,9 @@ export default {
 		}
 	},
 	methods: {
+        toExam() {
+            this.$Router.push({name:'exam'});
+        },
 		tapList(icon) {
 			switch (icon) {
 				case 'account':

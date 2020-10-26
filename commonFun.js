@@ -446,6 +446,24 @@ export function getDayDiff(endTime) {
 	var difValue = (dateEnd - dateStart) / (1000 * 60 * 60 * 24);
     return Math.floor(difValue);
 }
+
+export function getLastExam() {
+    let examList = JSON.parse(uni.getStorageSync("examNewData"))
+    if (examList.length === 0) {
+        return null;
+    }
+    let last = examList[0];
+    examList.forEach(it=>{
+        it.examCountDown = getDayDiff(it.examDate);
+        if (it.examCountDown >= 0) {
+            if ( it.examCountDown < last.examCountDown ) {
+                last = it;
+            }
+        }
+    })
+    return last.examCountDown<0?null:last;
+}
+
 const commonFun = {
 	getStorage,
 	getStorageSync,
@@ -471,6 +489,7 @@ const commonFun = {
     getTimeToCnameTime,
 	wait,
     getDayDiff,
+    getLastExam,
 };
 Vue.prototype.$commonFun = commonFun;
 export default commonFun;
