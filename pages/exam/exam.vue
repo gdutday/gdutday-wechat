@@ -4,12 +4,16 @@
 	<!-- @click事件返回点击标签元素的索引值 第一项为0 -->
 	<view class="bg-white minh-100">
         <cu-custom :isBack="true"><block slot="content">考试安排</block></cu-custom>
+        <view>{{infoList.attrs.length}}</view>
+        <view class="mt-3 text-center" v-if="infoList.length == 0">
+            <text>没有考试安排,可以尝试下拉刷新喔!</text>
+        </view>
 		<view class="steps">
 			<view class="steps_item" v-for="(i, index) in infoList" :key="index">
 				<view class="s_r">
 					<view class="line" :style="{backgroundColor:index != 0?(i.examCountDown>=0?backgroundColor:'#7a7374'):'rgba(0,0,0,0)'}"></view>
                     <view class="index" :style="{backgroundColor:i.examCountDown>=0?backgroundColor:'#7a7374',color:color}">
-						{{ i.examCountDown>0?i.examCountDown+"天":''}}
+						{{ i.examCountDown>0?(i.examCountDown <= 9? i.examCountDown+"天":i.examCountDown):''}}
 						{{ i.examCountDown==0?"今":''}}
                         {{ i.examCountDown<0?"结":''}}
 					</view>

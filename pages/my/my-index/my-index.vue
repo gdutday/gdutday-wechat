@@ -25,8 +25,9 @@
 		</wave>
 		<view class="bg-white py-4 px-3 shadow-warp flex-row" style="height: 160rpx;">
             <!-- <view class="flex-1 h-1" v-for="i in 3" :key="i"></view> -->
+            <!-- TODO 之后可能会删除 -->
             <view class="m-center">
-                <view v-show="lastExam!=null" class="cuIcon-time mr-4 text-bold text-center" @tap="toExam" > {{ lastExam!=null?(lastExam.examCountDown>0?lastExam.examCountDown+"天后有":"今天有"):""}}{{lastExam!=null?lastExam.examSubject:""}}考试</view>
+                <view v-if="lastExam!=null" class="cuIcon-time mr-4 text-bold text-center" @tap="toExam" > {{ lastExam!=null?(lastExam.examCountDown>0?lastExam.examCountDown+"天后有":"今天有"):""}}{{lastExam!=null?lastExam.examSubject:""}}考试</view>
             </view>
         </view>
 		<view v-if="delay" class="rounded-2 mx-5 mt-5 animation-slide-bottom depth-2">
@@ -42,7 +43,7 @@
 		</view>
 		<!-- <view class="text-lg text-blue" @tap="toGrade">{{ lastestGrade }}</view> -->
         <view class="flex-row">
-            <text class="m-center text-center text-gray mt-5">v1.5.0@gdutday</text>
+            <text class="m-center text-center text-gray mt-5">v1.5.1@gdutday</text>
         </view>
     </view>
 </template>
