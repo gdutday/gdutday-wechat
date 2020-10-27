@@ -31,6 +31,10 @@ export default {
 					item: '统一认证账户更换/登录',
 					operation: '更换'
 				},
+                {
+                	item: '教务系统登录',
+                	operation: '登录'
+                },
 				{
 					item: '清除账号缓存',
 					operation: '清除'
@@ -82,6 +86,9 @@ export default {
 				case '统一认证账户更换/登录':
 					this.$Router.push({ name: 'login' });
 					break;
+                case '教务系统登录':
+                    this.$Router.push({ name: 'login-edu' });
+                    break;
 			}
 		},
 		fail() {

@@ -53,8 +53,9 @@ export default {
 		};
 	},
 	mounted() {
-		this.ID = this.$account.ID;
         this.getImage();
+        this.ID = this.$education.ID;
+        this.password = this.$education.password;
 	},
     created() {
 	},
@@ -110,7 +111,13 @@ export default {
 						this.showTip = true;
 						this.tip = '课表信息为空,若为20级目前教务系统未对接,请之后尝试';
 					} else if (+res.data.error == 1) {
-                        console.log(res.data.data);
+                        this.$store.commit({
+                        	type: 'changeStateofGlobal',
+                        	stateName: 'education',
+                        	value: { ID: this.ID, password: this.password },
+                        	toStorage: true,
+                        	toStringify: true
+                        });
 						this.$store.commit({
 							type: 'changeStateofSchedule',
 							stateName: 'classData',
@@ -123,6 +130,13 @@ export default {
                         	stateName: 'campus',
                         	value: res.data.data.campus,
                         	toStorage: true
+                        });
+                        this.$store.commit({
+                            type: 'changeStateofSchedule',
+                            stateName: 'examNewData',
+                            value: res.data.data.exam,
+                            toStorage: true,
+                            toStringify: true
                         });
                         let _this = this;
                         uni.showModal({

@@ -28,6 +28,10 @@ let store = new Vuex.Store({
 			ID: '',
 			password: ''
 		}, true),
+        education: getStorageSync('education', {
+        	ID: '',
+        	password: ''
+        }, true),
 		allColor: allColor,
 	},
 	mutations: {
@@ -71,6 +75,9 @@ const computed = {
 		$account() {
 			return store.state.account;
 		},
+        $education() {
+        	return store.state.education;
+        },
 	}
 }
 Vue.mixin(computed);

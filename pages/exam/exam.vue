@@ -6,8 +6,15 @@
         <cu-custom :isBack="true"><block slot="content">考试安排</block></cu-custom>
         <view>{{infoList.attrs.length}}</view>
         <view class="mt-3 text-center" v-if="infoList.length == 0">
-            <text>没有考试安排,可以尝试下拉刷新喔!</text>
+            <text>没有考试安排,可以尝试下拉刷新喔!</text><br/>
+            <text>20级使用教务系统的同学</text><br/><text>可以点击教务系统重新登录获取</text>
+            <!-- style="width: 25vh;" -->
+            <button style="width: 25vh;" class="text-white" @tap="tap" :style="{backgroundColor:backgroundColor}">教务系统</button>
+            <!-- <view  class="m-center" :class="onceShake ? 'animation-shake' : ''">
+                <myButton :rotate="rotate" @buttonTap="tap" :text="'教务系统'" :bgColor="$colorList.theme" />
+            </view> -->
         </view>
+        
 		<view class="steps">
 			<view class="steps_item" v-for="(i, index) in infoList" :key="index">
 				<view class="s_r">
@@ -39,6 +46,8 @@
 	export default {
 		data() {
 			return {
+                rotate: false,
+                onceShake: false,
                 infoList: [],
                 color: '#fff',
                 backgroundColor: this.$commonFun.hexify(this.$store.getters.color.theme),
@@ -50,7 +59,6 @@
 			this.getExam();
 		},
         onPullDownRefresh() {
-            
         	this.refreshGrade();
         },
         computed:{
@@ -59,6 +67,11 @@
             }
         },
 		methods: {
+            tap() {
+                this.$Router.push({
+                    name: "login-edu",
+                });
+            },
             tip(title, icon = 'none') {
             	uni.showToast({
             		title: title,

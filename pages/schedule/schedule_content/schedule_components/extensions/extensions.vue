@@ -128,7 +128,6 @@ export default {
             operation();
         },
         openExam(){
-            console.log("exam")
         	this.$Router.push({
         	    name: "exam",
         	});
