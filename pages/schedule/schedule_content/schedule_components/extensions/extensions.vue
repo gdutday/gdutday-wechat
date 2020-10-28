@@ -148,7 +148,7 @@ export default {
 			})
 		},
         openQR() {
-            if (this.$account.ID.length == 0)
+            if (this.$account.ID.length == 0 && this.$education.ID == 0)
                 return interceptToLogin(this.$Router);
             this.Bus.showModal({
                 type: "modal",

@@ -136,7 +136,7 @@ export default {
 					} = await this.$http.get(APIs.version);
 					const beforeVersion = getStorageSync('version', '1.0.0');
 					//如果版本号不匹配则说明未看过更新说明
-					if (beforeVersion !== version && this.$account.ID !== '') {
+					if (beforeVersion !== version && (this.$account.ID !== '' || this.$education.ID !== '')) {
                         let that = this;
 						uni.showModal({
 							title: '更新说明',

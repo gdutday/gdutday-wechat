@@ -4,10 +4,14 @@ export default {
 			path: "/pages/schedule/schedule",
 			name: 'schedule'
 		},
-		{
-			path: "/pages/login/login",
-			name: 'login'
-		},
+		// {
+		// 	path: "/pages/login/login",
+		// 	name: 'login'
+		// },
+        {
+        	path: "/pages/login/login-edu",
+        	name: 'login'
+        },
         {
         	path: "/pages/login/login-edu",
         	name: 'login-edu'

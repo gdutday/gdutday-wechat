@@ -42,7 +42,7 @@
 </template>
 <script>
     import { APIs } from '@/staticData/staticData.js';
-    import {getDayDiff} from '@/commonFun.js';
+    import {getDayDiff,goToLoginUpdate} from '@/commonFun.js';
 	export default {
 		data() {
 			return {
@@ -59,7 +59,18 @@
 			this.getExam();
 		},
         onPullDownRefresh() {
-        	this.refreshGrade();
+        	// this.refreshGrade();
+            let that = this;
+            uni.showModal({
+            	title: "提示",
+            	content: "跳转到登录页面更新",
+            	success: e =>
+            		e.confirm ?
+            		that.$Router.push({
+            			name: "login"
+            		}) :
+            		""
+            });
         },
         computed:{
             hasAccount() {

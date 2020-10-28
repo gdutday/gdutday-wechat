@@ -63,7 +63,18 @@ export default {
 	// 	this.$emit('changeGradeConfig');
 	// },
 	onPullDownRefresh() {
-		this.getGrade();
+        let that = this;
+        uni.showModal({
+        	title: "提示",
+        	content: "跳转到登录页面更新",
+        	success: e =>
+        		e.confirm ?
+        		that.$Router.push({
+        			name: "login"
+        		}) :
+        		""
+        });
+		// this.getGrade();
 	},
 	async mounted() {
 		if (!this.hasGrade) !this.hasAccount ? this.$commonFun.interceptToLogin(this.$Router) : this.getGrade();
@@ -102,7 +113,9 @@ export default {
 		},
 		async getGrade() {
 			if (this.loading) return;
-			if (!this.hasAccount) return uni.stopPullDownRefresh() && this.tip('无账号,请先登录');
+			if (!this.hasAccount) {
+                return uni.stopPullDownRefresh() && this.tip('无账号,请先登录');
+            }
 			uni.showLoading({
 				title: '查询成绩中..'
 			});

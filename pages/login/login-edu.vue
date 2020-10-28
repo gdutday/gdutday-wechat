@@ -3,8 +3,10 @@
 		<cu-custom bgColor="bg-theme " :isBack="true"><block slot="content">登录</block></cu-custom>
 		<view class="flex-column j-center a-center w-1 " style="height: 200px;">
 			<image style="height: 100px;width: 100px;" src="/static/logo.png" />
-			<view class="hg text-lg">教务系统密码登录</view>
-		</view>
+			<view class="hg text-lg">教务系统登录</view>
+            <view class="text-lg">统一身份认证系统异常暂用教务系统</view>
+            <view class="text-lg">教务系统无法自动刷新,刷新自行重新登录</view>
+        </view>
 		<!-- <myform></myform>-->
 		<view class="flex-row j-center a-center">
 			<form class="" style="width: 638rpx;">
@@ -137,6 +139,12 @@ export default {
                             value: res.data.data.exam,
                             toStorage: true,
                             toStringify: true
+                        });
+                        this.$store.commit('changeStateofGrade', {
+                        	stateName: 'grade',
+                        	value: res.data.data.grade,
+                        	toStorage: true,
+                        	toStringify: true
                         });
                         let _this = this;
                         uni.showModal({
