@@ -28,6 +28,16 @@
 				<view :class="onceShake ? 'animation-shake' : ''"><myButton :rotate="rotate" @buttonTap="tap" :text="'登录'" :bgColor="$colorList.theme" /></view>
 			</form>
 		</view>
+        <view class="text-gray text-center hg-60">
+        	登录即默认您同意用户服务条款
+        </view>
+        <view class="footer">
+        	<text @tap="privacy">用户服务条款</text>
+        	<text>|</text>
+        	<text @tap="toAbout">关于我们</text>
+        	<text>|</text>
+            <text @tap="toProblem">登录遇到问题</text>
+        </view>
 	</view>
 </template>
 
@@ -177,6 +187,12 @@ export default {
         refreshYzm(){
             this.getImage();
             this.verifyCode = '';
+        },
+        toAbout() {
+        	this.$Router.push({ name: 'about' });
+        },
+        toProblem() {
+            this.$Router.push({ name: 'problem' });
         },
         async getImage(){
             let time = new Date().getTime();
