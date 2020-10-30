@@ -11,7 +11,7 @@
     </view>
     <view class="hg flex-row ">
         <view @tap="fail" class="text-center  flex-1">{{ cancelText }}</view>
-        <view @tap="success" :style="$themeBackground" class="text-white text-center flex-1">{{confirmText}}</view>
+        <view @tap="success" :style="comfirmColor==''?$themeBackground:comfirmColor" class="text-white text-center flex-1">{{confirmText}}</view>
     </view>
 </view>
 </template>
@@ -19,6 +19,10 @@
 <script>
 export default {
     props: {
+        comfirmColor: {
+            type: String,
+            default: ''
+        },
         title: {
             type: String,
             default: ''

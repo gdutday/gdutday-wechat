@@ -38,12 +38,20 @@
 				</view>
 			</view>
 		</view>
+        <yzmcom ref="reyzm"/>
 	</view>
 </template>
 <script>
     import { APIs } from '@/staticData/staticData.js';
     import {getDayDiff,goToLoginUpdate} from '@/commonFun.js';
+    import yzmcom from '@/components/cerbur-yzm.vue';
 	export default {
+        components: { yzmcom },
+        provide() {
+        	return {
+        		Bus: this
+        	};
+        },
 		data() {
 			return {
                 rotate: false,
@@ -55,26 +63,21 @@
             };
 		},
 		onLoad(e) {
-            // console.log(uni.getStorageSync("examNewData"))
 			this.getExam();
 		},
         onPullDownRefresh() {
+            this.refreshGradeByEdu();
+            
+            // this.refreshYzm();
         	// this.refreshGrade();
-            let that = this;
-            uni.showModal({
-            	title: "提示",
-            	content: "跳转到登录页面更新",
-            	success: e =>
-            		e.confirm ?
-            		that.$Router.push({
-            			name: "login"
-            		}) :
-            		""
-            });
+            
         },
         computed:{
             hasAccount() {
             	return !!this.$account.ID;
+            },
+            hasEducation() {
+                return !!this.$education.ID;
             }
         },
 		methods: {
@@ -108,6 +111,27 @@
                 examNoEnd.sort((a,b)=>a.examCountDown-b.examCountDown);
                 examEnd.sort((a,b)=>b.examCountDown-a.examCountDown);
                 this.infoList = examNoEnd.concat(examEnd);
+            },
+            refreshGradeByEdu() {
+                if (this.loading) return;
+                if (!this.hasEducation) {
+                    uni.stopPullDownRefresh()
+                    let that = this;
+                    uni.showModal({
+                    	title: "提示",
+                    	content: "还未登录哦,是否跳转到登录页面",
+                    	success: e =>
+                    		e.confirm ?
+                    		that.$Router.push({
+                    			name: "login-edu"
+                    		}) : ""
+                    });
+                    return;
+                }
+                this.loading = true;
+                this.$refs.reyzm.showModal();
+                this.loading = false;
+                uni.stopPullDownRefresh();
             },
             async refreshGrade() {
             	if (this.loading) return;
@@ -165,7 +189,6 @@
 		background-color: #f2f2f2;
 		display: flex;
 	}
-
 	.steps {
 		display: flex;
 		flex-direction: column;

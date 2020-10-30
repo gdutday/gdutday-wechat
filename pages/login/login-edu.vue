@@ -20,7 +20,7 @@
 					tip="教务系统密码"
 					:isShowPass="true"
 				></myInput>
-                <myInput :maxlength="4" :textColor="$colorList.theme" :lineColor="$colorList.theme" type="text" v-model="verifyCode" placeholder="验证码" tip="验证码"></myInput>
+                <myInput :maxlength="4" :textColor="$colorList.theme" :lineColor="$colorList.theme" type="text" v-model="verifyCode" placeholder="验证码不显示验证码点击查看遇到问题" tip="验证码"></myInput>
 				<ErrorTip :showTip="showTip">{{ tip }}</ErrorTip>
                 <view class="text-center">
                     <image @tap="refreshYzm" :src="yzm" class="text-center yzmImage" style="width: 200rpx;height: 140rpx">

@@ -13,13 +13,21 @@
 			<comfirm @success="success" @fail="fail" :title="title">{{ 'Tip : ' + tip }}</comfirm>
 		</modal>
 		<tip ref="tip"></tip>
+        <yzmcom ref="reyzm"/>
 	</view>
 </template>
 <script>
+import yzmcom from '@/components/cerbur-yzm.vue';
 import { defaultCourseBlock } from '@/staticData/staticData.js';
-import { getClassAndExam } from '@/commonFun.js'
+import { getClassAndExam } from '@/commonFun.js';
 export default {
-	components: {},
+	components: {yzmcom},
+    // inject: ['Bus'],
+    provide() {
+    	return {
+    		Bus: this
+    	};
+    },
 	data() {
 		return {
 			list: [
@@ -55,18 +63,38 @@ export default {
 	computed: {
 		color() {
 			return this.$store.getters.color;
-		}
+		},
+        hasEducation() {
+            return !!this.$education.ID;
+        }
 	},
 	methods: {
+        refreshGradeByEdu() {
+            if (!this.hasEducation) {
+                let that = this;
+                uni.showModal({
+                	title: "提示",
+                	content: "还未登录哦,是否跳转到登录页面",
+                	success: e =>
+                		e.confirm ?
+                		that.$Router.push({
+                			name: "login-edu"
+                		}) : ""
+                });
+                return;
+            }
+            this.$refs.reyzm.showModal();
+        },
 		change(e) {
 			let mes = e.currentTarget.dataset.name;
 			switch (mes) {
 				case '刷新课程表':
-					getClassAndExam().then(res=>{
-						if(res) {
-							this.$Router.replaceAll({ name: 'schedule' });
-						}
-					})
+                    this.refreshGradeByEdu();
+					// getClassAndExam().then(res=>{
+					// 	if(res) {
+					// 		this.$Router.replaceAll({ name: 'schedule' });
+					// 	}
+					// })
 					break;
 				case '清除账号缓存':
 					this.title = mes;
@@ -103,7 +131,14 @@ export default {
 					toStorage: true,
 					toStringify: true
 				});
-				this.$refs.tip.show('清除成功, 如需重新登陆可点击 "更换统一认证账户"');
+                this.$store.commit({
+                	type: 'changeStateofGlobal',
+                	stateName: 'education',
+                	value: { ID: '', password: '' },
+                	toStorage: true,
+                	toStringify: true
+                });
+				this.$refs.tip.show('清除成功, 如需重新登陆可点击 "更换统一认证账户" 或 "教务系统登录"');
 				this.$refs.modal.hideModal();
 			} else if (this.title == '清除课表缓存/解决首页白屏问题') {
 				this.$refs.modal.hideModal();
