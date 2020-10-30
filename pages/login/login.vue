@@ -29,8 +29,16 @@
 			<text @tap="privacy">用户服务条款</text>
 			<text>|</text>
 			<text @tap="toAbout">关于我们</text>
-			
+			<text>|</text>
+            <text @tap="toProblem">登录遇到问题</text>
 		</view>
+        <view class="footer footer2" style="top: 5rpx;">
+            <text></text>
+            <text></text>
+        </view>
+        <view class="footer footer2" style="top: 5rpx;" :textColor="$colorList.theme">
+            <text @tap="toEduLogin" :style="$themeFont">20级点这里:使用教务系统登录</text>
+        </view>
 	</view>
 </template>
 
@@ -96,6 +104,10 @@ export default {
 						console.log(res.data);
 						this.showTip = true;
 						this.tip = '教务系统异常';
+					} else if (+res.data.error == -305) {
+						console.log(res.data);
+						this.showTip = true;
+						this.tip = '课表信息为空,若为20级目前教务系统未对接,请使用下方教务系统登录';
 					} else if (+res.data.error == 1) {
 						// this.$store.commit('changeAccount', { ID: this.ID, password: this.password });
 						this.$store.commit({
@@ -116,7 +128,7 @@ export default {
 						this.$Router.replaceAll({ name: 'schedule' });
 					} else {
 						this.showTip = true;
-						this.tip = '其他错误请重试';
+						this.tip = res.data.msg;
 					}
 				})
 				.catch(res => {
@@ -135,7 +147,13 @@ export default {
 		},
 		toAbout() {
 			this.$Router.push({ name: 'about' });
-		}
+		},
+        toProblem() {
+            this.$Router.push({ name: 'problem' });
+        },
+        toEduLogin() {
+            this.$Router.push({ name: 'login-edu' });
+        }
 	},
 	watch: {}
 };
@@ -154,6 +172,11 @@ export default {
 }
 .footer text {
 	font-size: 14px;
+	margin-left: 15upx;
+	margin-right: 15upx;
+}
+.footer2 text {
+	font-size: 18px;
 	margin-left: 15upx;
 	margin-right: 15upx;
 }

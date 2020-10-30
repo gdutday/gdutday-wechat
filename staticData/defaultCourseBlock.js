@@ -3,7 +3,7 @@ export const defaultCourseBlock = [
 	isDefault: true,
 	courseTeacher: "gdutday小提示",
 	courseDay: "2",
-	courseName: '开源项目欢迎加入🌈\ngdutday️',
+	courseName: '计划开源中欢迎加入🌈\ngdutday️',
 	courseTime: "080910",
 	courseRoom: "GitHub",
 	courseContent: "",

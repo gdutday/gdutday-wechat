@@ -1,8 +1,10 @@
 const baseFunctionsUrl = "https://xingxing.cerbur.top/functions";
 const baseDownloadUrl = "https://gdutday.gitee.io/gdut-lib";
 const baseDataUrl = "https://gdutday.gitee.io/data";
+const baseNewsUrl = "https://news.cerbur.top"
 export const APIs = {
 	classAndExam: "/crawler/classAndExam",
+    educationInit: "/crawler/education/init",
 	curriculum: "/crawler/curriculum",
 	exam: "/crawler/exam",
 	campus: "/crawler/campus",
@@ -17,10 +19,14 @@ export const APIs = {
 	test: baseFunctionsUrl + "/test",
 	update: baseDataUrl + "/update",
 	version: baseDataUrl + "/version",
+    task: baseDataUrl + "/task",
+    problem: baseDataUrl + "/problem",
 	location: baseDataUrl + "/locations",
 	details: baseDataUrl + "/details/",
 	getSchoolOpening: baseDataUrl+"/openSchool",
 	locationLength: baseDataUrl+"/length",
+	getNewsList: baseNewsUrl + "/news/type",
+	getNewsDetail: baseNewsUrl + "/news/id",
 	// getSchoolOpening: baseFunctionsUrl + "/getSchoolOpening",
 	getRecommendBook: 'https://ifl.zhaobenshu.com/Logs/stvisitkey_ifa_GetList.ashx?a=[Lib={{gdut}}][StArea={{StWeek}}][UniSess={{}}][SessLib={{gdut}}][SessFun={{wap}}][SessPrd={{book}}][SessType={{3}}]&z3=&z4=0&z5=',
 	download: baseDownloadUrl,

@@ -1,7 +1,7 @@
 <template>
 	<view class="p-5 bg-white" style="border-radius: 10rpx;">
 		<view class="hg text-center">请置于图书馆闸机前</view>
-		<QR :val="$account.ID + ''" :size="300" :onval="true" ref="code" :showLoading="false" />
+		<QR :val="$account.ID.length==0?$education.ID:$account.ID + ''" :size="300" :onval="true" ref="code" :showLoading="false" />
 	</view>
 </template>
 <script>

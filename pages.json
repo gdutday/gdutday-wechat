@@ -15,6 +15,12 @@
 				"disableScroll":true
 			}
 		},
+        {
+			"path": "pages/login/login-edu",
+			"style": {
+				// "disableScroll":true
+			}
+		},
 		{
 			"path": "pages/my/my-clear/my-clear",
 			"style": {
@@ -30,7 +36,9 @@
 			"style": {}
 		}, {
 			"path": "pages/map/map",
-			"style": {}
+			"style": {
+                "disableScroll":true
+            }
 		}, {
 			"path": "pages/map/map-detail",
 			"style": {}
@@ -104,7 +112,9 @@
         }
         ,{
             "path" : "pages/news/news",
-            "style" : {}
+            "style": {
+            	"enablePullDownRefresh": true
+            }
         }
         ,{
             "path" : "pages/news/news-detail",
@@ -113,6 +123,20 @@
         ,{
             "path" : "pages/my/my-mark/my-mark",
             "style" : {}
+        }
+        ,{
+            "path" : "pages/my/my-task/my-task",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/my/my-problem/my-problem",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/exam/exam",
+            "style" : {
+                "enablePullDownRefresh": true
+            }
         }
     ],
 	"tabBar": {

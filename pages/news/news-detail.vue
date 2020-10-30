@@ -5,6 +5,7 @@
 				新闻详情
 			</template>
 		</cu-custom>
+        <empty-tip v-if="article === ''" loading></empty-tip>
 		<view class="py-3"><uParse @navigate="downloadFile" :content="article" /></view>
 		<modal ref="modal" :round="true" :maskForce="isProgress">
 			<block v-if="isProgress">
@@ -28,17 +29,21 @@
 			</block>
 		</modal>
 		<!-- <empty-tip loading/> -->
+        <back-button v-show="isShare" />
 		<tip ref="tip" />
 	</view>
 </template>
 
 <script>
+import { APIs } from '@/staticData/staticData.js';
 import uParse from '@/components/gaoyia-parse/parse.vue';
-import { replaceSpace } from './util.js';
+import { replaceSpace } from '@/pages/news/util.js';
+import backButton from '@/pages/file/file_backButton.vue';
 let task = null;
 export default {
 	components: {
-		uParse
+		uParse,
+        backButton
 	},
 	data() {
 		return {
@@ -49,21 +54,40 @@ export default {
 				totalBytesExpectedToWrite: 0
 			},
 			url: '',
-			article: replaceSpace(`<div class="articleBody" id="articleBody" style=" margin-top:30px; margin-left:25px; margin-right:25px; margin-bottom:30px;">
-               
-               <center><span style="font-size:38px; font-weight:bold; line-height:40px;">关于征求《广东省重点领域研发计划“重点科技产业质量基础共性技术研究及应用”重点专项申报指南》意见的函</span></center>
-               <br>
-                单 位：科技与人文研究院
-               <br>
-               <p><span style="font-size:16px;">各有关单位：<br>
-　　为全面贯彻落实党的十九大和习近平总书记关于加强关键核心技术攻关的重要讲话精神，落实《中共广东省委广东省人民政府关于实施质量强省战略的决定》、《广东省重点领域研发计划实施方案》总体要求，集中解决重点科技产业发展中检测、计量和认证等关键技术，广东省科技厅经前期调研、专家论证，结合省内重大技术和产业需求，形成了2020年度“重点科技产业质量基础共性技术研究及应用”重点专项申报指南征求意见稿（附件1）。</span><br>
-<span style="font-size: 16px;">　　为提高项目组织的公平性、科学性和精准性，省科技厅现将申报指南（征求意见稿）向社会公开征求意见。</span><br>
-<span style="font-size: 16px;">&nbsp; &nbsp; &nbsp; &nbsp;</span><span style="font-size: 16px;">有关修改意见和建议<span style="color:#ff0000;">将以单位名义整体通过系统提交</span>，</span><span style="font-size: 16px;">&nbsp;请有意见的老师填写申报指南意见反馈表，</span><span style="font-size: 16px;">于<span style="color:#ff0000;">2020年3月10日16时前发送至438184494@qq.com</span>，学校将统一提交至广东省科技厅。</span></p><p><span style="font-size: 16px;">&nbsp; &nbsp; &nbsp; 学校联系人：穆老师，15902060363<br>
-&nbsp; </span>&nbsp; &nbsp; &nbsp;&nbsp;<span style="font-size: 16px;">省科技厅</span><span style="font-size: 16px;">联系人：江翌昕，020-83163635</span></p><p><span style="font-size:16px;">　<br>
-　　附件：1.<a href="http://gdstc.gd.gov.cn/hdjlpt/yjzj/api/attachments/view/53cded05db49538620dc2464da2a26e4" target="_blank">2020年度广东省重点领域研发计划“重点科技产业质量基础共性技术研究及应用”重点专项申报指南征求意见稿</a></span></p><p><span style="font-size:16px;">　　　　　2.<a href="http://gdstc.gd.gov.cn/hdjlpt/yjzj/api/attachments/view/8cc168fb2e21b4175649cb402de57e2e" target="_blank">申报指南意见反馈表</a></span></p>
-                   <br>
-               </div>`)
+			article: '',
+			newsId:0,
+            title:'',
+            isShare:true,
 		};
+	},
+	onLoad(e) {
+		const id = decodeURIComponent(e.id);
+        const title = decodeURIComponent(e.title)
+        const isShare = decodeURIComponent(e.isShare)
+        this.newsId = id
+        this.title = title
+        if (isShare == 1) {
+            this.isShare = false;
+        }
+	},
+	async mounted(){
+		let article = '';
+        let i=0
+        while(i++<3){
+            try {
+            	const {
+            		data: { error, data }
+            	} = await this.$http.get(APIs.getNewsDetail + "/" + this.newsId);
+            	article = data;
+                if (+error == 1) {
+                    break;
+                }
+            }catch(e){
+            	console.log(e)
+            };
+        }
+        console.log(article)
+		this.article = replaceSpace(article)
 	},
 	computed: {
 		bytesStr() {
@@ -80,7 +104,7 @@ export default {
 		downloadFile(url) {
 			//是否可直接预览 是则弹出选择框
 			const isHttps = url.includes('news.gdut.edu.cn') && url.includes('https');
-			this.url = isHttps ? url : url.replace('http', 'https');
+			this.url = isHttps ? url : url.toString().replace('http', 'https');
 			const isDocType = ['ppt','doc','xsl','pdf'].some(item => url.includes(item));
 			if( this.url.includes('news.gdut.edu.cn')&&isDocType){
 				this.isProgress = false;
@@ -135,7 +159,24 @@ export default {
 					})
 			});
 		}
-	}
+	},
+    
+    
+    onShareAppMessage(res) {
+        // 来自页面内转发按钮
+        let _this = this;
+        return {
+            title: 'gdutday-校内新闻 | '+ _this.title,
+            path:  '/pages/news/news-detail?id='+_this.newsId+'&title='+_this.title
+        };
+    },
+    onShareTimeline(){
+        let _this = this;
+        return {
+            title: 'gdutday-校内新闻 | '+ _this.title,
+            query: 'id='+_this.newsId+'&title='+_this.title,
+        };
+    },
 };
 </script>
 

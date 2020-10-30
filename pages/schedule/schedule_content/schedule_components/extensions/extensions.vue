@@ -59,7 +59,7 @@ export default {
 				{
 				    icon: "news",
 				    description: "校内新闻",
-				    operation: this.openWait,//this.openNews,
+				    operation: this.openNews,
 				},
                 {
                     icon: "rubbish",
@@ -86,11 +86,11 @@ export default {
                     description: "空教室查询",
                     operation: this.openWait,
                 },
-                // {
-                //     icon: "evaluate",
-                //     description: "一键评教",
-                //     operation: this.openWait,
-                // },
+                {
+                    icon: "evaluate",
+                    description: "考试安排",
+                    operation: this.openExam,
+                },
                 // {
                 // image:'',
                 //description
@@ -127,6 +127,11 @@ export default {
         open(operation) {
             operation();
         },
+        openExam(){
+        	this.$Router.push({
+        	    name: "exam",
+        	});
+        },
         openRubbish() {
             this.$Router.push({
                 name: "rubbish",
@@ -139,11 +144,11 @@ export default {
 		},
 		openNews(){
 			this.$Router.push({
-				name:"newsDetail"
+				name:"news"
 			})
 		},
         openQR() {
-            if (this.$account.ID.length == 0)
+            if (this.$account.ID.length == 0 && this.$education.ID == 0)
                 return interceptToLogin(this.$Router);
             this.Bus.showModal({
                 type: "modal",

@@ -136,13 +136,19 @@ export default {
 					} = await this.$http.get(APIs.version);
 					const beforeVersion = getStorageSync('version', '1.0.0');
 					//如果版本号不匹配则说明未看过更新说明
-					if (beforeVersion !== version && this.$account.ID !== '') {
+					if (beforeVersion !== version && (this.$account.ID !== '' || this.$education.ID !== '')) {
+                        let that = this;
 						uni.showModal({
 							title: '更新说明',
 							content: '您已更新至最新版本，是否要查看更新说明 ? ',
 							confirmColor: this.$commonFun.hexify(this.$colorList.theme),
 							confirmText: '查看',
-							success: e => this.$Router.push({ name: 'mark' })
+                            success (res) {
+                                if(res.confirm) {
+                                    that.$Router.push({ name: 'mark' })
+                                }
+                            }
+							// success: e => this.$Router.push({ name: 'mark' })
 						});
 						uni.setStorageSync('version', version);
 					}

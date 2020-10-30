@@ -1,8 +1,8 @@
 <template>
 	<view class="flex-column" style="height: 100vh;">
-		<view style="width: 750rpx;height: 1000rpx;" class="bg-white position-relative">
-			<text class="cuIcon-back hg ml-3 pt-3 position-absolute " @tap.stop="back" v-show="showBack" style="z-index: 999999999;font-size: 20px;top:35rpx;"></text>
-			<text class="cuIcon-home hg ml-3 pt-3 position-absolute " @tap.stop="home" v-show="showHome" style="z-index: 999999999;font-size: 20px;top:35rpx;"></text>
+		<view style="width: 750rpx;height: 60vh;" class="bg-white position-relative">
+			<text class="cuIcon-back hg ml-3 pt-3 position-absolute " @tap.stop="back" v-show="showBack" style="z-index: 999999999;font-size: 20px;top:1vh;"></text>
+			<text class="cuIcon-home hg ml-3 pt-3 position-absolute " @tap.stop="home" v-show="showHome" style="z-index: 999999999;font-size: 20px;top:1vh;"></text>
 			<view
 			    class="flex-column a-center j-center bg-white position-absolute depth-6 active-shadow"
 			    style="width:80rpx;height:80rpx;border-radius:50%;z-index: 999999999;bottom: 45rpx; right: 20rpx;"
@@ -25,7 +25,7 @@
 				style="width:40rpx;height:40rpx;"
 				></image>
 			</view>
-			<map style="width: 750rpx;height: 1000rpx;"
+			<map style="width: 750rpx;height: 60vh;"
 				id="map"
 			    :scale="scale"
 				layer-style="1"
@@ -58,7 +58,7 @@
 						<view
 							class="flex-row"
 						>
-							<view @tap.stop="toDetail(nextItem)" class="capsul-button-2 text-white depth-3" :style="$themeBackground">介绍</view>
+							<view @tap.stop="toDetail(nextItem)" class="capsul-button-2 text-white depth-3 active-shadow" :style="$themeBackground">介绍</view>
 							<view @tap.stop="showNavigation(nextItem)" class="capsul-button-2 text-white depth-3 active-shadow" :style="$themeBackground">导航</view>	
 						</view>
 					</view>
@@ -289,7 +289,8 @@ export default {
 	onShareTimeline(){
 		return {
 			title: 'gdutday-校园导航分享给你',
-			path: `/pages/map/map`
+			path: `/pages/map/map`,
+            query:'',
 		}
 	},
 };

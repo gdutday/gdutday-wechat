@@ -1,8 +1,8 @@
 {
     "name" : "gdutday",
-    "appid" : "__UNI__DF8311E",
+    "appid" : "__UNI__D97011E",
     "description" : "",
-    "versionName" : "GDUT day",
+    "versionName" : "gdutday",
     "versionCode" : 214,
     "transformPx" : false,
     "app-plus" : {
@@ -37,11 +37,20 @@
                     "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
-                ]
+                ],
+                "abiFilters" : [ "armeabi-v7a", "arm64-v8a", "x86" ]
             },
-            "ios" : {},
+            "ios" : {
+                "idfa" : false
+            },
             /* ios打包配置 */
-            "sdkConfigs" : {}
+            "sdkConfigs" : {
+                "ad" : {},
+                "maps" : {}
+            },
+            "splashscreen" : {
+                "androidStyle" : "common"
+            }
         },
         "usingComponents" : true
     },
@@ -65,7 +74,7 @@
         },
         "plugins" : {
             "routePlan" : {
-                "version" : "1.0.7",
+                "version" : "1.0.8",
                 "provider" : "wx50b5593e81dd937a"
             }
         }

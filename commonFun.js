@@ -308,6 +308,7 @@ function tip(title, icon = 'none') {
 		icon: icon
 	});
 }
+
 export async function  getClassAndExam() {
 	var account = getStorageSync('account', {
 		ID: '',
@@ -349,13 +350,13 @@ export async function  getClassAndExam() {
 					toStorage: true,
 					toStringify: true
 				});
-				// Vue.prototype.$store.commit({
-				// 	type: 'changeStateofSchedule',
-				// 	stateName: 'examData',
-				// 	value: exam,
-				// 	toStorage: true,
-				// 	toStringify: true
-				// });
+				Vue.prototype.$store.commit({
+					type: 'changeStateofSchedule',
+					stateName: 'examData',
+					value: [],
+					toStorage: true,
+					toStringify: true
+				});
 				Vue.prototype.$store.commit({
 					type: 'changeStateofSchedule',
 					stateName: 'campus',
@@ -410,7 +411,59 @@ export async function getLocationLenght() {
 	})
 	return length;
 }
-	
+
+export function getTimeToCnameTime(stringTime){
+    let minute = 1000 * 60;
+    let hour = minute *60;
+    let day = hour *24;
+    let week = day * 7;
+    let month = day * 30;
+    let time1 = new Date().getTime();//当前的时间戳
+    let time2 = Date.parse(new Date(stringTime));//指定时间的时间戳
+    let time = time1 - time2;
+    let result = null;
+    if(time < 0){
+        alert("设置的时间不能早于当前时间！");
+    }else if(time/month >= 1){
+        result = parseInt(time/month) + "月前";
+    }else if(time/week >= 1){
+        result = parseInt(time/week) + "周前";
+    }else if(time/day >= 1){
+        result = parseInt(time/day) + "天前";
+    }else if(time/hour >= 1){
+        result = parseInt(time/hour) + "小时前";
+    }else if(time/minute >= 1){
+        result = parseInt(time/minute) + "分钟前";
+    }else {
+        result = "刚刚发布";
+    }
+    return result
+}
+export function getDayDiff(endTime) {
+    var now = new Date();
+    var dateStart = new Date(now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate());
+	var dateEnd = new Date(endTime);
+	var difValue = (dateEnd - dateStart) / (1000 * 60 * 60 * 24);
+    return Math.floor(difValue);
+}
+
+export function getLastExam() {
+    let examList = JSON.parse(uni.getStorageSync("examNewData"))
+    if (examList.length === 0) {
+        return null;
+    }
+    let last = examList[0];
+    examList.forEach(it=>{
+        it.examCountDown = getDayDiff(it.examDate);
+        if (it.examCountDown >= 0) {
+            if ( it.examCountDown < last.examCountDown ) {
+                last = it;
+            }
+        }
+    })
+    return last.examCountDown<0?null:last;
+}
+
 const commonFun = {
 	getStorage,
 	getStorageSync,
@@ -433,7 +486,10 @@ const commonFun = {
 	openSchoolChangeTips,
 	getClassAndExam,
 	getLocationList,
+    getTimeToCnameTime,
 	wait,
+    getDayDiff,
+    getLastExam,
 };
 Vue.prototype.$commonFun = commonFun;
 export default commonFun;

@@ -19,7 +19,7 @@ export const privacy = `<h1>隐私政策</h1>
 <ul>
 <li>含公选课：除去重修课项, ( ( 科目绩点 * 学分)之和 /  学分之和 )</li>
 <li>不含公选课：除去重修课项和公选课项, ( ( 科目绩点 * 学分)之和 /  学分之和 )</li>
-
+<li>补考：所有数据带补考字样的信息不计入到绩点之中</li>
 </ul>
 <p>注意：某些课程类型为选修课，但不是公选课，仍会计入绩点。</p>
 </li>
@@ -35,21 +35,4 @@ export const privacy = `<h1>隐私政策</h1>
 
 </ol>
 <p><strong>gdutday方对上述功能拥有最终解释权。</strong></p>
-<h1 data-breakpage>常见问题</h1>
-<h2>登录成功但课程表不显示</h2>
-<p>已知ios11及以下系统极有可能渲染失败和布局错位的问题，因页面渲染依赖系统的渲染引擎，所以此问题无法修复。如果您有内容渲染失败或布局错位等问题，也请与我们联系。</p>
-<h2>无法登录</h2>
-<ol>
-<li>本系统使用的是<a href='http://authserver.gdut.edu.cn/authserver/login'><strong>统一身份认证系统</strong></a>进行登录。<strong>初始密码</strong>为身份证后六位。如遇到无法登录，请使用浏览器验证统一身份认证系统是否能正常登录。</li>
-<li>如果遗忘统一身份认证系统密码可在浏览器端打开 <a href='http://authserver.gdut.edu.cn/authserver/getBackPasswordMainPage.do' target='_blank' class='url'>http://authserver.gdut.edu.cn/authserver/getBackPasswordMainPage.do</a> 找回密码。</li>
-<li>无法通过找回密码，可联系辅导员帮助找回统一认证密码，具体详见学校找回密码页。</li>
-
-</ol>
-<h1 data-breakpage>其他问题</h1>
-<ol>
-<li>在 “我的”-&gt;“意见反馈” 中提交遇到的问题，并选择48小时内客服可回复，开发者可直接联系到你。</li>
-<li>可以直接添加<a href='1076030174'>qq群(点击复制群号)</a></li>
-<li>如果你使用GitHub，欢迎在 <a href='https://github.com/gdutday/gdutday-issue/issues' target='_blank' class='url'>https://github.com/gdutday/gdutday-issue/issues</a> 此项目中的issue进行反馈。</li>
-
-</ol>
 `

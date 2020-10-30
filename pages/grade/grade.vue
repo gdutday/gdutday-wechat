@@ -20,6 +20,7 @@
 			<block v-else-if="index == 4"><get-pole-column /></block>
 			<block v-else-if="index == 5"><all-grade-scores-column /></block>
 		</view>
+        <yzmcom ref="reyzm" page="grade" style="z-index: 999999999;"/>
 	</view>
 </template>
 
@@ -33,8 +34,10 @@ import classifyRing from '@/pages/grade/grade-charts/grade-ring.vue';
 import poleLine from '@/pages/grade/grade-charts/grade-line.vue';
 import { APIs } from '@/staticData/staticData.js';
 import { wait } from '@/commonFun.js';
+import yzmcom from '@/components/cerbur-yzm.vue';
 export default {
 	components: {
+        yzmcom,
 		gradeConfig,
 		columnExample,
 		allGradeScoresColumn,
@@ -63,7 +66,8 @@ export default {
 	// 	this.$emit('changeGradeConfig');
 	// },
 	onPullDownRefresh() {
-		this.getGrade();
+        this.refreshGradeByEdu();
+		// this.getGrade();
 	},
 	async mounted() {
 		if (!this.hasGrade) !this.hasAccount ? this.$commonFun.interceptToLogin(this.$Router) : this.getGrade();
@@ -91,7 +95,10 @@ export default {
 		},
 		hasAccount() {
 			return !!this.$account.ID;
-		}
+		},
+        hasEducation() {
+            return !!this.$education.ID;
+        }
 	},
 	methods: {
 		tip(title, icon = 'none') {
@@ -100,9 +107,30 @@ export default {
 				icon: icon
 			});
 		},
+        refreshGradeByEdu() {
+            if (this.loading) return;
+            if (!this.hasEducation) {
+                uni.stopPullDownRefresh()
+                let that = this;
+                uni.showModal({
+                	title: "提示",
+                	content: "还未登录哦,是否跳转到登录页面",
+                	success: e =>
+                		e.confirm ?
+                		that.$Router.push({
+                			name: "login-edu"
+                		}) : ""
+                });
+                return;
+            }
+            this.$refs.reyzm.showModal();
+            uni.stopPullDownRefresh();
+        },
 		async getGrade() {
 			if (this.loading) return;
-			if (!this.hasAccount) return uni.stopPullDownRefresh() && this.tip('无账号,请先登录');
+			if (!this.hasAccount) {
+                return uni.stopPullDownRefresh() && this.tip('无账号,请先登录');
+            }
 			uni.showLoading({
 				title: '查询成绩中..'
 			});

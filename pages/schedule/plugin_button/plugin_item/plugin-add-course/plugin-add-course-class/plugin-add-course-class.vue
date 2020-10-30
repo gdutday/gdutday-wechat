@@ -1,7 +1,7 @@
 <template>
 	<view id="course" style="width: 650rpx;">
 		<view class="flex-row j-sb">
-			<input style="width:500rpx;" class="text-df" type="text" placeholder="课程名称" v-model="name" />
+			<input style="width:500rpx;" class="text-df" type="text" placeholder="课程名称(必填)" v-model="name" />
 			<view class="flex-row flex-1 j-sb" v-if="addTag">
 				<view class="text-df transition-2" @tap="deleteAdd" :style="$themeFont">删除</view>
 				<view class="text-df transition-2" @tap="changeAdd" :style="hasAll ? $themeFont : 'color:#C8C8C8'">修改</view>

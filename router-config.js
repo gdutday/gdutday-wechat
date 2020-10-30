@@ -4,14 +4,26 @@ export default {
 			path: "/pages/schedule/schedule",
 			name: 'schedule'
 		},
-		{
-			path: "/pages/login/login",
-			name: 'login'
-		},
+		// {
+		// 	path: "/pages/login/login",
+		// 	name: 'login'
+		// },
+        {
+        	path: "/pages/login/login-edu",
+        	name: 'login'
+        },
+        {
+        	path: "/pages/login/login-edu",
+        	name: 'login-edu'
+        },
 		{
 			path: "/pages/my/my-mark/my-mark",
 			name: 'mark'
 		},
+        {
+        	path: "/pages/my/my-task/my-task",
+        	name: 'task'
+        },
 		{
 			path: "/pages/my/my-clear/my-clear",
 			name: 'clear'
@@ -28,6 +40,10 @@ export default {
 			path: "/pages/my/my-about/my-about",
 			name: 'about'
 		},
+        {
+        	path: "/pages/my/my-problem/my-problem",
+        	name: 'problem'
+        },
 		{
 			path: "/pages/grade/grade",
 			name: 'grade'
@@ -48,6 +64,10 @@ export default {
 			path: "/pages/file/file-detail/file-detail",
 			name: 'file_detail'
 		},
+        {
+        	path: "/pages/exam/exam",
+        	name: 'exam'
+        },
 		{
 			path: "/pages/rubbish/rubbish",
 			name: 'rubbish'

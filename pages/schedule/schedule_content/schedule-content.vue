@@ -178,7 +178,7 @@ export default {
 					),
 					true
 				);
-				if (+count[this.$currentWeek] === 0 && Math.random() < 1 / 5) {
+				if (+count[this.$currentWeek] === 0) {
 					this.$commonFun
 						.rePromise({
 							PromiseFunction: this.$http.post.bind(this.$http),
@@ -205,10 +205,17 @@ export default {
 									toStorage: true,
 									toStringify: true
 								});
+                                this.$store.commit({
+                                	type: 'changeStateofSchedule',
+                                	stateName: 'examNewData',
+                                	value: exam,
+                                	toStorage: true,
+                                	toStringify: true
+                                });
 								this.$store.commit({
 									type: 'changeStateofSchedule',
 									stateName: 'examData',
-									value: exam,
+									value: [],
 									toStorage: true,
 									toStringify: true
 								});
