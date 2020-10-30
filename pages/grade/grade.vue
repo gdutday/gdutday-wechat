@@ -20,7 +20,7 @@
 			<block v-else-if="index == 4"><get-pole-column /></block>
 			<block v-else-if="index == 5"><all-grade-scores-column /></block>
 		</view>
-        <yzmcom ref="reyzm" page="grade"/>
+        <yzmcom ref="reyzm" page="grade" style="z-index: 999999999;"/>
 	</view>
 </template>
 

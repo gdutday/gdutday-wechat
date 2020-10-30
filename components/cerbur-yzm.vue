@@ -81,7 +81,6 @@
                 this.verifyCode = '';
             },
             async request() {
-                console.log("request");
             	this.$commonFun
             		.rePromise({
             			PromiseFunction: this.$http.post.bind(this.$http),
