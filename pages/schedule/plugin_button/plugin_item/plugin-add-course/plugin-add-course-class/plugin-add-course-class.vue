@@ -86,12 +86,12 @@ export default {
 		};
 	},
 	created() {
-		this.Bus.$on('addSchedule', async(params) => {
+		this.Bus.$on('addSchedule', async params => {
 			this.addTag = 0;
 			this.init();
-			if(params !== undefined){
+			if (params !== undefined) {
 				this.hasChoose = true;
-				const { week,name,room: place,day,start,long } = params;
+				const { week, name, room: place, day, start, long } = params;
 				this.name = name;
 				this.place = place;
 				this.hasChoose = true;
@@ -271,9 +271,9 @@ export default {
 			});
 		},
 		// query() {
-			// this.$commonFun.reQueryDom('course', this).then(res => {
-			// this.Bus.$emit('sendCourseHeight', 290);
-			// }).catch((err)=>{});
+		// this.$commonFun.reQueryDom('course', this).then(res => {
+		// this.Bus.$emit('sendCourseHeight', 290);
+		// }).catch((err)=>{});
 		// },
 		toAsk() {
 			this.Bus.showModal({ key: 'ask' });
