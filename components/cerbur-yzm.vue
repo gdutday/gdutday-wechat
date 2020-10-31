@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<modal ref="modal">
+		<modal ref="modal" :maskForce="true">
 			<comfirm
 				@success="success"
 				@fail="fail"

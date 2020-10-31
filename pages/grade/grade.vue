@@ -31,7 +31,7 @@
 		>
 			<block v-if="index == 0"><grade-config /></block>
 			<block v-else-if="index == 1"><classify-ring /></block>
-			<block v-else-if="indesx == 2"><pole-line /></block>
+			<block v-else-if="index == 2"><pole-line /></block>
 			<block v-else-if="index == 3">
 				<column-example />
 				<get-grade-scores-column />
