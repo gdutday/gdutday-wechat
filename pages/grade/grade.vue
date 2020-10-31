@@ -133,7 +133,6 @@ export default {
 		},
 		showCharts() {
 			this.show = true;
-			console.log(this.show)
 			this.$nextTick(() => this.$emit('changeGradeConfig'));
 		},
 		refreshGradeByEdu() {

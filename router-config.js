@@ -44,6 +44,10 @@ export default {
         	path: "/pages/my/my-problem/my-problem",
         	name: 'problem'
         },
+        {
+        	path: "/pages/my/my-open/my-open",
+        	name: 'open'
+        },
 		{
 			path: "/pages/grade/grade",
 			name: 'grade'

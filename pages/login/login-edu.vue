@@ -244,7 +244,6 @@ export default {
 					'content-type': 'image/jpeg'
 				},
 				success: res => {
-					console.log(res);
 					let cookie = res.header['Set-Cookie'];
 					let session = cookie.substring(
 						cookie.indexOf('=') + 1,

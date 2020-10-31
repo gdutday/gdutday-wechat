@@ -43,7 +43,7 @@
 		</view>
 		<!-- <view class="text-lg text-blue" @tap="toGrade">{{ lastestGrade }}</view> -->
         <view class="flex-row">
-            <text class="m-center text-center text-gray mt-5">v1.5.5@gdutday</text>
+            <text class="m-center text-center text-gray mt-5">v1.5.6@gdutday</text>
         </view>
     </view>
 </template>
@@ -118,7 +118,11 @@ export default {
 				{
 					icon: 'about',
 					text: '关于我们'
-				}
+				},
+                {
+                	icon: 'github',
+                	text: '开源总览'
+                }
 			],
 			delay:false
 		};
@@ -181,6 +185,11 @@ export default {
 						name: 'about'
 					});
 					break;
+                case 'github':
+                    this.$Router.push({
+                        name: 'open'
+                    });
+                    break;
 			}
 		},
 		toCode() {
