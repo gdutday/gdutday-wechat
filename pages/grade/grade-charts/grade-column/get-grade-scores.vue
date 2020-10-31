@@ -33,6 +33,7 @@ export default {
 				format: val => +val.toFixed(0)
 			});
 		},
+		toJSON() {},
 		touchColumn(e) {
 			//#ifndef H5
 			  e.changedTouches[0].y = e.touches[0].y;
