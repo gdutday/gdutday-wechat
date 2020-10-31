@@ -36,6 +36,7 @@ export default {
 			//#endif
 			column.scrollStart(e);
 		},
+		toJSON() {},
 		moveColumn(e) {
 			column.scroll(e);
 		},

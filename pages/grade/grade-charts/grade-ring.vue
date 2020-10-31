@@ -68,6 +68,7 @@ export default {
 				name:'privacy'
 			})
 		},
+		toJSON() {},
 		showRing(that, canvasId, chartData) {
 			const colors = ['#f04864', '#FF7293', '#FFE655', '#33C8FD', '#40C769'];
 			return new uCharts({

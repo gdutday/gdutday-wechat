@@ -46,6 +46,7 @@ export default {
 				]
 			});
 		},
+		toJSON() {},
 		showLine(that, canvasId, chartData) {
 			return new uCharts({
 				$this: that,

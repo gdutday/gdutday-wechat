@@ -1,18 +1,37 @@
 <template>
-	<view class="bg-white pb-5">
-		<cover-view class="text-white w-1 flex-row j-center a-center position-fixed mb" style="top:0px;z-index: 1000;box-shadow: 1px 2px 2px #CCCCCC;" :style="style + color">
+	<view class="bg-white pb-5" style="min-height: 100vh;">
+		<!-- <block v-if="show"> -->
+		<cover-view
+			class="text-white w-1 flex-row j-center a-center position-fixed mb"
+			style="top:0px;z-index: 1000;box-shadow: 1px 2px 2px #CCCCCC;"
+			:style="style + color"
+		>
 			<cover-view @tap="toFind" class="flex-row a-center">
-				<cover-image class="mr-1" style="width: 16px;height: 16px;" src="/static/find.png" />
+				<cover-image
+					class="mr-1"
+					style="width: 16px;height: 16px;"
+					src="/static/find.png"
+				/>
 				<cover-view>点击查看成绩</cover-view>
 			</cover-view>
 		</cover-view>
 		<view :style="style"></view>
-		<view class="text-gray bg-white text-df pl-1 py-2" style="margin-bottom: -10rpx;" v-if="!hasGrade">tip:现在没有成绩数据哦,以下是示例</view>
-		<view v-if="delay" class="mt-5 rounded-2 depth-1 mx-2 pb-2 pt animation-slide-bottom"
-		 v-for="(item, index) in 6" :key="index">
+		<view
+			class="text-gray bg-white text-df pl-1 py-2"
+			style="margin-bottom: -10rpx;"
+			v-if="!hasGrade"
+		>
+			tip:现在没有成绩数据哦,以下是示例
+		</view>
+		<view
+			v-if="delay&&show"
+			class="mt-5 rounded-2 depth-1 mx-2 pb-2 pt animation-slide-bottom"
+			v-for="(item, index) in 6"
+			:key="index"
+		>
 			<block v-if="index == 0"><grade-config /></block>
 			<block v-else-if="index == 1"><classify-ring /></block>
-			<block v-else-if="index == 2"><pole-line /></block>
+			<block v-else-if="indesx == 2"><pole-line /></block>
 			<block v-else-if="index == 3">
 				<column-example />
 				<get-grade-scores-column />
@@ -20,7 +39,8 @@
 			<block v-else-if="index == 4"><get-pole-column /></block>
 			<block v-else-if="index == 5"><all-grade-scores-column /></block>
 		</view>
-        <yzmcom ref="reyzm" page="grade" style="z-index: 999999999;"/>
+		<!-- </block> -->
+		<yzmcom @hideModal="showCharts" ref="reyzm" page="grade" />
 	</view>
 </template>
 
@@ -37,7 +57,7 @@ import { wait } from '@/commonFun.js';
 import yzmcom from '@/components/cerbur-yzm.vue';
 export default {
 	components: {
-        yzmcom,
+		yzmcom,
 		gradeConfig,
 		columnExample,
 		allGradeScoresColumn,
@@ -54,7 +74,8 @@ export default {
 	data() {
 		return {
 			loading: false,
-			delay: false
+			delay: false,
+			show: true
 		};
 	},
 	onLoad() {
@@ -66,11 +87,14 @@ export default {
 	// 	this.$emit('changeGradeConfig');
 	// },
 	onPullDownRefresh() {
-        this.refreshGradeByEdu();
+		this.refreshGradeByEdu();
 		// this.getGrade();
 	},
 	async mounted() {
-		if (!this.hasGrade) !this.hasAccount ? this.$commonFun.interceptToLogin(this.$Router) : this.getGrade();
+		if (!this.hasGrade)
+			!this.hasAccount
+				? this.$commonFun.interceptToLogin(this.$Router)
+				: this.getGrade();
 		uni.showLoading({
 			title: '加载图表中'
 		});
@@ -96,9 +120,9 @@ export default {
 		hasAccount() {
 			return !!this.$account.ID;
 		},
-        hasEducation() {
-            return !!this.$education.ID;
-        }
+		hasEducation() {
+			return !!this.$education.ID;
+		}
 	},
 	methods: {
 		tip(title, icon = 'none') {
@@ -107,30 +131,37 @@ export default {
 				icon: icon
 			});
 		},
-        refreshGradeByEdu() {
-            if (this.loading) return;
-            if (!this.hasEducation) {
-                uni.stopPullDownRefresh()
-                let that = this;
-                uni.showModal({
-                	title: "提示",
-                	content: "还未登录哦,是否跳转到登录页面",
-                	success: e =>
-                		e.confirm ?
-                		that.$Router.push({
-                			name: "login-edu"
-                		}) : ""
-                });
-                return;
-            }
-            this.$refs.reyzm.showModal();
-            uni.stopPullDownRefresh();
-        },
+		showCharts() {
+			this.show = true;
+			console.log(this.show)
+			this.$nextTick(() => this.$emit('changeGradeConfig'));
+		},
+		refreshGradeByEdu() {
+			if (this.loading) return;
+			if (!this.hasEducation) {
+				uni.stopPullDownRefresh();
+				let that = this;
+				uni.showModal({
+					title: '提示',
+					content: '还未登录哦,是否跳转到登录页面',
+					success: e =>
+						e.confirm
+							? that.$Router.push({
+									name: 'login-edu'
+							  })
+							: ''
+				});
+				return;
+			}
+			this.show = false;
+			this.$refs.reyzm.showModal();
+			uni.stopPullDownRefresh();
+		},
 		async getGrade() {
 			if (this.loading) return;
 			if (!this.hasAccount) {
-                return uni.stopPullDownRefresh() && this.tip('无账号,请先登录');
-            }
+				return uni.stopPullDownRefresh() && this.tip('无账号,请先登录');
+			}
 			uni.showLoading({
 				title: '查询成绩中..'
 			});
@@ -155,7 +186,11 @@ export default {
 						toStorage: true,
 						toStringify: true
 					});
-					this.tip(...(data.length ? ['成绩查询成功', 'success'] : ['查询成功,但无成绩数据']));
+					this.tip(
+						...(data.length
+							? ['成绩查询成功', 'success']
+							: ['查询成功,但无成绩数据'])
+					);
 					this.$emit('changeGradeConfig');
 				} else {
 					this.tip('成绩查询失败,请重试');

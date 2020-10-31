@@ -1,21 +1,25 @@
 <template>
 	<!-- 文本框 -->
-	<view  class="rapper">
+	<view class="rapper" :style="width ? 'width:' + width + ';' : ''">
 		<view style="height: 32px;"></view>
-		<input class="myinput" @focus="focus" @blur="blur" :value="value" :type="_type" :maxlength="maxlength" :placeholder="place_1" :password="type === 'password'" @input="onInput" >
-		<view class="inputline" :style="'background-color:'+lineColor" :class=" isfocus ? 'active' : ''">
-		</view>
-		<view class="tip" :class="_focus ?  'focus' : ''" :style="_focus ? 'color:'+ textColor : ''"  >
-		{{tip}}
-		</view> 
-
-		</input>
+		<input
+			class="myinput"
+			@focus="focus"
+			@blur="blur"
+			:value="value"
+			:type="_type"
+			:maxlength="maxlength"
+			:placeholder="place_1"
+			:password="type === 'password'"
+			@input="onInput"
+		/>
+		<view class="inputline" :style="'background-color:' + lineColor" :class="isfocus ? 'active' : ''"></view>
+		<view class="tip" :class="_focus ? 'focus' : ''" :style="_focus ? 'color:' + textColor : ''">{{ tip }}</view>
 		<!-- 是否可见密码 -->
 		<!-- 倒计时 -->
 		<!-- <view v-if="_isShowCode && !_isShowPass" :class="['vercode', { 'vercode-run': second > 0 }]" @click="setCode">{{ getVerCodeSecond }}</view> -->
 		<view v-if="_isShowCode" :class="['vercode', { 'vercode-run': second > 0 }]" @click="setCode">{{ getVerCodeSecond }}</view>
-		<view class="line">
-		</view>
+		<view class="line"></view>
 	</view>
 </template>
 
@@ -26,32 +30,35 @@ export default {
 		return {
 			// showPassword: false, //是否显示明文
 			second: 0, //倒计时
-			isRunCode: false ,//是否开始倒计时
-			isfocus:false,
-			timer:null,
-			place_1:'',
+			isRunCode: false, //是否开始倒计时
+			isfocus: false,
+			timer: null,
+			place_1: ''
 		};
 	},
 	props: {
-		value:{
-			required:true,
+		value: {
+			required: true
 		},
-		lineColor:{
-			type:String,
-			default:'grey'
+		lineColor: {
+			type: String,
+			default: 'grey'
 		},
-		textColor:{
-			type:String,
-			default:'grey'
+		textColor: {
+			type: String,
+			default: 'grey'
 		},
-		type:{
-			type:String,
-			default:'text'
+		type: {
+			type: String,
+			default: 'text'
+		},
+		width: {
+			type: String
 		},
 		placeholder: String, //框内提示
-		tip:{
+		tip: {
 			type: String,
-			default:'用户'
+			default: '用户'
 		},
 		maxlength: {
 			//最大长度
@@ -79,9 +86,9 @@ export default {
 		}
 	},
 	model: {
-	    prop: 'value',
-	    event: 'input'
-	  },
+		prop: 'value',
+		event: 'input'
+	},
 	mounted() {
 		_this = this;
 		//准备触发
@@ -91,20 +98,19 @@ export default {
 		clearInterval(countDown); //先清理一次循环，避免缓存
 	},
 	methods: {
-		
-		focus(){
-			clearTimeout(this.timer)
-			this.timer = setTimeout(()=>{
-			this.isfocus = true;
-			this.place_1 = this.placeholder;
-			},50)
+		focus() {
+			clearTimeout(this.timer);
+			this.timer = setTimeout(() => {
+				this.isfocus = true;
+				this.place_1 = this.placeholder;
+			}, 50);
 		},
-		blur(){
-			clearTimeout(this.timer)
-			this.timer = setTimeout(()=>{
-			this.isfocus = false;
-			this.place_1 = '';
-			},50)
+		blur() {
+			clearTimeout(this.timer);
+			this.timer = setTimeout(() => {
+				this.isfocus = false;
+				this.place_1 = '';
+			}, 50);
 		},
 		// showPass() {
 		// 	//是否显示密码
@@ -149,8 +155,8 @@ export default {
 		}
 	},
 	computed: {
-		_focus(){
-			return this.isfocus || this.value!='';
+		_focus() {
+			return this.isfocus || this.value != '';
 		},
 		_type() {
 			//处理值
@@ -182,14 +188,12 @@ export default {
 				}
 			}
 		}
-	},
-	
+	}
 };
-	
 </script>
 
 <style scoped>
-input{
+input {
 	overflow: visible;
 }
 .rapper {
@@ -219,38 +223,37 @@ input{
 	color: rgba(0, 0, 0, 0.87);
 	position: relative;
 }
-.inputline{
-	content: "";
-	display:block;
+.inputline {
+	content: '';
+	display: block;
 	position: absolute;
 	width: 100%;
 	height: 2px;
 	background-color: grey;
 	bottom: -0.5px;
-	transform: scale(0,1);
-	transition: transform .45s cubic-bezier(.23,1,.32,1);
+	transform: scale(0, 1);
+	transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
 }
-.tip{
-	color:#808080;
+.tip {
+	color: #808080;
 	position: absolute;
 	height: 32px;
 	line-height: 32px;
 	top: 32px;
 	left: 0px;
-	transition: all .45s cubic-bezier(.23,1,.32,1);
+	transition: all 0.45s cubic-bezier(0.23, 1, 0.32, 1);
 }
-.focus{
-	font-size: 14px ;
-	transform:translateY(-32px) ;
+.focus {
+	font-size: 14px;
+	transform: translateY(-32px);
 }
-.active{
-	transform: scale(1,1) !important;
-	
+.active {
+	transform: scale(1, 1) !important;
 }
 .line {
-	width:100% ;
+	width: 100%;
 	height: 1px;
-	background-color:#D1D1D1;
+	background-color: #d1d1d1;
 }
 .vercode {
 	color: rgba(0, 0, 0, 0.7);
