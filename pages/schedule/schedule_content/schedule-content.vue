@@ -179,67 +179,67 @@ export default {
 					true
 				);
 				if (+count[this.$currentWeek] === 0) {
-					this.$commonFun
-						.rePromise({
-							PromiseFunction: this.$http.post.bind(this.$http),
-							parms: [
-								APIs.classAndExam,
-								{
-									schoolId: this.$account.ID,
-									password: this.$account.password
-								}
-							],
-							times: 2
-						})
-						.then(res => {
-							if (+res.data.error == 1) {
-								const {
-									curriculum,
-									exam,
-									campus
-								} = res.data.data;
-								this.$store.commit({
-									type: 'changeStateofSchedule',
-									stateName: 'classData',
-									value: curriculum,
-									toStorage: true,
-									toStringify: true
-								});
-                                this.$store.commit({
-                                	type: 'changeStateofSchedule',
-                                	stateName: 'examNewData',
-                                	value: exam,
-                                	toStorage: true,
-                                	toStringify: true
-                                });
-								this.$store.commit({
-									type: 'changeStateofSchedule',
-									stateName: 'examData',
-									value: [],
-									toStorage: true,
-									toStringify: true
-								});
-								this.$store.commit({
-									type: 'changeStateofSchedule',
-									stateName: 'campus',
-									value: campus,
-									toStorage: true
-								});
-								this.$commonFun.countTimes();
-								this.Bus.$refs['tip'].show('课表已刷新');
-								console.log('更新课表');
-							} else {
-								this.Bus.$refs['tip'].show(
-									'课表更新失败 , 服务器端故障或密码变更'
-								);
-								console.log(res, '更新失败');
-							}
-						})
-						.catch(res => {
-							//待写提示
-							this.Bus.$refs['tip'].show('请检查网络');
-							console.log(res, '网络问题');
-						});
+					// this.$commonFun
+					// 	.rePromise({
+					// 		PromiseFunction: this.$http.post.bind(this.$http),
+					// 		parms: [
+					// 			APIs.classAndExam,
+					// 			{
+					// 				schoolId: this.$account.ID,
+					// 				password: this.$account.password
+					// 			}
+					// 		],
+					// 		times: 2
+					// 	})
+					// 	.then(res => {
+					// 		if (+res.data.error == 1) {
+					// 			const {
+					// 				curriculum,
+					// 				exam,
+					// 				campus
+					// 			} = res.data.data;
+					// 			this.$store.commit({
+					// 				type: 'changeStateofSchedule',
+					// 				stateName: 'classData',
+					// 				value: curriculum,
+					// 				toStorage: true,
+					// 				toStringify: true
+					// 			});
+     //                            this.$store.commit({
+     //                            	type: 'changeStateofSchedule',
+     //                            	stateName: 'examNewData',
+     //                            	value: exam,
+     //                            	toStorage: true,
+     //                            	toStringify: true
+     //                            });
+					// 			this.$store.commit({
+					// 				type: 'changeStateofSchedule',
+					// 				stateName: 'examData',
+					// 				value: [],
+					// 				toStorage: true,
+					// 				toStringify: true
+					// 			});
+					// 			this.$store.commit({
+					// 				type: 'changeStateofSchedule',
+					// 				stateName: 'campus',
+					// 				value: campus,
+					// 				toStorage: true
+					// 			});
+					// 			this.$commonFun.countTimes();
+					// 			this.Bus.$refs['tip'].show('课表已刷新');
+					// 			console.log('更新课表');
+					// 		} else {
+					// 			this.Bus.$refs['tip'].show(
+					// 				'课表更新失败 , 服务器端故障或密码变更'
+					// 			);
+					// 			console.log(res, '更新失败');
+					// 		}
+					// 	})
+					// 	.catch(res => {
+					// 		//待写提示
+					// 		this.Bus.$refs['tip'].show('请检查网络');
+					// 		console.log(res, '网络问题');
+					// 	});
 				} else {
 					console.log('本周已更新');
 				}

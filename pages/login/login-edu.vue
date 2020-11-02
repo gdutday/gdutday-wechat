@@ -156,7 +156,7 @@ export default {
 					} else if (+res.data.error == -305) {
 						console.log(res.data);
 						this.showTip = true;
-						this.tip = '课表信息为空,若为20级目前教务系统未对接,请之后尝试';
+						this.tip = '课表信息为空,若为新年级则是目前教务系统未对接,请之后尝试';
 					} else if (+res.data.error == 1) {
 						this.$store.commit({
 							type: 'changeStateofGlobal',
@@ -196,7 +196,7 @@ export default {
 							showCancel: false,
 							title: '提示',
 							content:
-								'教务系统由于特殊原因,无法自动更新,请在之后教务系统与统一身份认证系统对接完成后,使用统一身份认证系统登录',
+								'由于统一认证平台限制,暂时无法自动更新课表。若有需求,请前往『账户与数据』重新登录即可更新',
 							complete() {
 								_this.$Router.replaceAll({ name: 'schedule' });
 							}
@@ -216,7 +216,7 @@ export default {
 					} else if (res.errMsg == 'request:fail') {
 						this.tip = '网络连接错误 , 请重试';
 					} else {
-						this.tip = '其他错误请重试 , 请重启小程序';
+						this.tip = '其他错误 , 请重启小程序';
 					}
 				});
 		},
@@ -246,20 +246,25 @@ export default {
 				success: res => {
 					console.log(res);
 					let cookie = res.header['Set-Cookie'];
-					let session = cookie.substring(
-						cookie.indexOf('=') + 1,
-						cookie.indexOf(';')
-					);
-					let imgs =
-						'data:image/jpeg;base64,' +
-						polyfill.btoa(
-							new Uint8Array(res.data).reduce(
-								(data, byte) => data + String.fromCharCode(byte),
-								''
-							)
+					if (cookie) {
+						let session = cookie.substring(
+							cookie.indexOf('=') + 1,
+							cookie.indexOf(';')
 						);
-					this.yzm = imgs;
-					this.session = session;
+						let imgs =
+							'data:image/jpeg;base64,' +
+							polyfill.btoa(
+								new Uint8Array(res.data).reduce(
+									(data, byte) => data + String.fromCharCode(byte),
+									''
+								)
+							);
+						this.yzm = imgs;
+						this.session = session;
+					} else {
+						this.tip = '无法获取验证码，请联系开发者';
+						this.showTip = true;
+					}
 				}
 			});
 		}

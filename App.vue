@@ -1,7 +1,13 @@
 <script>
 import Vue from 'vue';
 import { APIs } from '@/staticData/staticData.js';
-import { getStorageSync, getCurrentWeek,openSchoolChangeTips,commonFun,getClassAndExam } from '@/commonFun.js';
+import {
+	getStorageSync,
+	getCurrentWeek,
+	openSchoolChangeTips,
+	commonFun,
+	getClassAndExam
+} from '@/commonFun.js';
 import { http } from '@/axios-config.js';
 export default {
 	onLaunch() {
@@ -12,7 +18,10 @@ export default {
 		Vue.prototype.$currentDay = (new Date().getDay() || 7) - 1;
 		//设置bar颜色
 		//这个iconlist要跟pages.json里面的icon对应!
-		const barColor = this.$themeColor == 'otherTheme' ? this.$commonFun.hexify(this.$allColor.gray.theme) : this.$commonFun.hexify(this.$colorList.theme);
+		const barColor =
+			this.$themeColor == 'otherTheme'
+				? this.$commonFun.hexify(this.$allColor.gray.theme)
+				: this.$commonFun.hexify(this.$colorList.theme);
 		const iconList = ['task_fill', 'grade', 'people_fill'].map(item => {
 			return `static/bar/${this.$themeColor}/${item}.png`;
 		});
@@ -60,24 +69,32 @@ export default {
 				// #endif
 			}
 		});
+		// 修复因考试安排与课表冲突导致的白屏
+		Vue.prototype.$store.commit({
+			type: 'changeStateofSchedule',
+			stateName: 'examData',
+			value: [],
+			toStorage: true,
+			toStringify: true
+		});
 	},
 	onShow() {},
 	onHide: function() {
 		console.log('App Hide');
 	},
 	created() {
-		this.schoolOpening().catch(e=>console.log(e));
+		this.schoolOpening().catch(e => console.log(e));
 	},
 	methods: {
 		async schoolOpening() {
 			const {
 				data: { schoolOpening }
 			} = await http.get(APIs.getSchoolOpening);
-			var oldTime = uni.getStorageSync('schoolOpening')
+			var oldTime = uni.getStorageSync('schoolOpening');
 			uni.setStorageSync('schoolOpening', schoolOpening);
 			if (oldTime !== schoolOpening) {
 				// TODO 刷新一次课表
-				openSchoolChangeTips()
+				openSchoolChangeTips();
 			}
 		}
 	}

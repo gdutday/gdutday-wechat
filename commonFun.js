@@ -286,7 +286,22 @@ export function interceptToLogin(
 			""
 	});
 }
-
+// 跳转至账号/数据页面
+export function interceptToMyClear(
+	router,
+	content = ""
+) {
+	uni.showModal({
+		title: "提示",
+		content: content,
+		success: e =>
+			e.confirm ?
+			router.push({
+				name: "clear"
+			}) :
+			""
+	});
+}
 export function openSchoolChangeTips(
 	content = "检测到本地时间与服务器时间不一致\n点击确定后将更新课程\n请更新完后重启小程序同步时间"
 ) {

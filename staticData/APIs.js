@@ -1,4 +1,4 @@
-const baseFunctionsUrl = "https://xingxing.cerbur.top/functions";
+const baseFunctionsUrl = "https://xing.cerbur.top/functions";
 const baseDownloadUrl = "https://gdutday.gitee.io/gdut-lib";
 const baseDataUrl = "https://gdutday.gitee.io/data";
 const baseNewsUrl = "https://news.cerbur.top"

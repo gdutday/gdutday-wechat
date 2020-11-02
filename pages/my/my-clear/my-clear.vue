@@ -5,29 +5,57 @@
 			<ripple>
 				<view class="hg flex-row j-sb a-center px-5 bg-white">
 					<view>{{ item.item }}</view>
-					<view @tap="change" class="ripple white capsul-button  text-white depth-2" :style="$themeBackground" :data-name="item.item">{{ item.operation }}</view>
+					<view
+						@tap="change"
+						class="ripple white capsul-button  text-white depth-2"
+						:style="$themeBackground"
+						:data-name="item.item"
+					>
+						{{ item.operation }}
+					</view>
 				</view>
 			</ripple>
 		</block>
 		<modal ref="modal">
-			<comfirm @success="success" @fail="fail" :title="title">{{ 'Tip : ' + tip }}</comfirm>
+			<comfirm @success="success" @fail="fail" :title="title">
+				{{ 'Tip : ' + tip }}
+			</comfirm>
+		</modal>
+		<modal ref="unifiedModal" :maskForce="true">
+			<comfirm
+				confirmText="设置"
+				@success="unifiedModalComfirm"
+				@fail="fail"
+				title="统一认证密码设置"
+			>
+				<text class="text-gray text-sm">tip:此密码仅保存在本地</text>
+				<my-input
+					:textColor="$colorList.theme"
+					:lineColor="$colorList.theme"
+					type="text"
+					v-model="unifiedPassword"
+					placeholder="统一认证密码默认为身份证后六位"
+					tip="统一身份认证密码"
+				/>
+			</comfirm>
 		</modal>
 		<tip ref="tip"></tip>
-        <yzmcom ref="reyzm"/>
+		<yzmcom ref="reyzm" />
 	</view>
 </template>
 <script>
 import yzmcom from '@/components/cerbur-yzm.vue';
 import { defaultCourseBlock } from '@/staticData/staticData.js';
 import { getClassAndExam } from '@/commonFun.js';
+import myInput from '@/components/watch-input.vue';
 export default {
-	components: {yzmcom},
-    // inject: ['Bus'],
-    provide() {
-    	return {
-    		Bus: this
-    	};
-    },
+	components: { yzmcom, myInput },
+	// inject: ['Bus'],
+	provide() {
+		return {
+			Bus: this
+		};
+	},
 	data() {
 		return {
 			list: [
@@ -36,13 +64,17 @@ export default {
 					operation: '刷新'
 				},
 				{
-					item: '统一认证账户更换/登录',
+					item: '教务系统账户更换/登录',
 					operation: '更换'
 				},
-                {
-                	item: '教务系统登录',
-                	operation: '登录'
-                },
+				{
+					item: '统一认证密码设置',
+					operation: '设置'
+				},
+				// {
+				// 	item: '教务系统登录',
+				// 	operation: '登录'
+				// },
 				{
 					item: '清除账号缓存',
 					operation: '清除'
@@ -57,39 +89,44 @@ export default {
 				}
 			],
 			title: '',
-			tip: ''
+			tip: '',
+			unifiedPassword: ''
 		};
 	},
 	computed: {
 		color() {
 			return this.$store.getters.color;
 		},
-        hasEducation() {
-            return !!this.$education.ID;
-        }
+		hasEducation() {
+			return !!this.$education.ID;
+		}
+	},
+	created() {
+		this.unifiedPassword = this.$unifiedPassword;
 	},
 	methods: {
-        refreshGradeByEdu() {
-            if (!this.hasEducation) {
-                let that = this;
-                uni.showModal({
-                	title: "提示",
-                	content: "还未登录哦,是否跳转到登录页面",
-                	success: e =>
-                		e.confirm ?
-                		that.$Router.push({
-                			name: "login-edu"
-                		}) : ""
-                });
-                return;
-            }
-            this.$refs.reyzm.showModal();
-        },
+		refreshGradeByEdu() {
+			if (!this.hasEducation) {
+				let that = this;
+				uni.showModal({
+					title: '提示',
+					content: '还未登录哦,是否跳转到登录页面',
+					success: e =>
+						e.confirm
+							? that.$Router.push({
+									name: 'login-edu'
+							  })
+							: ''
+				});
+				return;
+			}
+			this.$refs.reyzm.showModal();
+		},
 		change(e) {
 			let mes = e.currentTarget.dataset.name;
 			switch (mes) {
 				case '刷新课程表':
-                    this.refreshGradeByEdu();
+					this.refreshGradeByEdu();
 					// getClassAndExam().then(res=>{
 					// 	if(res) {
 					// 		this.$Router.replaceAll({ name: 'schedule' });
@@ -98,12 +135,14 @@ export default {
 					break;
 				case '清除账号缓存':
 					this.title = mes;
-					this.tip = '清除账号(统一认证账号)后, 将不会刷新课表, 但课表数据保留, 详情请见隐私政策';
+					this.tip =
+						'清除账号(教务系统账号)后, 将不会刷新课表, 但课表数据保留, 详情请见隐私政策';
 					this.$refs.modal.showModal();
 					break;
 				case '清除全部缓存':
 					this.title = mes;
-					this.tip = '清除全部缓存后, 将会清除课表数据,成绩,账号(统一认证账号)数据等数据, 请谨慎! 详情请见隐私政策';
+					this.tip =
+						'清除全部缓存后, 将会清除课表数据,成绩,账号(教务系统账号)数据等数据, 请谨慎! 详情请见隐私政策';
 					this.$refs.modal.showModal();
 					break;
 				case '清除课表缓存/解决首页白屏问题':
@@ -111,16 +150,29 @@ export default {
 					this.tip = '这将清除课表缓存并重新获取课表!';
 					this.$refs.modal.showModal();
 					break;
-				case '统一认证账户更换/登录':
+				case '教务系统账户更换/登录':
 					this.$Router.push({ name: 'login' });
 					break;
-                case '教务系统登录':
-                    this.$Router.push({ name: 'login-edu' });
-                    break;
+				case '统一认证密码设置':
+					this.$refs.unifiedModal.showModal();
+				// case '教务系统登录':
+				//     this.$Router.push({ name: 'login-edu' });
+				//     break;
 			}
+		},
+		unifiedModalComfirm() {
+			this.$store.commit({
+				type: 'changeStateofGlobal',
+				stateName: 'unifiedPassword',
+				value: this.unifiedPassword,
+				toStorage: true
+			});
+			this.$refs.tip.show('设置成功');
+			this.$refs.unifiedModal.hideModal();
 		},
 		fail() {
 			this.$refs.modal.hideModal();
+			this.$refs.unifiedModal.hideModal();
 		},
 		success() {
 			if (this.title == '清除账号缓存') {
@@ -131,14 +183,16 @@ export default {
 					toStorage: true,
 					toStringify: true
 				});
-                this.$store.commit({
-                	type: 'changeStateofGlobal',
-                	stateName: 'education',
-                	value: { ID: '', password: '' },
-                	toStorage: true,
-                	toStringify: true
-                });
-				this.$refs.tip.show('清除成功, 如需重新登陆可点击 "更换统一认证账户" 或 "教务系统登录"');
+				this.$store.commit({
+					type: 'changeStateofGlobal',
+					stateName: 'education',
+					value: { ID: '', password: '' },
+					toStorage: true,
+					toStringify: true
+				});
+				this.$refs.tip.show(
+					'清除成功, 如需重新登陆可点击『教务系统账户更换/登录』'
+				);
 				this.$refs.modal.hideModal();
 			} else if (this.title == '清除课表缓存/解决首页白屏问题') {
 				this.$refs.modal.hideModal();
@@ -156,11 +210,11 @@ export default {
 					toStorage: true,
 					toStringify: true
 				});
-				getClassAndExam().then(res=>{
-					if(res) {
+				getClassAndExam().then(res => {
+					if (res) {
 						this.$Router.replaceAll({ name: 'schedule' });
 					}
-				})
+				});
 			} else if (this.title == '清除全部缓存') {
 				uni.clearStorageSync();
 				this.$refs.tip.show('清除成功, 重新加载后生效');
