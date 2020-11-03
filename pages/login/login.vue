@@ -1,6 +1,6 @@
 <template>
 	<view class="bg-white h-100">
-		<cu-custom bgColor="bg-theme " :isBack="true"><block slot="content">登录</block></cu-custom>
+		<cu-custom bgColor="bg-theme" :isBack="true"><block slot="content">登录</block></cu-custom>
 		<view class="flex-column j-center a-center w-1 " style="height: 200px;">
 			<image style="height: 100px;width: 100px;" src="/static/logo.png" />
 			<view class="hg text-lg">gdutday欢迎你</view>

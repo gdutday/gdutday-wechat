@@ -24,14 +24,15 @@ let store = new Vuex.Store({
 		themeColor: allColor.otherTheme.theme ? 'otherTheme' : getStorageSync('themeColor', config.defaultColor),
 		// themeColor: getStorageSync('themeColor','gray'),
 		isShake: getStorageSync('isShake', true),
-		account: getStorageSync('account', {
+		// account: getStorageSync('account', {
+		// 	ID: '',
+		// 	password: ''
+		// }, true),
+		unifiedPassword: getStorageSync('unifiedPassword', ''),
+		education: getStorageSync('education', {
 			ID: '',
 			password: ''
 		}, true),
-        education: getStorageSync('education', {
-        	ID: '',
-        	password: ''
-        }, true),
 		allColor: allColor,
 	},
 	mutations: {
@@ -73,14 +74,18 @@ const computed = {
 			return store.state.isShake;
 		},
 		$account() {
-			return store.state.account;
+			// return store.state.account;
+			return store.state.education;
 		},
-        $education() {
-        	return store.state.education;
-        },
+		$unifiedPassword(){
+			return store.state.unifiedPassword;
+		},
+		$education() {
+			return store.state.education;
+		},
 	}
 }
 Vue.mixin(computed);
-export const commit  =store.commit;
+export const commit = store.commit;
 export const state = store.state
 export default store;

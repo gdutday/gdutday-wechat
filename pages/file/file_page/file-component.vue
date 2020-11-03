@@ -1,17 +1,26 @@
 <template>
 	<view class="bg-white" style="min-height: 100vh;">
 		<custom-input v-model="value" placeholder="搜索本页">
-			<block slot="content">{{name}}</block>
+			<block slot="content">{{ name }}</block>
 		</custom-input>
 		<block v-if="level == 0 && recentIconLength">
-			<view class="qiun-bg-white qiun-title-bar qiun-common-mt"><view class="qiun-title-dot-light">最近打开</view></view>
+			<view class="qiun-bg-white qiun-title-bar qiun-common-mt">
+				<view class="qiun-title-dot-light">最近打开</view>
+			</view>
 			<view class="w-1 px-5 flex-row box-content" :style="'height:80px;'">
 				<block v-for="(item, index) in recentIcon" :key="index">
-					<view style="width: 16.6%;" @tap="next(item, true)" class="flex-column j-around a-center">
-						<view class="flex-column a-center j-center bg-white" style="width:40px;height:40px;border-radius:50%">
+					<view
+						style="width: 16.6%;"
+						@tap="next(item, true)"
+						class="flex-column j-around a-center"
+					>
+						<view
+							class="flex-column a-center j-center bg-white"
+							style="width:40px;height:40px;border-radius:50%"
+						>
 							<image :src="item.icon" style="height: 35px;width: 35px;" />
 						</view>
-						<text class="text-xxs text-center flex-1 overflow-hidden wrap-3" >
+						<text class="text-xxs text-center flex-1 overflow-hidden wrap-3">
 							{{ item.name }}
 						</text>
 					</view>
@@ -25,9 +34,7 @@
 				src="https://image.weilanwl.com/gif/rhomb-white.gif"
 				mode="aspectFit"
 			/>
-			<block v-if="emptyShow">
-				<empty-tip />
-			</block>
+			<block v-if="emptyShow"><empty-tip /></block>
 			<block v-for="(item, index) in filterFileData" :key="item.name">
 				<view
 					@tap="next(item, false)"
@@ -36,10 +43,29 @@
 					:style="'animation-delay:' + Math.log10(index + 1) * 150 + 'ms'"
 				>
 					<view class="flex-row a-center" style="height:45px">
-						<image :src="iconType(item.type) == 'pic' ? item.url : icon[index]" class="h-1 mr-2" style="width:45px;" />
+						<image
+							:src="iconType(item.type) == 'pic' ? item.url : icon[index]"
+							class="h-1 mr-2"
+							style="width:45px;"
+						/>
 						<view class="flex-column h-1 j-sb flex-1 wrap-2">
-							<text class="text-df" style="word-break:break-all;">{{ item.name }}</text>
-							<text style="color: #C3C3C3;">2.3MB</text>
+							<text class="text-df" style="word-break:break-all;">
+								{{ item.name }}
+							</text>
+							<text style="color: #C3C3C3;" v-if="item.size">
+								<!-- MB = 2^20 B -->
+								<!-- 2^20 = 1048576 -->
+								<block v-if="item.type === 'folder'">
+									<!-- {{ item.size }} 个文件 -->
+								</block>
+								<block v-else>
+									{{
+										item.size < 10485
+											? '小于0.01MB'
+											: (item.size / 1048576).toFixed(2) + 'MB'
+									}}
+								</block>
+							</text>
 						</view>
 					</view>
 					<!-- <view style="height: 45px;" class="flex-column j-sb">
@@ -68,7 +94,7 @@ export default {
 		return {
 			level: 0,
 			url: APIs.giteeDownloadRoot,
-			pwd: '/',	//等于原来的url存储当前文件夹的路径
+			pwd: '/', //等于原来的url存储当前文件夹的路径
 			name: '资料',
 			value: '',
 			fileData: [],
@@ -79,10 +105,8 @@ export default {
 	async created() {
 		this.init();
 		try {
-			const {
-				//接受gitee端返回的参数
-				data: {tree},
-				/**
+			//接受gitee端返回的参数
+			/**
 				 * tree{
 						path:文件or文件夹名
 						type: 文件类型 tree为文件夹，blob为文件
@@ -90,35 +114,39 @@ export default {
 						size: 文件大小 仅文件有(byte)
 					}
 				 */
+			const {
+				data: { tree }
 			} = await this.$http.get(this.url);
 			this.loadingShow = false;
 			// console.log(tree)
 			if (tree != null) {
 				tree.length
 					? (this.fileData = tree.map(item => {
-						var fileName = item.path;
-						if (this.pwd == '/' 
-							&& (fileName == "LICENSE" 
-							|| fileName == "Hello.txt"
-							|| fileName == "README.md"
-							)){
-							// return;
-						}
-						//给文件设定初始都是文件夹的情况
-						var fileType = "folder";
-						var fileUrl = item.url;
-						//加入此返回值为文件，设定对应的
-						if (item.type == "blob") {
-							//提取文件后缀名作为文件类型
-							fileType = item.path.substring(item.path.lastIndexOf('.') + 1);
-							//根据文件名和所处的路径生成 对应的文件下载路径
-							fileUrl = APIs.download + this.pwd + item.path;
-						}
-						return {
-							type: fileType,
-							name: fileName,
-							url: fileUrl,
-						};
+							// let fileName = item.path;
+							let f = {
+								//给文件设定初始都是文件夹的情况
+								type: 'folder',
+								name: item.path,
+								url: item.url,
+								size: item.size
+							};
+							if (
+								this.pwd == '/' &&
+								['LICENSE', 'Hello.txt', 'README.md'].indexOf(f.name) > -1
+							) {
+								// return;
+							}
+							if (item.type == 'blob') {
+								//提取文件后缀名作为文件类型
+								f.type = f.name.substring(f.name.lastIndexOf('.') + 1);
+								//根据文件名和所处的路径生成 对应的文件下载路径
+								f.url = APIs.download + this.pwd + f.name;
+							} else if (item.type == 'tree') {
+								// this.$http.get(f.url).then(({ data: { tree } }) => {
+								// 	f.size = tree.length;
+								// });
+							}
+							return f;
 					  }))
 					: (this.emptyShow = true);
 			} else throw new Error('');
@@ -140,7 +168,9 @@ export default {
 			else return this.fileData.filter(item => item.name.indexOf(this.value) > -1);
 		},
 		imageData() {
-			return this.filterFileData.filter(item => iconType(item.type) == 'pic').map(item => item.url);
+			return this.filterFileData
+				.filter(item => iconType(item.type) == 'pic')
+				.map(item => item.url);
 		},
 		icon() {
 			return this.filterFileData.map(item => {
@@ -161,12 +191,13 @@ export default {
 			return this.recentIcon.length;
 		},
 		recentImage() {
-			return this.recentStack.filter(item => iconType(item.type) == 'pic').map(item => item.url);
+			return this.recentStack
+				.filter(item => iconType(item.type) == 'pic')
+				.map(item => item.url);
 		},
 		hasFileData() {
 			return this.fileData.length > 0;
 		}
-		
 	},
 	methods: {
 		init() {
@@ -181,7 +212,11 @@ export default {
 		next(item, fromRecent) {
 			const { type, url, name } = item,
 				nextLevel = this.level + 1;
-			if (iconType(type) == 'pic') return this.openImage(item, fromRecent ? this.recentImage : this.imageData);
+			if (iconType(type) == 'pic')
+				return this.openImage(
+					item,
+					fromRecent ? this.recentImage : this.imageData
+				);
 			if (type == 'folder') {
 				this.$store.commit({
 					type: 'changeStateofFile',
@@ -196,11 +231,20 @@ export default {
 					name: 'file_' + nextLevel
 				});
 			} else {
-				this.$Router.push({ name: 'file_detail', params: { ...item, unShare: true } });
+				console.log(item)
+				this.$Router.push({
+					name: 'file_detail',
+					params: { ...item, unShare: true }
+				});
 			}
 		},
 		openImage({ type, url, name }, data = this.imageData) {
-			this.$store.commit('unshiftRecentStack', { url: url, type: type, name: name, unShare: true });
+			this.$store.commit('unshiftRecentStack', {
+				url: url,
+				type: type,
+				name: name,
+				unShare: true
+			});
 			return uni.previewImage({
 				urls: data,
 				current: url

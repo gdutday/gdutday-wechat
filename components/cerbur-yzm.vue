@@ -170,6 +170,10 @@ export default {
 							toStorage: true,
 							toStringify: true
 						});
+						if (this.page == 'exam') {
+							console.log('exam');
+							this.Bus.$emit('changeExamNewData');
+						}
 						this.$store.commit('changeStateofGrade', {
 							stateName: 'grade',
 							value: res.data.data.grade,
@@ -222,6 +226,7 @@ export default {
 		},
 		fail() {
 			this.hideModal();
+			this.$emit('fail')
 		}
 	}
 };

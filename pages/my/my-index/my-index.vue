@@ -76,7 +76,7 @@ export default {
 	onShareTimeline(){},
 	data() {
 		return {
-            lastExam: [],
+            lastExam: null,
 			list: [
 				{
 					icon: 'account',
