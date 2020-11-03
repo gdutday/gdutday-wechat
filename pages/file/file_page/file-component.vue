@@ -231,6 +231,7 @@ export default {
 					name: 'file_' + nextLevel
 				});
 			} else {
+				console.log(item)
 				this.$Router.push({
 					name: 'file_detail',
 					params: { ...item, unShare: true }

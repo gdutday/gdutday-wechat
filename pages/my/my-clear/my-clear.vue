@@ -32,7 +32,7 @@
 				<my-input
 					:textColor="$colorList.theme"
 					:lineColor="$colorList.theme"
-					type="text"
+					type="password"
 					v-model="unifiedPassword"
 					placeholder="统一认证密码默认为身份证后六位"
 					tip="统一身份认证密码"

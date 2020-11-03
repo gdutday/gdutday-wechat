@@ -1,7 +1,12 @@
 //抽离出来的函数
 import Vue from "vue";
-import { http } from '@/axios-config.js';
-import { APIs } from '@/staticData/staticData.js';
+import {
+	http
+} from '@/axios-config.js';
+import {
+	APIs,
+	defaultExamNewData
+} from '@/staticData/staticData.js';
 // import { store } from '@/store.js';
 //通用函数,异步设置缓存,没有就设置缓存值
 export function getStorage(key, success = () => {}, fail = () => {}, def) {
@@ -282,8 +287,7 @@ export function interceptToLogin(
 			e.confirm ?
 			router.push({
 				name: "login"
-			}) :
-			""
+			}) : ""
 	});
 }
 // 跳转至账号/数据页面
@@ -298,8 +302,7 @@ export function interceptToMyClear(
 			e.confirm ?
 			router.push({
 				name: "clear"
-			}) :
-			""
+			}) : ""
 	});
 }
 export function openSchoolChangeTips(
@@ -317,6 +320,7 @@ export function openSchoolChangeTips(
 		// 	""
 	});
 }
+
 function tip(title, icon = 'none') {
 	uni.showToast({
 		title: title,
@@ -324,77 +328,80 @@ function tip(title, icon = 'none') {
 	});
 }
 
-export async function  getClassAndExam() {
+export async function getClassAndExam() {
 	var account = getStorageSync('account', {
 		ID: '',
 		password: ''
 	}, true);
-	if(account.ID === '') {
+	if (account.ID === '') {
 		tip('无账号,请登录');
 		return
 	}
 	uni.showLoading({
-			title: '更新课表中..'
-		});
-		try {
-			const {
-				data: { error, data }
-			} = await rePromise({
-				PromiseFunction: http.post.bind(http),
-				parms: [
-					APIs.classAndExam,
-					// APIs.curriculum,
-					{
-						schoolId: account.ID,
-						password: account.password
-					}
-				],
-				times: 2
-			});
-			uni.hideLoading();
-			if (+error == 1) {
-				const {
-					curriculum,
-					exam,
-					campus
-				} = data;
-				Vue.prototype.$store.commit({
-					type: 'changeStateofSchedule',
-					stateName: 'classData',
-					value: curriculum,
-					toStorage: true,
-					toStringify: true
-				});
-				Vue.prototype.$store.commit({
-					type: 'changeStateofSchedule',
-					stateName: 'examData',
-					value: [],
-					toStorage: true,
-					toStringify: true
-				});
-				Vue.prototype.$store.commit({
-					type: 'changeStateofSchedule',
-					stateName: 'campus',
-					value: campus,
-					toStorage: true
-				});
-				tip('更新成功','success')
-				return true;
-			} else if (+error == -201) {
-				tip('学号不存在或密码错误');
-			} else if (error == -503) {
-				tip('账号被教务系统判定为需要验证');
-			} else if (error == -501) {
-				tip('教务系统异常');
-			} else {
-				tip('更新失败,服务器原因')
+		title: '更新课表中..'
+	});
+	try {
+		const {
+			data: {
+				error,
+				data
 			}
-			return false;
-		} catch (e) {
-			console.log(e);
-			tip('更新失败,未知原因');
-			return false;
+		} = await rePromise({
+			PromiseFunction: http.post.bind(http),
+			parms: [
+				APIs.classAndExam,
+				// APIs.curriculum,
+				{
+					schoolId: account.ID,
+					password: account.password
+				}
+			],
+			times: 2
+		});
+		uni.hideLoading();
+		if (+error == 1) {
+			const {
+				curriculum,
+				exam,
+				campus
+			} = data;
+			Vue.prototype.$store.commit({
+				type: 'changeStateofSchedule',
+				stateName: 'classData',
+				value: curriculum,
+				toStorage: true,
+				toStringify: true
+			});
+			Vue.prototype.$store.commit({
+				type: 'changeStateofSchedule',
+				stateName: 'examData',
+				value: [],
+				toStorage: true,
+				toStringify: true
+			});
+			Vue.prototype.$store.commit({
+				type: 'changeStateofSchedule',
+				stateName: 'campus',
+				value: campus,
+				toStorage: true
+			});
+			tip('更新成功', 'success')
+			return true;
+		} else if (+error == -201) {
+			tip('学号不存在或密码错误');
+		} else if (error == -503) {
+			tip('账号被教务系统判定为需要验证');
+		} else if (error == -501) {
+			tip('教务系统异常');
+		} else {
+			tip('更新失败,服务器原因')
 		}
+		return false;
+	} catch (e) {
+		console.log(e);
+		tip('更新失败,未知原因');
+		return false;
+	}
 }
 //async 等待几秒后才执行
 export function wait(time = 1000) {
@@ -406,7 +413,11 @@ export function wait(time = 1000) {
 }
 
 export async function getLocationList() {
-	const {data: { locationData }} = await rePromise({
+	const {
+		data: {
+			locationData
+		}
+	} = await rePromise({
 		PromiseFunction: http.get.bind(http),
 		parms: [
 			APIs.location,
@@ -417,7 +428,11 @@ export async function getLocationList() {
 }
 
 export async function getLocationLenght() {
-	const {data: { length }} = await rePromise({
+	const {
+		data: {
+			length
+		}
+	} = await rePromise({
 		PromiseFunction: http.get.bind(http),
 		parms: [
 			APIs.locationLength,
@@ -427,56 +442,59 @@ export async function getLocationLenght() {
 	return length;
 }
 
-export function getTimeToCnameTime(stringTime){
-    let minute = 1000 * 60;
-    let hour = minute *60;
-    let day = hour *24;
-    let week = day * 7;
-    let month = day * 30;
-    let time1 = new Date().getTime();//当前的时间戳
-    let time2 = Date.parse(new Date(stringTime));//指定时间的时间戳
-    let time = time1 - time2;
-    let result = null;
-    if(time < 0){
-        alert("设置的时间不能早于当前时间！");
-    }else if(time/month >= 1){
-        result = parseInt(time/month) + "月前";
-    }else if(time/week >= 1){
-        result = parseInt(time/week) + "周前";
-    }else if(time/day >= 1){
-        result = parseInt(time/day) + "天前";
-    }else if(time/hour >= 1){
-        result = parseInt(time/hour) + "小时前";
-    }else if(time/minute >= 1){
-        result = parseInt(time/minute) + "分钟前";
-    }else {
-        result = "刚刚发布";
-    }
-    return result
+export function getTimeToCnameTime(stringTime) {
+	let minute = 1000 * 60;
+	let hour = minute * 60;
+	let day = hour * 24;
+	let week = day * 7;
+	let month = day * 30;
+	let time1 = new Date().getTime(); //当前的时间戳
+	let time2 = Date.parse(new Date(stringTime)); //指定时间的时间戳
+	let time = time1 - time2;
+	let result = null;
+	if (time < 0) {
+		alert("设置的时间不能早于当前时间！");
+	} else if (time / month >= 1) {
+		result = parseInt(time / month) + "月前";
+	} else if (time / week >= 1) {
+		result = parseInt(time / week) + "周前";
+	} else if (time / day >= 1) {
+		result = parseInt(time / day) + "天前";
+	} else if (time / hour >= 1) {
+		result = parseInt(time / hour) + "小时前";
+	} else if (time / minute >= 1) {
+		result = parseInt(time / minute) + "分钟前";
+	} else {
+		result = "刚刚发布";
+	}
+	return result
 }
 export function getDayDiff(endTime) {
-    var now = new Date();
-    var dateStart = new Date(now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate());
+	var now = new Date();
+	var dateStart = new Date(now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate());
 	var dateEnd = new Date(endTime);
 	var difValue = (dateEnd - dateStart) / (1000 * 60 * 60 * 24);
-    return Math.floor(difValue);
+	return Math.floor(difValue);
 }
 
 export function getLastExam() {
-    let examList = JSON.parse(uni.getStorageSync("examNewData"))
-    if (examList.length === 0) {
-        return null;
-    }
-    let last = examList[0];
-    examList.forEach(it=>{
-        it.examCountDown = getDayDiff(it.examDate);
-        if (it.examCountDown >= 0) {
-            if ( it.examCountDown < last.examCountDown ) {
-                last = it;
-            }
-        }
-    })
-    return last.examCountDown<0?null:last;
+	let examList = JSON.parse(uni.getStorageSync("examNewData"))
+	if (examList.length === 0) {
+		return null;
+	}
+	if (examList[0].examSubject === defaultExamNewData[0].examSubject) {
+		return null
+	}
+	let last = examList[0];
+	examList.forEach(it => {
+		it.examCountDown = getDayDiff(it.examDate);
+		if (it.examCountDown >= 0) {
+			if (it.examCountDown < last.examCountDown) {
+				last = it;
+			}
+		}
+	})
+	return last.examCountDown < 0 ? null : last;
 }
 
 const commonFun = {
@@ -501,10 +519,10 @@ const commonFun = {
 	openSchoolChangeTips,
 	getClassAndExam,
 	getLocationList,
-    getTimeToCnameTime,
+	getTimeToCnameTime,
 	wait,
-    getDayDiff,
-    getLastExam,
+	getDayDiff,
+	getLastExam,
 };
 Vue.prototype.$commonFun = commonFun;
 export default commonFun;

@@ -14,9 +14,9 @@
 				<text class="text-df mt-4 mb-2">{{ name }}</text>
 				<text class="text-sm text-gray">
 					{{
-						item.size < 10485
+						size < 10485
 							? '小于0.01MB'
-							: (item.size / 1048576).toFixed(2) + 'MB'
+							: (size / 1048576).toFixed(2) + 'MB'
 					}}
 				</text>
 			</view>
@@ -135,7 +135,6 @@ export default {
 	onShareTimeline() {},
 	onLoad(e) {
 		const query = JSON.parse(decodeURIComponent(e.query));
-		console.log(query)
 		({
 			url: this.url,
 			type: this.type,

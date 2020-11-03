@@ -10,8 +10,9 @@ import {
 	courseBlockColorListRGBA
 } from './colors.js'
 import {
-	defaultCourseBlock
-} from './defaultCourseBlock.js'
+	defaultCourseBlock,
+	defaultExamNewData
+} from './defaultData.js'
 import {
 	tmplIds
 } from './others.js'
@@ -28,6 +29,7 @@ export {
 	courseBlockColorList,
 	courseBlockColorListRGBA,
 	defaultCourseBlock,
+	defaultExamNewData,
 	// locationData,
 	introdution,
 	tmplIds,

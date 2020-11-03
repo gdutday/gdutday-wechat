@@ -130,9 +130,14 @@ export default {
 			operation();
 		},
 		openExam() {
-			this.$Router.push({
-				name: 'exam'
-			});
+			if (this.$education.ID === 0) {
+				return interceptToLogin(this.$Router);
+			}else {
+				this.$Router.push({
+					name: 'exam'
+				});
+				
+			}
 		},
 		openRubbish() {
 			this.$Router.push({
@@ -150,15 +155,15 @@ export default {
 			});
 		},
 		openQR() {
-			if (this.$account.ID.length == 0 && this.$education.ID == 0)
-				return interceptToLogin(this.$Router);
+			// if (this.$account.ID.length == 0 && this.$education.ID == 0)
+			if (this.$education.ID === 0) return interceptToLogin(this.$Router);
 			this.Bus.showModal({
 				type: 'modal',
 				key: 'QR'
 			});
 		},
 		async openPay() {
-			if (this.$account.ID.length === 0) {
+			if (this.$education.ID === 0) {
 				return interceptToLogin(this.$Router);
 			} else if (this.$unifiedPassword.length === 0) {
 				return interceptToMyClear(

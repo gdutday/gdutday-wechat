@@ -11,7 +11,8 @@
 				</view>
 				<view class="content" :style="[{ top: StatusBar + 'px' }]"><slot name="content"></slot></view>
 			</view>
-			<view v-if="fixed" :style="style + $themeBackground"></view>
+			<!-- <view v-if="fixed" :style="style + $themeBackground" /> -->
+			<view v-if="fixed" :style="style" />
 	</view>
 </template>
 

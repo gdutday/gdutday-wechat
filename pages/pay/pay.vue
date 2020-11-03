@@ -41,6 +41,14 @@
 		<view class="qiun-bg-white qiun-title-bar qiun-common-mt">
 			<text class="qiun-title-dot-light text-lg">缴费</text>
 			<text
+				v-if="hasRecentSrc"
+				@tap="openRecent"
+				class="ml-2 text-sm"
+				:style="'color:' + $colorList.white"
+			>
+				最近获取的二维码
+			</text>
+			<text
 				@tap="openLog"
 				class="ml-2 text-sm"
 				:style="'color:' + $colorList.white"
@@ -103,21 +111,28 @@
 				<image
 					@tap="preview"
 					class="gif-white response w-1 bg-white all-400 loading"
-					:src="pay.src"
+					:src="type === 'recent' ? recentSrc : pay.src"
 					mode="aspectFit"
 				/>
 			</view>
-			<view class="animation-fade pl-3  bg-white">
+			<view class="animation-fade pl-3  bg-white" v-if="type !== 'recent'">
 				<view class="text-gray text-sm">订单号：</view>
 				<view class="text-danger text-xl hg">{{ pay.orderId }}</view>
 			</view>
-			<view class="hg flex-row ">
-				<view
+			<view class="hg flex-row">
+				<!-- <view
 					@tap="preview"
 					:style="$themeBackground"
 					class="text-white text-center flex-1 transition-2"
 				>
 					预览
+				</view> -->
+				<view
+					@tap="copy"
+					:style="$themeBackground"
+					class="text-white text-center flex-1 transition-2"
+				>
+					复制链接
 				</view>
 				<view @tap="storage" class="text-center flex-1">保存</view>
 				<!-- <view @tap="storage" :disabled="!loaded" :class="loaded ? 'Btn' : 'disabledBtn'" class="text-white text-center flex-1 transition-2">
@@ -155,6 +170,7 @@ const STATUS = {
 export default {
 	data() {
 		return {
+			type: 'new',
 			range: Array.from(
 				{
 					length: 5
@@ -177,6 +193,7 @@ export default {
 				src: 'https://image.weilanwl.com/gif/loading-1.gif',
 				tempFilePath: ''
 			},
+			recentSrc: '',
 			payLog: [], //{time:日期 + 时分,orderId:订单号}
 			STATUS,
 			status: STATUS.LOADING_INFO
@@ -208,13 +225,24 @@ export default {
 				账号剩余月数: info.remain,
 				还没使用赠送月数: info.present
 			};
+		},
+		hasRecentSrc() {
+			return this.recentSrc.length > 0;
 		}
 	},
 	mounted() {
 		this.getInfo();
 		this.payLog = getStorageSync('payLog', [], true);
+		if (+uni.getStorageSync('PayDate') === +new Date().getDate()) {
+			this.recentSrc = uni.getStorageSync('PayCode');
+		}
 	},
 	methods: {
+		copy() {
+			uni.setClipboardData({
+				data: this.type === 'recent' ? this.recentSrc : this.pay.src
+			});
+		},
 		slide(e) {
 			this.multiple = e.detail.value;
 		},
@@ -229,7 +257,7 @@ export default {
 				for (let key in this.info) this.info[key] = info[key];
 				this.status = STATUS.LOADED_INFO_SUCCESS;
 			} catch (e) {
-				console.log(e)
+				console.log(e);
 				if (e.data.error_code === 200) {
 					this.$refs.tip.show('统一认证密码错误或账户被锁定');
 				} else {
@@ -267,6 +295,10 @@ export default {
 			}
 			this.$refs.tip.show('保存成功，请尽快付款');
 		},
+		openRecent() {
+			this.$refs.modal.showModal();
+			this.type = 'recent';
+		},
 		async open() {
 			switch (this.status) {
 				case STATUS.LOADING_INFO:
@@ -286,6 +318,7 @@ export default {
 					break;
 				case STATUS.LOADED_SRC_SUCCESS:
 					this.$refs.modal.showModal();
+					this.type = 'new';
 					break;
 			}
 		},
@@ -301,6 +334,8 @@ export default {
 				this.pay.src = src;
 				this.pay.orderId = orderId;
 				this.status = STATUS.LOADED_SRC_SUCCESS;
+				uni.setStorageSync('PayDate', new Date().getDate());
+				uni.setStorageSync('PayCode', src);
 			} catch (e) {
 				this.$refs.tip.show('获取付款二维码失败,请重试');
 				this.status = STATUS.LOADED_INFO_SUCCESS;
