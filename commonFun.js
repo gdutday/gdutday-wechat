@@ -470,8 +470,7 @@ export function getTimeToCnameTime(stringTime) {
 	return result
 }
 export function getDayDiff(endTime) {
-	var now = new Date();
-	var dateStart = new Date(now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate());
+	var dateStart = new Date(new Date(new Date().toLocaleDateString()).getTime());
 	var dateEnd = new Date(endTime);
 	var difValue = (dateEnd - dateStart) / (1000 * 60 * 60 * 24);
 	return Math.floor(difValue);

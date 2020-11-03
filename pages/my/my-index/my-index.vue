@@ -43,7 +43,7 @@
 		</view>
 		<!-- <view class="text-lg text-blue" @tap="toGrade">{{ lastestGrade }}</view> -->
         <view class="flex-row">
-            <text class="m-center text-center text-gray mt-5">v1.5.6@gdutday</text>
+            <text class="m-center text-center text-gray mt-5">v1.5.7@gdutday</text>
         </view>
     </view>
 </template>

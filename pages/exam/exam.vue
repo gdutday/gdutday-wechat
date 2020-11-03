@@ -73,8 +73,7 @@
 						<text class="time">{{ i.examDate }} {{ i.examTime }}</text>
 						<text class="cuIcon-tag mr-4">{{ i.examSubject }}</text>
 						<text class="cuIcon-location mr-4">
-							{{ i.examClassroom }}
-							{{
+							{{ i.examClassroom }} {{
 								i.examPosition === ''
 									? '座位未出'
 									: '座位号:' + i.examPosition + '号'
