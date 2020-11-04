@@ -73,7 +73,11 @@ export default {
         	path: `/pages/schedule/schedule`
         };
 	},
-	onShareTimeline(){},
+    onShareTimeline(){
+        return {
+            title: '颜值超高的课表小程序-gdutday分享给你',
+        };
+    },
 	data() {
 		return {
             lastExam: null,
