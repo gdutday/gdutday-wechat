@@ -28,6 +28,13 @@
 				<switch :checked="$isShake" @change="shakeChange" :color="$isShake ? $colorList.theme : '#8799A3'" />
 			</view>
 		</ripple>
+        <view class="hg px-5 flex-row bg-white j-sb">
+        	<view>
+        		<!-- <text class="cuIcon-writefill mr-1 text-xl"></text> -->
+        		课表背景
+        	</view>
+        	<view class="ripple" :style="$themeFont">课表页面->➕->👔->背景设置</view>
+        </view>
 		<modal ref="modal"><color-picker @choose="choose"></color-picker></modal>
 		<tip ref="tip"></tip>
 		<t-color-picker v-if="reMount" ref="colorPicker" :color="defaultColor" @confirm="confirm">{{ description }}</t-color-picker>

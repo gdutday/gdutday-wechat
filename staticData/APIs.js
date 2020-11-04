@@ -17,6 +17,7 @@ export const APIs = {
 		comments: baseFunctionsUrl + '/douban/comments'
 	},
 	test: baseFunctionsUrl + "/test",
+    open: baseDataUrl + "/open",
 	update: baseDataUrl + "/update",
 	version: baseDataUrl + "/version",
     task: baseDataUrl + "/task",

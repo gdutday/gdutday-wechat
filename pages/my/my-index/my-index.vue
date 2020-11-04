@@ -43,7 +43,7 @@
 		</view>
 		<!-- <view class="text-lg text-blue" @tap="toGrade">{{ lastestGrade }}</view> -->
         <view class="flex-row">
-            <text class="m-center text-center text-gray mt-5">v1.5.5@gdutday</text>
+            <text class="m-center text-center text-gray mt-5">v1.5.8@gdutday</text>
         </view>
     </view>
 </template>
@@ -73,7 +73,11 @@ export default {
         	path: `/pages/schedule/schedule`
         };
 	},
-	onShareTimeline(){},
+    onShareTimeline(){
+        return {
+            title: '颜值超高的课表小程序-gdutday分享给你',
+        };
+    },
 	data() {
 		return {
             lastExam: null,
@@ -118,7 +122,11 @@ export default {
 				{
 					icon: 'about',
 					text: '关于我们'
-				}
+				},
+                {
+                	icon: 'github',
+                	text: '开源总览'
+                }
 			],
 			delay:false
 		};
@@ -181,6 +189,11 @@ export default {
 						name: 'about'
 					});
 					break;
+                case 'github':
+                    this.$Router.push({
+                        name: 'open'
+                    });
+                    break;
 			}
 		},
 		toCode() {

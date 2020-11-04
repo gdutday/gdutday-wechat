@@ -171,7 +171,6 @@ export default {
 							toStringify: true
 						});
 						if (this.page == 'exam') {
-							console.log('exam');
 							this.Bus.$emit('changeExamNewData');
 						}
 						this.$store.commit('changeStateofGrade', {

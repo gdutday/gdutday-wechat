@@ -282,13 +282,13 @@ export default {
 	onShareAppMessage(res) {
 		// 来自页面内转发按钮
 		return {
-			title: 'gdutday-校园导航分享给你',
+			title: 'gdutday | 校园导航分享给你',
 			path: `/pages/map/map`
 		};
 	},
 	onShareTimeline(){
 		return {
-			title: 'gdutday-校园导航分享给你',
+			title: 'gdutday | 校园导航分享给你',
 			path: `/pages/map/map`,
             query:'',
 		}

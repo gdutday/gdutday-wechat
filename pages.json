@@ -138,6 +138,10 @@
                 "enablePullDownRefresh": true
             }
         }
+        ,{
+            "path" : "pages/my/my-open/my-open",
+            "style" : {}
+        }
     ],
 	"tabBar": {
 		"color": "#A1A1A1",

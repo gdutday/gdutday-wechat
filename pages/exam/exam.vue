@@ -37,7 +37,7 @@
 										: '#7a7374'
 									: 'rgba(0,0,0,0)'
 						}"
-					></view>
+					/>
 					<view
 						class="index"
 						:style="{
@@ -46,15 +46,7 @@
 							color: color
 						}"
 					>
-						{{
-							i.examCountDown > 0
-								? i.examCountDown <= 9
-									? i.examCountDown + '天'
-									: i.examCountDown
-								: ''
-						}}
-						{{ i.examCountDown == 0 ? '今' : '' }}
-						{{ i.examCountDown < 0 ? '结' : '' }}
+						{{ handleExamCountDown(i.examCountDown) }}
 					</view>
 					<view
 						class="line"
@@ -70,21 +62,22 @@
 				</view>
 				<view class="s_l">
 					<view class="info_item" @tap="topage(index)">
-						<text class="time">{{ i.examDate }} {{ i.examTime }}</text>
-						<text class="cuIcon-tag mr-4">{{ i.examSubject }}</text>
-						<text class="cuIcon-location mr-4">
-							{{ i.examClassroom }}
+						<text class="time">{{ i.examDate + ' ' + i.examTime }}</text>
+						<view>
+							<text class="cuIcon-tag mr-1" />
+							{{ i.examSubject }}
+						</view>
+						<view>
+							<text class="cuIcon-location mr-1" />
 							{{
-								i.examPosition === ''
+								i.examClassroom + i.examPosition === ''
 									? '座位未出'
 									: '座位号:' + i.examPosition + '号'
 							}}
-						</text>
-						<view
-							class="cuIcon-time mr-4"
-							:style="{ WebkitLineClamp: lineNum != 0 ? lineNum : '' }"
-						>
-							{{ i.examWeek }}周星期{{ i.examDay }}
+						</view>
+						<view>
+							<text class="cuIcon-time mr-1" />
+							{{ i.examWeek + '周星期' + i.examDay }}
 						</view>
 					</view>
 				</view>
@@ -149,6 +142,14 @@ export default {
 		},
 		topage(e) {
 			this.$emit('click', e);
+		},
+		handleExamCountDown(examCountDown) {
+			let subffix;
+			if (examCountDown > 9) subffix = '';
+			else if (examCountDown > 0) subffix = '天';
+			else if (examCountDown === 0) subffix = '今';
+			else subffix = '结';
+			return examCountDown + subffix;
 		},
 		getExam() {
 			//获取列表
@@ -270,10 +271,10 @@ page {
 		}
 
 		.s_l {
+			width: 500rpx;
 			display: flex;
 			flex-direction: column;
 			padding: 20rpx 0;
-
 			.info_item {
 				background-color: #ffffff;
 				margin-right: 30upx;
