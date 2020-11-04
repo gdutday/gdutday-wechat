@@ -12,6 +12,12 @@ export const introdution = {
 	        introdution: '一级退堂鼓选手奶盖犬犬',
 	        position: '后台'
 	    },
+		{
+		    name: '星星',
+		    head: 'https://7869-xingxinglieo-tecft-1300484036.tcb.qcloud.la/head/xingxing.jpeg?sign=a68e51976e2df87e89581315c0761462&t=1575894047',
+		    introdution: '为何代码越写越烂？',
+		    position: '前端'
+		},
 	],
 	cooperation: [
 		{
@@ -24,6 +30,12 @@ export const introdution = {
 			name: '电子科技协会网络组',
 			head: 'https://gdutday.gitee.io/textpage/images/pic12.jpg',
 			introdution: '技术合作',
+			position: '技术支持'
+		},
+		{
+			name: '研发中心工作室',
+			head: 'https://cdn.nlark.com/yuque/0/2020/jpeg/517627/1604407939923-13428294-4388-43c0-9e26-85a34c5560fb.jpeg',
+			introdution: '代码贡献',
 			position: '技术支持'
 		},
 	],
