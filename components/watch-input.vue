@@ -1,7 +1,7 @@
 <template>
 	<!-- 文本框 -->
 	<view class="rapper" :style="width ? 'width:' + width + ';' : ''">
-		<view style="height: 32px;"></view>
+		<view style="height: 32px;" />
 		<input
 			class="myinput"
 			@focus="focus"
@@ -10,15 +10,38 @@
 			:type="_type"
 			:maxlength="maxlength"
 			:placeholder="place_1"
-			:password="type === 'password'"
+			:password="type === 'password' && eyeStatus === 'cuIcon-attentionfill'"
 			@input="onInput"
 		/>
-		<view class="inputline" :style="'background-color:' + lineColor" :class="isfocus ? 'active' : ''"></view>
-		<view class="tip" :class="_focus ? 'focus' : ''" :style="_focus ? 'color:' + textColor : ''">{{ tip }}</view>
+		<text
+			class="position-absolute right-0"
+			:class="eyeStatus"
+			style="top: 40px;z-index: 3;"
+			@tap="tapEye"
+			v-if="type === 'password'"
+		/>
+		<view
+			class="inputline"
+			:style="'background-color:' + lineColor"
+			:class="isfocus ? 'active' : ''"
+		/>
+		<view
+			class="tip"
+			:class="_focus ? 'focus' : ''"
+			:style="_focus ? 'color:' + textColor : ''"
+		>
+			{{ tip }}
+		</view>
 		<!-- 是否可见密码 -->
 		<!-- 倒计时 -->
 		<!-- <view v-if="_isShowCode && !_isShowPass" :class="['vercode', { 'vercode-run': second > 0 }]" @click="setCode">{{ getVerCodeSecond }}</view> -->
-		<view v-if="_isShowCode" :class="['vercode', { 'vercode-run': second > 0 }]" @click="setCode">{{ getVerCodeSecond }}</view>
+		<view
+			v-if="_isShowCode"
+			:class="['vercode', { 'vercode-run': second > 0 }]"
+			@click="setCode"
+		>
+			{{ getVerCodeSecond }}
+		</view>
 		<view class="line"></view>
 	</view>
 </template>
@@ -30,6 +53,7 @@ export default {
 		return {
 			// showPassword: false, //是否显示明文
 			second: 0, //倒计时
+			eyeStatus: 'cuIcon-attentionfill',
 			isRunCode: false, //是否开始倒计时
 			isfocus: false,
 			timer: null,
@@ -98,6 +122,13 @@ export default {
 		clearInterval(countDown); //先清理一次循环，避免缓存
 	},
 	methods: {
+		tapEye() {
+			const s = {
+				'cuIcon-attention': 'cuIcon-attentionfill',
+				'cuIcon-attentionfill': 'cuIcon-attention'
+			};
+			this.eyeStatus = s[this.eyeStatus];
+		},
 		focus() {
 			clearTimeout(this.timer);
 			this.timer = setTimeout(() => {
