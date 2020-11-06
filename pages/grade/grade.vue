@@ -23,22 +23,23 @@
 		>
 			tip:现在没有成绩数据哦,以下是示例
 		</view>
-		<view
-			v-if="delay&&show"
-			class="mt-5 rounded-2 depth-1 mx-2 pb-2 pt animation-slide-bottom"
-			v-for="(item, index) in 6"
-			:key="index"
-		>
-			<block v-if="index == 0"><grade-config /></block>
-			<block v-else-if="index == 1"><classify-ring /></block>
-			<block v-else-if="index == 2"><pole-line /></block>
-			<block v-else-if="index == 3">
-				<column-example />
-				<get-grade-scores-column />
-			</block>
-			<block v-else-if="index == 4"><get-pole-column /></block>
-			<block v-else-if="index == 5"><all-grade-scores-column /></block>
-		</view>
+		<block v-if="delay && show">
+			<view
+				class="mt-5 rounded-2 depth-1 mx-2 pb-2 pt animation-slide-bottom"
+				v-for="(item, index) in 6"
+				:key="index"
+			>
+				<block v-if="index == 0"><grade-config /></block>
+				<block v-else-if="index == 1"><classify-ring /></block>
+				<block v-else-if="index == 2"><pole-line /></block>
+				<block v-else-if="index == 3">
+					<column-example />
+					<get-grade-scores-column />
+				</block>
+				<block v-else-if="index == 4"><get-pole-column /></block>
+				<block v-else-if="index == 5"><all-grade-scores-column /></block>
+			</view>
+		</block>
 		<!-- </block> -->
 		<yzmcom @hideModal="showCharts" ref="reyzm" page="grade" />
 	</view>

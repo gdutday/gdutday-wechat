@@ -1,13 +1,11 @@
 <template>
 	<view class="bg-white h-100">
-		<cu-custom :isBack="true">
-			<block slot="content">登录</block>
-		</cu-custom>
+		<cu-custom :isBack="true"><block slot="content">登录</block></cu-custom>
 		<view class="flex-column j-center a-center w-1 " style="height: 200px;">
 			<image style="height: 100px;width: 100px;" src="/static/logo.png" />
 			<view class="hg text-lg">教务系统登录</view>
-			<view class="text-lg">统一身份认证系统异常暂用教务系统</view>
-			<view class="text-lg">教务系统无法自动刷新,刷新自行重新登录</view>
+			<!-- <view class="text-lg">统一身份认证系统异常暂用教务系统</view>
+			<view class="text-lg">教务系统无法自动刷新,刷新自行重新登录</view> -->
 		</view>
 		<!-- <myform></myform>-->
 		<view class="flex-row j-center a-center">
@@ -49,7 +47,7 @@
 				/>
 				<ErrorTip :showTip="showTip">{{ tip }}</ErrorTip>
 				<!-- <view class="text-center"></view> -->
-				<view :class="onceShake ? 'animation-shake' : ''">
+				<view :class="onceShake ? 'animation-shake' : ''" class="mt-3">
 					<myButton
 						:rotate="rotate"
 						@buttonTap="tap"
@@ -144,7 +142,9 @@ export default {
 					if (+res.data.error == -201) {
 						console.log(res.data);
 						this.showTip = true;
-						this.tip = '学号不存在或密码错误';
+						this.tip =
+							'学号不存在或教务系统密码错误或教务系统密码为默认密码。';
+							// 教务系统密码包含特殊字符，请先前往教务系统验证密码；若密码为默认密码，也无法登录，请前往教务系统修改默认密码后再次尝试
 					} else if (+res.data.error == -503) {
 						console.log(res.data);
 						this.showTip = true;
@@ -156,7 +156,8 @@ export default {
 					} else if (+res.data.error == -305) {
 						console.log(res.data);
 						this.showTip = true;
-						this.tip = '课表信息为空,若为新年级则是目前教务系统未对接,请之后尝试';
+						this.tip =
+							'课表信息为空,若为新年级则是目前教务系统未对接,请之后尝试';
 					} else if (+res.data.error == 1) {
 						this.$store.commit({
 							type: 'changeStateofGlobal',
@@ -194,9 +195,9 @@ export default {
 						let _this = this;
 						uni.showModal({
 							showCancel: false,
-							title: '提示',
+							title: '您已经登录成功！',
 							content:
-								'由于统一认证平台限制,暂时无法自动更新课表。若有需求,请前往『账户与数据』重新登录即可更新',
+								'由于统一认证平台限制,暂时无法自动更新课表。若有需求,请前往『账户与数据』重新登录即可',
 							complete() {
 								_this.$Router.replaceAll({ name: 'schedule' });
 							}
