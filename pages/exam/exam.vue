@@ -116,7 +116,7 @@ export default {
 	},
 	onPullDownRefresh() {
 		this.refreshGradeByEdu();
-
+		uni.stopPullDownRefresh();
 		// this.refreshYzm();
 		// this.refreshGrade();
 	},

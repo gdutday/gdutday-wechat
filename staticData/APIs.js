@@ -13,6 +13,7 @@ export const APIs = {
 	// download: "/document/download",
 	getPayImg: baseFunctionsUrl + "/getPayImg",
 	getNetInfo: baseFunctionsUrl + "/getNetInfo",
+	getLink:baseFunctionsUrl+'/getLink',
 	douban: {
 		comments: baseFunctionsUrl + '/douban/comments'
 	},

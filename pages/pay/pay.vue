@@ -44,14 +44,14 @@
 				v-if="hasRecentSrc"
 				@tap="openRecent"
 				class="ml-2 text-sm"
-				:style="'color:' + $colorList.white"
+				:style="'color:' + $colorList.theme"
 			>
 				最近获取的二维码
 			</text>
 			<text
 				@tap="openLog"
 				class="ml-2 text-sm"
-				:style="'color:' + $colorList.white"
+				:style="'color:' + $colorList.theme"
 			>
 				获取过的订单
 			</text>
@@ -128,13 +128,15 @@
 					预览
 				</view> -->
 				<view
-					@tap="copy"
+					open-type="contact"
+					@tap="getLink"
 					:style="$themeBackground"
-					class="text-white text-center flex-1 transition-2"
+					class="text-white flex-1 transition-2 text-center"
 				>
 					复制链接
 				</view>
-				<view @tap="storage" class="text-center flex-1">保存</view>
+				<view @tap="storage" class="flex-1 text-center">保存</view>
+				<!-- <view @tap="scan" class="text-center flex-1">扫描</view> -->
 				<!-- <view @tap="storage" :disabled="!loaded" :class="loaded ? 'Btn' : 'disabledBtn'" class="text-white text-center flex-1 transition-2">
                 {{ loaded ? '预览' : '获取中...' }}
             </view> -->
@@ -142,7 +144,7 @@
 		</modal>
 		<modal ref="modal2">
 			<scroll-view style="width:600rpx;height:770rpx;" scroll-y>
-				<view class="px-3 mt-3 text-gray">本地记录获取过的订单(非付款账单)</view>
+				<view class="px-3 mt-3 text-gray">本地记录曾获取的订单(非付款账单)</view>
 				<view
 					class="hg px-3 flex-row j-sb border-bottom"
 					v-for="(item, index) in payLog"
@@ -152,6 +154,25 @@
 					<text>{{ item.time }}</text>
 				</view>
 			</scroll-view>
+		</modal>
+		<modal ref="modal3">
+			<view class="cu-bar bg-white">
+				<view class="text-black text-center title w-1">提示</view>
+			</view>
+			<view class="p-5 bg-white text-lg" style="width: 540rpx;">复制链接成功！是否进入客服消息内黏贴链接？</view>
+			<view class="hg flex-row">
+				<button @tap="$refs.modal3.hideModal()" class="flex-1 text-center ">
+					取消
+				</button>
+				<button
+					open-type="contact"
+					:style="$themeBackground"
+					class="text-white flex-1 transition-2 text-center "
+					@tap="storage"
+				>
+					确定
+				</button>
+			</view>
 		</modal>
 	</view>
 </template>
@@ -222,8 +243,7 @@ export default {
 				账户: info.account,
 				余额: info.money,
 				状态: info.status,
-				账号剩余月数: info.remain,
-				还没使用赠送月数: info.present
+				账号剩余月数: Number.parseInt(info.remain)
 			};
 		},
 		hasRecentSrc() {
@@ -238,11 +258,6 @@ export default {
 		}
 	},
 	methods: {
-		copy() {
-			uni.setClipboardData({
-				data: this.type === 'recent' ? this.recentSrc : this.pay.src
-			});
-		},
 		slide(e) {
 			this.multiple = e.detail.value;
 		},
@@ -268,26 +283,64 @@ export default {
 				this.status = STATUS.LOADED_INFO_FAILED;
 			}
 		},
-		async storage() {
-			if (this.status !== STATUS.LOADED_SRC_SUCCESS) return;
+		async getLink() {
+			if (this.status !== STATUS.LOADED_SRC_SUCCESS && this.type !== 'recent')
+				return;
 			try {
-				if (this.pay.tempFilePath === '') {
-					const { tempFilePath } = await becomePromise(
-						uni.downloadFile,
-						{
-							url: this.pay.src
-						},
-						'下载二维码失败'
-					);
-					this.pay.tempFilePath = tempFilePath;
-				}
-				await becomePromise(
-					uni.saveImageToPhotosAlbum,
+				const { tempFilePath } = await becomePromise(
+					uni.downloadFile,
 					{
-						filePath: this.pay.tempFilePath
+						url: this.type === 'recent' ? this.recentSrc : this.pay.src
+					},
+					'复制支付链接失败'
+				);
+				const base64 = (await becomePromise(uni.getFileSystemManager().readFile, {
+					filePath: tempFilePath, //选择图片返回的相对路径
+					encoding: 'base64' //编码格式
+				})).data;
+				const { data: link } = await this.$http.post(APIs.getLink, {
+					qrpic: base64
+				});
+				uni.setClipboardData({
+					data: link
+				});
+				this.$refs.modal.hideModal();
+				this.$refs.modal3.showModal();
+			} catch (e) {
+				return this.$refs.tip.show('复制支付链接失败');
+			}
+		},
+		async storage() {
+			if (this.status !== STATUS.LOADED_SRC_SUCCESS && this.type !== 'recent')
+				return;
+			try {
+				// if (this.pay.tempFilePath === '') {
+				const { tempFilePath } = await becomePromise(
+					uni.downloadFile,
+					{
+						url: this.type === 'recent' ? this.recentSrc : this.pay.src
+					},
+					'下载二维码失败'
+				);
+				const { savedFilePath } = await becomePromise(
+					uni.saveFile,
+					{
+						tempFilePath
 					},
 					'保存二维码失败'
 				);
+				const newFilePath = `${wx.env.USER_DATA_PATH}/pay-qr-${+new Date()}.png`;
+				const fm = uni.getFileSystemManager();
+				fm.renameSync(savedFilePath, newFilePath);
+				await becomePromise(
+					uni.saveImageToPhotosAlbum,
+					{
+						filePath: newFilePath
+					},
+					'保存二维码失败'
+				);
+				fm.unlink(newFilePath);
+				this.$refs.modal.hideModal();
 			} catch (e) {
 				console.log(e);
 				const msg = e[1];
@@ -341,26 +394,26 @@ export default {
 				this.status = STATUS.LOADED_INFO_SUCCESS;
 			}
 		},
-		preview() {
-			if (this.status === STATUS.LOADED_SRC_SUCCESS) {
-				if (this.pay.tempFilePath === '') {
-					uni.previewImage({
-						urls: [this.pay.tempFilePath]
-					});
-				} else {
-					becomePromise(uni.downloadFile, {
-						url: this.pay.src
-					})
-						.then(({ tempFilePath }) => {
-							this.pay.tempFilePath = tempFilePath;
-							uni.previewImage({
-								urls: [tempFilePath]
-							});
-						})
-						.catch(err => this.$refs.tip.show('获取预览图片失败'));
-				}
-			}
-		},
+		// preview() {
+		// 	if (this.status === STATUS.LOADED_SRC_SUCCESS) {
+		// 		if (this.pay.tempFilePath === '') {
+		// 			uni.previewImage({
+		// 				urls: [this.pay.tempFilePath]
+		// 			});
+		// 		} else {
+		// 			becomePromise(uni.downloadFile, {
+		// 				url: this.pay.src
+		// 			})
+		// 				.then(({ tempFilePath }) => {
+		// 					this.pay.tempFilePath = tempFilePath;
+		// 					uni.previewImage({
+		// 						urls: [tempFilePath]
+		// 					});
+		// 				})
+		// 				.catch(err => this.$refs.tip.show('获取预览图片失败'));
+		// 		}
+		// 	}
+		// },
 		openLog() {
 			this.$refs.modal2.showModal();
 		},
