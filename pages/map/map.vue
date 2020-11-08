@@ -81,7 +81,7 @@ export default {
 	components: {
 		xingNav
 	},
-	mixins:[xingMapSwiperComponent({length: getLocationLenght()})],
+	mixins:[xingMapSwiperComponent({length: getLocationLenght})],
 	data() {
 		return {
 			showBack: false,
@@ -92,7 +92,7 @@ export default {
 			tabDelay: null,
 			locationData: [],
 			longitude: '113.393122',        // 初始经度
-			latitude: '23.039404',         // 初始纬度
+			latitude: '23.039404', // 初始纬度
 			markers: [],
 			scale: 17,
 			polyline: [],

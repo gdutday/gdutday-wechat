@@ -34,6 +34,8 @@ let store = new Vuex.Store({
 			password: ''
 		}, true),
 		allColor: allColor,
+		// 使用一次验证码返回的cookie
+		uuid:''
 	},
 	mutations: {
 		changeStateofGlobal: ChangeAndStorageState,
@@ -51,6 +53,9 @@ let store = new Vuex.Store({
 })
 const computed = {
 	computed: {
+		$uuid(){
+			return store.state.uuid;
+		},
 		$colorList() {
 			return store.getters.color;
 			// this.$colorList = {

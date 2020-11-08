@@ -53,7 +53,7 @@
 
 <script>
 import swiperoptimize from '@/pages/schedule/schedule_content/schedule_components/class-swiper-optimize.vue';
-import extensions from '@/pages/schedule/schedule_content/schedule_components/extensions/extensions.vue';
+import extensions from '@/pages/extensions/extensions.vue';
 import selectDay from '@/pages/schedule/schedule_content/schedule_components/select-day.vue';
 export default {
 	components: {

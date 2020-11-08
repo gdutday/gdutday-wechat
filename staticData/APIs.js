@@ -4,29 +4,30 @@ const baseDataUrl = "https://gdutday.gitee.io/data";
 const baseNewsUrl = "https://news.cerbur.top"
 export const APIs = {
 	classAndExam: "/crawler/classAndExam",
-    educationInit: "/crawler/education/init",
+	educationInit: "/crawler/education/init",
 	curriculum: "/crawler/curriculum",
 	exam: "/crawler/exam",
 	campus: "/crawler/campus",
 	grade: "/crawler/grade",
 	login: "/user/login",
+	checkMsg:"/check/msg", // 检测文字是否合乎法规的接口
 	// download: "/document/download",
 	getPayImg: baseFunctionsUrl + "/getPayImg",
 	getNetInfo: baseFunctionsUrl + "/getNetInfo",
-	getLink:baseFunctionsUrl+'/getLink',
+	getLink: baseFunctionsUrl + '/getLink',
 	douban: {
 		comments: baseFunctionsUrl + '/douban/comments'
 	},
 	test: baseFunctionsUrl + "/test",
-    open: baseDataUrl + "/open",
+	open: baseDataUrl + "/open",
 	update: baseDataUrl + "/update",
 	version: baseDataUrl + "/version",
-    task: baseDataUrl + "/task",
-    problem: baseDataUrl + "/problem",
+	task: baseDataUrl + "/task",
+	problem: baseDataUrl + "/problem",
 	location: baseDataUrl + "/locations",
 	details: baseDataUrl + "/details/",
-	getSchoolOpening: baseDataUrl+"/openSchool",
-	locationLength: baseDataUrl+"/length",
+	getSchoolOpening: baseDataUrl + "/openSchool",
+	locationLength: baseDataUrl + "/length",
 	getNewsList: baseNewsUrl + "/news/type",
 	getNewsDetail: baseNewsUrl + "/news/id",
 	// getSchoolOpening: baseFunctionsUrl + "/getSchoolOpening",
@@ -52,6 +53,6 @@ export function bookPlacePrammer(key) {
 export function bookDetailPramer(CtrlRd) {
 	return `https://ifq.zhaobenshu.com/Find/find_ifa_Accs_GetDetail.ashx?a=[Lib={{gdut}}][CtrlRd={{${CtrlRd}}}][UniSess={{}}][SessLib={{gdut}}][SessFun={{wap}}][SessPrd={{book}}][SessType={{3}}]&z3=&z4=1&z5=`;
 }
-export function jingdongBookComments(id){
+export function jingdongBookComments(id) {
 	return `https://club.jd.com/comment/productPageComments.action?productId=${id}&score=0&sortType=5&page=0&pageSize=10`;
 }

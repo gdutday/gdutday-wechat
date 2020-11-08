@@ -6,13 +6,14 @@ export default function xingMapSwiperComponent({
 		data() {
 			return {
 				swiperList: [index, 0, 0],
+				length:0,
 				swiperCurrent: 0,
 			};
 		},
 		created() {
 			let that = this
-			if (typeof(length)=="object"){
-				length.then(res=>{
+			if (typeof(length)== 'function'){
+				length().then(res=>{
 					length = res
 					that.$_handleSwiperList();
 				})

@@ -55,6 +55,13 @@
 			>
 				获取过的订单
 			</text>
+			<text
+				@tap="$refs.modal4.showModal()"
+				class="ml-2 text-sm"
+				:style="'color:' + $colorList.theme"
+			>
+				使用说明
+			</text>
 		</view>
 		<view class="px-3 text-lg mt-2">
 			<view class="flex-row a-center">
@@ -109,7 +116,6 @@
 		<modal ref="modal">
 			<view class="p-5 bg-white">
 				<image
-					@tap="preview"
 					class="gif-white response w-1 bg-white all-400 loading"
 					:src="type === 'recent' ? recentSrc : pay.src"
 					mode="aspectFit"
@@ -127,15 +133,17 @@
 				>
 					预览
 				</view> -->
-				<view
+				<!-- <view
 					open-type="contact"
 					@tap="getLink"
 					:style="$themeBackground"
 					class="text-white flex-1 transition-2 text-center"
 				>
 					复制链接
+				</view> -->
+				<view :style="$themeBackground" @tap="storage" class="flex-1 text-center text-white">
+					保存
 				</view>
-				<view @tap="storage" class="flex-1 text-center">保存</view>
 				<!-- <view @tap="scan" class="text-center flex-1">扫描</view> -->
 				<!-- <view @tap="storage" :disabled="!loaded" :class="loaded ? 'Btn' : 'disabledBtn'" class="text-white text-center flex-1 transition-2">
                 {{ loaded ? '预览' : '获取中...' }}
@@ -155,11 +163,13 @@
 				</view>
 			</scroll-view>
 		</modal>
-		<modal ref="modal3">
+		<!-- <modal ref="modal3">
 			<view class="cu-bar bg-white">
 				<view class="text-black text-center title w-1">提示</view>
 			</view>
-			<view class="p-5 bg-white text-lg" style="width: 540rpx;">复制链接成功！是否进入客服消息内黏贴链接？</view>
+			<view class="p-5 bg-white text-lg" style="width: 540rpx;">
+				复制链接成功！是否进入客服消息内黏贴链接？
+			</view>
 			<view class="hg flex-row">
 				<button @tap="$refs.modal3.hideModal()" class="flex-1 text-center ">
 					取消
@@ -173,6 +183,32 @@
 					确定
 				</button>
 			</view>
+		</modal> -->
+		<modal ref="modal4">
+			<confirm
+				title="使用说明"
+				confirm-text="好的"
+				@success="$refs.modal4.hideModal()"
+				@fail="$refs.modal4.hideModal()"
+			>
+				<scroll-view scroll-y="true">
+					<view class="cuIcon-title">获取支付二维码</view>
+					从网络缴费系统支付平台获取的微信付款二维码。一般等待时间为10秒左右，若无法获取请重试。如果获取失败超过三次，烦请到网络缴费系统网页操作。
+					<view class="cuIcon-title">
+						获取成功后操作
+						<view class="cuIcon-title ml-2">
+							点击保存或自行截图，然后返回微信扫一扫付款。注意：选择保存时，图片保存到微信文件夹，扫一扫先选择微信的文件夹。
+						</view>
+						<view class="cuIcon-title ml-2">
+							付款二维码有失效时间，最好在10分钟内付款。
+						</view>
+					</view>
+					<view class="cuIcon-title">曾获取的订单</view>
+					获取成功二维码的订单号，不是付款成功的订单号。
+					<view class="cuIcon-title">最近获取的二维码</view>
+					记录本日退出此页面时获取的二维码，以防无意退出页面导致再进入时需要重新获取二维码。
+				</scroll-view>
+			</confirm>
 		</modal>
 	</view>
 </template>

@@ -35,8 +35,8 @@ import pluginNotice from '@/pages/schedule/plugin_button/plugin_item/plugin-noti
 import pluginAddCourse from '@/pages/schedule/plugin_button/plugin_item/plugin-add-course/plugin-add-course.vue';
 import timePicker from '@/pages/schedule/plugin_button/plugin_item/plugin-add-course/plugin-add-course-item/plugin-add-course-item-components/plugin-time-picker.vue';
 import repeat from '@/pages/schedule/plugin_button/plugin_item/plugin-add-course/plugin-add-course-item/plugin-add-course-item-components/plugin-repeat.vue';
-import QR from '@/pages/schedule/schedule_content/schedule_components/extensions/libraryQR/QR.vue';
-import payWarning from '@/pages/schedule/schedule_content/schedule_components/extensions/pay/pay-warning.vue';
+import QR from '@/pages/extensions/libraryQR/QR.vue';
+import payWarning from '@/pages/extensions/pay/pay-warning.vue';
 import ask from '@/pages/schedule/plugin_button/plugin_item/plugin-add-course/plugin-add-course-class/plugin-add-course-class-components/plugin-add-course-class-ask.vue';
 // import addItemButton from '@/pages/schedule/add-item-button.vue'
 export default {

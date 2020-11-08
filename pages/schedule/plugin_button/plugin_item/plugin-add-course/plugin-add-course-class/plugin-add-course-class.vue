@@ -1,18 +1,52 @@
 <template>
 	<view id="course" style="width: 650rpx;">
 		<view class="flex-row j-sb">
-			<input style="width:500rpx;" class="text-df" type="text" placeholder="课程名称(必填)" v-model="name" />
+			<input
+				style="width:500rpx;"
+				class="text-df"
+				type="text"
+				placeholder="课程名称(必填)"
+				v-model="name"
+			/>
 			<view class="flex-row flex-1 j-sb" v-if="addTag">
-				<view class="text-df transition-2" @tap="deleteAdd" :style="$themeFont">删除</view>
-				<view class="text-df transition-2" @tap="changeAdd" :style="hasAll ? $themeFont : 'color:#C8C8C8'">修改</view>
+				<view class="text-df transition-2" @tap="deleteAdd" :style="$themeFont">
+					删除
+				</view>
+				<view
+					class="text-df transition-2"
+					@tap="changeAdd"
+					:style="hasAll ? $themeFont : 'color:#C8C8C8'"
+				>
+					修改
+				</view>
 			</view>
-			<block v-else><view class="text-df transition-2" @tap="add" :style="hasAll ? $themeFont : 'color:#C8C8C8'">添加</view></block>
+			<block v-else>
+				<view
+					class="text-df transition-2"
+					@tap="add"
+					:style="hasAll ? $themeFont : 'color:#C8C8C8'"
+				>
+					添加
+				</view>
+			</block>
 		</view>
 		<view class="hg flex-row a-center">
 			<text class="cuIcon-tag mr-1"></text>
-			<input class="d-inline-block text-sm flex-1" type="text" placeholder="上课地点(选填)" v-model="place" />
+			<input
+				class="d-inline-block text-sm flex-1"
+				type="text"
+				placeholder="上课地点(选填)"
+				v-model="place"
+			/>
 		</view>
-		<picker @change="firstTap" class="hg" @columnchange="changeStart" mode="multiSelector" :value="index" :range="range">
+		<picker
+			@change="firstTap"
+			class="hg"
+			@columnchange="changeStart"
+			mode="multiSelector"
+			:value="index"
+			:range="range"
+		>
 			<view class="hg">
 				<text class="cuIcon-time mr-1"></text>
 				<block v-if="hasChoose">
@@ -33,12 +67,23 @@
 				<text @tap="toAsk" class="cuIcon-question text-xs ml-1"></text>
 			</view>
 			<view class="flex-row a-center">
-				<xing-radio :color="$colorList.theme" @check="checkAll" :checked="isAll" />
+				<xing-radio
+					:color="$colorList.theme"
+					@check="checkAll"
+					:checked="isAll"
+				/>
 				<text class="ml">全选</text>
 			</view>
 		</view>
 		<view class="flex-row flex-wrap a-center" style="line-height: 40px;">
-			<view class="check-group flex-row j-centerround round" style="padding: 15rpx 20rpx;" @tap="choose" :data-index="i" v-for="(item, i) in weekChoose" :key="i">
+			<view
+				class="check-group flex-row j-centerround round"
+				style="padding: 15rpx 20rpx;"
+				@tap="choose"
+				:data-index="i"
+				v-for="(item, i) in weekChoose"
+				:key="i"
+			>
 				<view
 					class="check-box round text-center flex-column j-center position-relative transition-5"
 					:class="item.disabled ? 'disabled' : ''"
@@ -49,7 +94,9 @@
 						class="w-1 h-1 position-center round text-center flex-column j-center transition-3 overflow-hidden"
 						:style="
 							item.checked
-								? 'transition:all .15s ease;' + $themeBackground + ';color:white;opacity:1;transform:translate(-50%,-50%) scale(1) '
+								? 'transition:all .15s ease;' +
+								  $themeBackground +
+								  ';color:white;opacity:1;transform:translate(-50%,-50%) scale(1) '
 								: 'transform:translate(-50%,-50%) scale(0);opacity:0'
 						"
 					>
@@ -108,14 +155,21 @@ export default {
 		});
 		this.range = [
 			['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
-			Array.from({ length: 12 }, (item, index) => `第${index + 1}节(${this.$store.getters.thisCampusTime[index].start})`),
+			Array.from(
+				{ length: 12 },
+				(item, index) =>
+					`第${index + 1}节(${this.$store.getters.thisCampusTime[index].start})`
+			),
 			Array.from({ length: 12 }, (item, index) => index + 1 + '节课')
 		];
 	},
 	computed: {
 		//选择全部周的标志
 		isAll() {
-			return this.weekChoose.every(item => item.checked || item.disabled) && this.weekChoose.some(item => !item.disabled);
+			return (
+				this.weekChoose.every(item => item.checked || item.disabled) &&
+				this.weekChoose.some(item => !item.disabled)
+			);
 		},
 		during() {
 			return diffCampusTime[this.$store.state.schedule.campus];
@@ -147,8 +201,9 @@ export default {
 		// this.query();
 	},
 	methods: {
-		add() {
-			if (this.hasAll) {
+		async add() {
+			const isCheck = await this.isCheck();
+			if (this.hasAll && isCheck) {
 				// productClassData()
 				this.$store.commit({
 					type: 'changeAddClassData',
@@ -167,6 +222,8 @@ export default {
 				this.Bus.$refs['tip'].show('添加课程成功');
 				this.Bus.hideModal('bottomModal');
 				setTimeout(() => (this.Bus.allModal.bottomModal.is = ''), 300);
+			} else if (!isCheck) {
+				this.Bus.$refs['tip'].show('添加课程失败,涉及敏感字符');
 			}
 		},
 		deleteAdd() {
@@ -179,9 +236,17 @@ export default {
 			this.Bus.$refs['tip'].show('删除课程成功');
 			this.Bus.hideModal('bottomModal');
 		},
-		changeAdd() {
-			if (this.hasAll) {
-				// productClassData()
+		async isCheck() {
+			const {
+				data: { error }
+			} = await this.$http.post(this.$APIs.checkMsg, {
+				content: this.name + this.place
+			});
+			return +error === 1;
+		},
+		async changeAdd() {
+			const isCheck = await this.isCheck();
+			if (this.hasAll && isCheck) {
 				this.$store.commit({
 					type: 'changeAddClassData',
 					handle: addClassData => {
@@ -198,6 +263,8 @@ export default {
 				});
 				this.Bus.$refs['tip'].show('修改课程成功');
 				this.Bus.hideModal('bottomModal');
+			} else if (!isCheck) {
+				this.Bus.$refs['tip'].show('添加课程失败,涉及敏感字符');
 			}
 		},
 		init() {
@@ -214,7 +281,9 @@ export default {
 			const addClassData = this.$store.state.schedule.addClassData;
 			this.addIndex = addClassData.findIndex(add => add.addTag === addTag);
 			this.ban();
-			const { name, room: place, day, start, long, week } = addClassData[this.addIndex];
+			const { name, room: place, day, start, long, week } = addClassData[
+				this.addIndex
+			];
 			this.name = name;
 			this.place = place;
 			this.hasChoose = true;
@@ -235,8 +304,16 @@ export default {
 			this.$set(this.index, e.detail.column, e.detail.value);
 			if (e.detail.column == startIndex) {
 				const length = 11 - e.detail.value;
-				if (this.index[longIndex] > length) this.$set(this.index, longIndex, length);
-				this.$set(this.range, longIndex, Array.from({ length: length + 1 }, (item, index) => index + 1 + '节课'));
+				if (this.index[longIndex] > length)
+					this.$set(this.index, longIndex, length);
+				this.$set(
+					this.range,
+					longIndex,
+					Array.from(
+						{ length: length + 1 },
+						(item, index) => index + 1 + '节课'
+					)
+				);
 			}
 			this.ban();
 		},
@@ -256,7 +333,11 @@ export default {
 			};
 			const handlePrimeClassData = [...this.$store.getters.handlePrimeClassData];
 			this.addTag ? handlePrimeClassData.splice(this.addIndex, 1) : '';
-			const allClassData = [...this.$store.state.schedule.classData, ...handlePrimeClassData, ...this.$store.state.schedule.examData];
+			const allClassData = [
+				...this.$store.state.schedule.classData,
+				...handlePrimeClassData,
+				...this.$store.state.schedule.examData
+			];
 			textConflict({
 				parms: parms,
 				ClassAndExam: allClassData,

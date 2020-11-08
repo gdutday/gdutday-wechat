@@ -62,17 +62,24 @@
 				</view>
 				<view class="s_l">
 					<view class="info_item" @tap="topage(index)">
-						<text class="time">{{ i.examDate + ' ' + i.examTime }}</text>
+						<text class="time">{{ i.examDate + '  ' + i.examTime }}</text>
 						<view>
 							<text class="cuIcon-tag mr-1" />
-							{{ i.examSubject }}
+							{{
+								i.examSubject.slice(0, 10) +
+									(i.examSubject.length >= 10 ? '...' : '')
+							}}
 						</view>
 						<view>
 							<text class="cuIcon-location mr-1" />
 							{{
 								i.examClassroom + i.examPosition === ''
-									? '座位未出'
-									: '座位号:' + i.examPosition + '号'
+									? '位置未出'
+									: `${i.examClassroom}  ${
+											i.examPosition
+												? '座位号:' + i.examPosition + '号'
+												: ''
+									  }`
 							}}
 						</view>
 						<view>
@@ -271,7 +278,7 @@ page {
 		}
 
 		.s_l {
-			width: 500rpx;
+			// width: 500rpx;
 			display: flex;
 			flex-direction: column;
 			padding: 20rpx 0;

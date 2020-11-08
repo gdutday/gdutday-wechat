@@ -40,7 +40,11 @@ import {
 	http,
 	httpWithSession
 } from '@/axios-config.js';
+import {
+	APIs
+} from '@/staticData/staticData.js'
 Vue.prototype.$http = http;
+Vue.prototype.$APIs = APIs;
 Vue.prototype.$httpWithSession = httpWithSession;
 
 Vue.config.productionTip = true;
